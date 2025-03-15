@@ -1,1 +1,112 @@
 @import "tailwindcss";
+
+@keyframes hero-gradient-animation {
+  0% {
+    --c-0: hsla(176, 100%, 80%, 0.32);
+    --x-0: 0%;
+    --y-0: 52%;
+    --s-start-0: 3%;
+    --s-end-0: 79%;
+    --s-start-1: 3%;
+    --s-end-1: 79%;
+    --y-1: 35%;
+    --x-1: 98%;
+    --c-1: hsla(152, 100%, 91%, 0.12);
+  }
+
+  100% {
+    --c-0: hsla(177, 100%, 91%, 0.2);
+    --x-0: 24%;
+    --y-0: 16%;
+    --s-start-0: 4%;
+    --s-end-0: 67%;
+    --s-start-1: 4%;
+    --s-end-1: 67%;
+    --y-1: 100%;
+    --x-1: 62%;
+    --c-1: hsla(190, 0%, 100%, 1);
+  }
+}
+
+@property --c-0 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: hsla(176, 100%, 80%, 0.32);
+}
+
+@property --x-0 {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 0%;
+}
+
+@property --y-0 {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 52%;
+}
+
+@property --s-start-0 {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 3%;
+}
+
+@property --s-end-0 {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 79%;
+}
+
+@property --s-start-1 {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 3%;
+}
+
+@property --s-end-1 {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 79%;
+}
+
+@property --y-1 {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 35%;
+}
+
+@property --x-1 {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 98%;
+}
+
+@property --c-1 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: hsla(152, 100%, 91%, 0.12);
+}
+
+.mesh-background {
+  --c-0: hsla(176, 100%, 80%, 0.32);
+  --x-0: 0%;
+  --y-0: 52%;
+  --y-1: 35%;
+  --x-1: 98%;
+  --c-1: hsla(152, 100%, 91%, 0.12);
+  background-color: hsla(255, 0%, 100%, 1);
+  background-image:
+    radial-gradient(
+      circle at var(--x-0) var(--y-0),
+      var(--c-0) var(--s-start-0),
+      transparent var(--s-end-0)
+    ),
+    radial-gradient(
+      circle at var(--x-1) var(--y-1),
+      var(--c-1) var(--s-start-1),
+      transparent var(--s-end-1)
+    );
+  animation: hero-gradient-animation 10s linear infinite alternate;
+  background-blend-mode: normal, normal;
+}
