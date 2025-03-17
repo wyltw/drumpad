@@ -1,6 +1,14 @@
 @import url("https://fonts.googleapis.com/css2?family=Audiowide&family=Orbitron:wght@400..900&display=swap");
 @import "tailwindcss";
 
+/* custom styles */
+
+@theme {
+  --color-primary: #9cfffa;
+}
+
+/* mesh-background */
+
 @keyframes hero-gradient-animation {
   0% {
     --c-0: hsla(176, 100%, 80%, 0.32);
