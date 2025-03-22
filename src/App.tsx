@@ -7,7 +7,7 @@ function App() {
       <div className="col-span-1 mt-32 place-items-center px-6">
         <CallToAction />
       </div>
-      <div className="col-span-1 grid h-4/5 w-3xl grid-cols-3 grid-rows-3 place-items-center">
+      <div className="col-span-1 mx-auto mt-auto grid grid-cols-3 grid-rows-3 place-items-center gap-x-10 gap-y-4">
         {Array.from({ length: 9 }).map((_, index) => (
           <Pad order={String(index + 1)} />
         ))}
