@@ -6,9 +6,9 @@ const arrayBuffer = async (url: string) => {
   return audioContext.decodeAudioData(arrayBuffer);
 };
 
-export const playback = async () => {
+export const playback = async (url: string) => {
   const playSound = audioContext.createBufferSource();
-  playSound.buffer = await arrayBuffer("./src/assets/sounds/909s/kick.wav");
+  playSound.buffer = await arrayBuffer(url);
   playSound.connect(audioContext.destination);
   playSound.start(audioContext.currentTime);
 };
