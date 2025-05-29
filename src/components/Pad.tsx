@@ -1,11 +1,13 @@
+import { SquarePen } from "lucide-react";
 import { Kit } from "../lib/types";
 import { playback } from "../lib/utils";
+import { Button } from "./ui/button";
 
 type PadProps = { order: string; sample: Kit };
 
 export default function Pad({ order, sample }: PadProps) {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col gap-1">
       <div className="hover:animate-button-pulsing rounded-2xl">
         <button
           onClick={() => playback(sample.source)}
@@ -14,10 +16,24 @@ export default function Pad({ order, sample }: PadProps) {
           <span className="text-sm text-white">{sample.name}</span>
         </button>
       </div>
-      <span className="self-start">
-        pad
-        <span className="ms-1">{order}</span>
-      </span>
+      <EditableText order={order} />
     </div>
+  );
+}
+
+type EditableTextProps = { order: string };
+
+function EditableText({ order }: EditableTextProps) {
+  return (
+    <Button
+      className="flex h-6 cursor-pointer justify-between px-1 hover:bg-white"
+      size={"sm"}
+      variant={"ghost"}
+    >
+      <span className="text-sm">
+        pad <span className="ms-[2px]">{order}</span>
+      </span>
+      <SquarePen size={16} />
+    </Button>
   );
 }
