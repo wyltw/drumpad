@@ -25,15 +25,20 @@ type EditableTextProps = { order: string };
 
 function EditableText({ order }: EditableTextProps) {
   return (
-    <Button
-      className="flex h-6 cursor-pointer justify-between px-1 hover:bg-white"
-      size={"sm"}
-      variant={"ghost"}
-    >
-      <span className="text-sm">
-        pad <span className="ms-[2px]">{order}</span>
-      </span>
-      <SquarePen size={16} />
-    </Button>
+    <>
+      <Button
+        size={"sm"}
+        variant={"ghost"}
+        className="group flex h-6 cursor-pointer justify-between px-1 hover:bg-transparent focus-visible:ring-0"
+      >
+        <span className="text-sm">
+          pad <span className="ms-[2px]">{order}</span>
+        </span>
+        <SquarePen
+          className="opacity-0 duration-300 group-hover:opacity-100"
+          size={16}
+        />
+      </Button>
+    </>
   );
 }
