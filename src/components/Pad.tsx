@@ -2,6 +2,8 @@ import { SquarePen } from "lucide-react";
 import { Kit } from "../lib/types";
 import { playback } from "../lib/utils";
 import { Button } from "./ui/button";
+import { useState } from "react";
+import { Input } from "./ui/input";
 
 type PadProps = { order: string; sample: Kit };
 
@@ -24,12 +26,19 @@ export default function Pad({ order, sample }: PadProps) {
 type EditableTextProps = { order: string };
 
 function EditableText({ order }: EditableTextProps) {
+  const [isEditable, setIsEditable] = useState(false);
+  if (isEditable) {
+    return <Input className="" />;
+  }
   return (
     <>
       <Button
         size={"sm"}
         variant={"ghost"}
         className="group flex h-6 cursor-pointer justify-between px-1 hover:bg-transparent focus-visible:ring-0"
+        onDoubleClick={() => {
+          setIsEditable(true);
+        }}
       >
         <span className="text-sm">
           pad <span className="ms-[2px]">{order}</span>
