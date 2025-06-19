@@ -17,7 +17,7 @@ export default function Pad({ order, sample }: PadProps) {
           <span className="text-sm text-white">{sample.name}</span>
         </button>
       </div>
-      <EditableText order={order} />
+      <EditableText order={order} name={sample.name} />
     </div>
   );
 }
