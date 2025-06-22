@@ -1,5 +1,5 @@
 import { SquarePen } from "lucide-react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 
@@ -8,6 +8,7 @@ type EditableTextProps = { order: string; name: string };
 export function EditableText({ order, name }: EditableTextProps) {
   const [isEditable, setIsEditable] = useState(false);
   const [value, setValue] = useState(name);
+
   const handleBlur = (event: React.FocusEvent<HTMLInputElement, Element>) => {
     setIsEditable(false);
     setValue(event.target.value);
@@ -15,6 +16,7 @@ export function EditableText({ order, name }: EditableTextProps) {
   if (isEditable) {
     return (
       <Input
+        // ref={inputRef}
         value={value}
         onBlur={handleBlur}
         onChange={(event) => {
@@ -33,6 +35,8 @@ export function EditableText({ order, name }: EditableTextProps) {
         className="group flex h-6 cursor-pointer justify-between px-1 hover:bg-transparent focus-visible:ring-0"
         onClick={() => {
           setIsEditable(true);
+          // inputRef.current?.focus();
+          // console.log(inputRef);
         }}
       >
         <span className="text-sm">
@@ -46,3 +50,19 @@ export function EditableText({ order, name }: EditableTextProps) {
     </>
   );
 }
+
+// function SampleNameInput() {
+//   const inputRef = useRef<HTMLInputElement>(null);
+//   return (
+//     <Input
+//       ref={inputRef}
+//       value={value}
+//       onBlur={handleBlur}
+//       onChange={(event) => {
+//         setValue(event.target.value);
+//       }}
+//       size={1}
+//       className="h-6 w-full py-0 font-sans text-sm md:text-base"
+//     />
+//   );
+// }
