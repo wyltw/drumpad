@@ -132,11 +132,9 @@
   --animate-button-pulsing: button-pulsing ease-in-out 0.7s;
 
   @keyframes button-pulsing {
-    0% {
-      box-shadow: 0 0 0 0 rgba(156, 255, 250, 0.8);
-    }
     100% {
-      box-shadow: 0 0 0 16px rgba(156, 255, 250, 0.1);
+      scale: 3;
+      opacity: 0;
     }
   }
 }

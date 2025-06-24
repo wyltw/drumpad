@@ -4,7 +4,7 @@ import { HOUSE_KIT } from "./lib/constants";
 
 function App() {
   return (
-    <main className="container mx-auto grid min-h-screen grid-cols-[fit-content(520px)_1fr]">
+    <main className="container mx-auto grid min-h-screen grid-cols-[fit-content(520px)_1fr] overflow-hidden">
       <div className="col-span-1 mt-32 place-items-center px-6">
         <CallToAction />
       </div>
