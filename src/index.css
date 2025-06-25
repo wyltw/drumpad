@@ -129,11 +129,11 @@
 
 @theme {
   --color-primary: #9cfffa;
-  --animate-button-pulsing: button-pulsing ease-in-out 0.7s;
+  --animate-button-pulsing: button-pulsing ease-in-out 1s;
 
   @keyframes button-pulsing {
     100% {
-      scale: 3;
+      scale: 3.6;
       opacity: 0;
     }
   }
