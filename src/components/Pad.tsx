@@ -13,7 +13,9 @@ export default function Pad({ order, sample }: PadProps) {
   return (
     <div className="flex flex-col gap-1">
       <PadButton onClick={handleClick}>
-        <span className="text-sm text-white">{sample.name}</span>
+        <span className="text-sm text-white/50 transition group-hover:text-white">
+          {sample.name}
+        </span>
         <Mask />
       </PadButton>
       <EditableText order={order} name={sample.name} />
@@ -29,7 +31,7 @@ function PadButton({ children, onClick }: PadButtonProps) {
   return (
     <button
       onClick={onClick}
-      className="ring-primary/75 relative size-32 cursor-pointer rounded-2xl bg-zinc-800 shadow-md shadow-gray-600 transition hover:ring-4 focus:shadow-none"
+      className="group ring-primary/75 relative size-32 cursor-pointer rounded-2xl bg-zinc-800 shadow-md shadow-gray-600 transition hover:ring-4 focus:shadow-none"
       // hover時出現ring-4，focus時取消box-shadow
     >
       {children}
