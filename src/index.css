@@ -133,8 +133,8 @@
 
   @keyframes button-pulsing {
     100% {
-      scale: 3.6;
       opacity: 0;
+      outline-offset: 240px;
     }
   }
 }

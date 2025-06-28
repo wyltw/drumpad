@@ -41,7 +41,7 @@ function PadButton({ children, onClick }: PadButtonProps) {
 
 function Mask() {
   return (
-    <span className="ring-primary/75 hover:animate-button-pulsing absolute top-3/6 left-3/6 block size-32 -translate-16 scale-100 rounded-2xl opacity-100 ring-2" />
-    // hover時播放動畫，scale變大，opacity變淡，常時ring-2
+    <span className="ring-primary/75 hover:animate-button-pulsing outline-primary/75 absolute top-3/6 left-3/6 block size-32 -translate-16 rounded-2xl opacity-100 ring-2 outline-2 hover:outline-offset-2" />
+    // hover時播放動畫，opacity變淡，常時outline-2
   );
 }
