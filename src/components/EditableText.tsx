@@ -1,5 +1,5 @@
 import { SquarePen } from "lucide-react";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 
@@ -40,7 +40,7 @@ export function EditableText({ order, name }: EditableTextProps) {
         }}
       >
         <span className="text-sm">
-          pad <span className="ms-[2px]">{order}</span>
+          pad<span className="ml-1">{order}</span>
         </span>
         <SquarePen
           className="opacity-0 duration-300 group-hover:opacity-100"
