@@ -18,7 +18,7 @@ export default function Pad({ order, sample }: PadProps) {
         </span>
         <Mask />
       </PadButton>
-      <EditableText order={order} name={sample.name} />
+      <EditableText order={order} sampleName={sample.name} />
     </div>
   );
 }
