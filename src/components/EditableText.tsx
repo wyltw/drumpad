@@ -35,8 +35,6 @@ export function EditableText({ order, sampleName }: EditableTextProps) {
         className="group flex h-6 cursor-pointer justify-between px-1 hover:bg-transparent focus-visible:ring-0"
         onClick={() => {
           setIsEditable(true);
-          // inputRef.current?.focus();
-          // console.log(inputRef);
         }}
       >
         <span className="text-sm">
