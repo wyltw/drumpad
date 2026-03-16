@@ -1,14 +1,13 @@
 const audioContext = new AudioContext();
 
-const arrayBuffer = async (url: string) => {
-  const sound = await fetch(url);
-  const arrayBuffer = await sound.arrayBuffer();
-  return audioContext.decodeAudioData(arrayBuffer);
+export const getArrayBuffer = async (url: string) => {
+  const response = await fetch(url);
+  return response.arrayBuffer();
 };
 
-export const playback = async (url: string) => {
-  const playSound = audioContext.createBufferSource();
-  playSound.buffer = await arrayBuffer(url);
-  playSound.connect(audioContext.destination);
-  playSound.start(audioContext.currentTime);
-};
+// export const playback = async (url: string) => {
+//   const playSound = audioContext.createBufferSource();
+//   playSound.buffer = await arrayBuffer(url);
+//   playSound.connect(audioContext.destination);
+//   playSound.start(audioContext.currentTime);
+// };
