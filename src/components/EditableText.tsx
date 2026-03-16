@@ -22,7 +22,7 @@ export function EditableText({ order, sampleName }: EditableTextProps) {
         value={value}
         onBlur={handleBlur}
         onChange={handleChange}
-        size={1}
+        size={1} // without this attribute w-full won't work. default width would be size=20
         className="h-6 w-full py-0 font-sans text-sm md:text-base"
       />
     );
