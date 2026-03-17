@@ -1,13 +1,12 @@
 import { ComponentPropsWithoutRef, ReactNode } from "react";
 import { Kit } from "../lib/types";
 import { EditableText } from "./EditableText";
-import { playback } from "@/lib/utils/utils";
 
 type PadProps = { order: string; sample: Kit };
 
 export default function Pad({ order, sample }: PadProps) {
   const handleClick = () => {
-    playback(sample.source);
+    // playback(sample.source);
   };
 
   return (
