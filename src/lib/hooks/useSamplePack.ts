@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState, useTransition } from "react";
-import { Kit, SamplePack } from "../types/types";
+import { Sample } from "../types/types";
 import { getArrayBuffer } from "../utils/utils";
 import { HOUSE_KIT } from "../constants";
 
@@ -7,10 +7,10 @@ export const useSamplePack = (audioContext: AudioContext) => {
   const [samplePack, setSamplePack] = useState<SamplePack[] | null>(null);
   const [isPending, startTransiion] = useTransition();
   const loadSamplePack = useCallback(
-    async (sources: Kit[]) => {
+    async (sources: Sample[]) => {
       const promises = sources.map(async (source) => ({
         id: crypto.randomUUID(),
-        sampleName: source.name,
+        sampleName: source.sampleName,
         buffer: await getArrayBuffer(source.source),
       }));
       const result = await Promise.all(promises);
