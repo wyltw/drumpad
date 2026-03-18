@@ -1,5 +1,5 @@
 import { ComponentPropsWithoutRef, ReactNode } from "react";
-import { Kit } from "../lib/types";
+import { Kit } from "../lib/types/types";
 import { EditableText } from "./EditableText";
 
 type PadProps = { order: string; sample: Kit };

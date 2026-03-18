@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState, useTransition } from "react";
-import { Kit, SamplePack } from "../types";
+import { Kit, SamplePack } from "../types/types";
 import { getArrayBuffer } from "../utils/utils";
 import { HOUSE_KIT } from "../constants";
 

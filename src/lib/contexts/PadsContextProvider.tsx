@@ -1,15 +1,15 @@
 import { createContext, ReactNode, useContext, useRef } from "react";
 import { useSamplePack } from "../hooks/useSamplePack";
-import { SamplePack } from "../types";
+import { DecodedSample } from "../types/types";
 
-type TSamplePackContext = {
-  samplePack: SamplePack[] | null;
+type TPadsPackContext = {
+  samplePack: DecodedSample[] | null;
   isPending: boolean;
 };
 
-const SamplePackContext = createContext<TSamplePackContext | null>(null);
+const PadsContext = createContext<TPadsPackContext | null>(null);
 
-export default function SamplePackContextProvider({
+export default function PadsContextProvider({
   children,
 }: {
   children: ReactNode;
@@ -19,20 +19,17 @@ export default function SamplePackContextProvider({
     audioContextRef.current = new AudioContext();
   }
   const { samplePack, isPending } = useSamplePack(audioContextRef.current);
-  console.log(samplePack);
   const context = { samplePack, isPending };
 
   return (
-    <SamplePackContext.Provider value={context}>
-      {children}
-    </SamplePackContext.Provider>
+    <PadsContext.Provider value={context}>{children}</PadsContext.Provider>
   );
 }
 
-export const useSamplePackContext = () => {
-  const context = useContext(SamplePackContext);
+export const usePadsContextContext = () => {
+  const context = useContext(PadsContext);
   if (!context) {
-    throw new Error("Use SamplePackContext with Provider! ");
+    throw new Error("Use PadsContext with Provider! ");
   }
   return context;
 };
