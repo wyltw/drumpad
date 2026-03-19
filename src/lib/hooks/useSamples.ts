@@ -3,17 +3,17 @@ import { decodeSample, loadSample } from "../utils/utils";
 import { HOUSE_KIT } from "../constants";
 import { SampleDecoded } from "../types/types";
 
-export const useSamplePack = (
+export const useSamples = (
   selectedKit: string,
   audioContext: AudioContext,
 ) => {
-  const [samplePack, setSamplePack] = useState<SampleDecoded[] | null>(null);
+  const [samples, setSamples] = useState<SampleDecoded[] | null>(null);
   const [isPending, startTransiion] = useTransition();
 
   const loadDefaultSample = useCallback(async () => {
     startTransiion(async () => {
       const sample = await decodeSample(loadSample(HOUSE_KIT), audioContext);
-      setSamplePack(sample);
+      setSamples(sample);
     });
   }, [audioContext]);
 
@@ -23,5 +23,5 @@ export const useSamplePack = (
     }
   }, [selectedKit, loadDefaultSample]);
 
-  return { samplePack, isPending };
+  return { samples, isPending };
 };

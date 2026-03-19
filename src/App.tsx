@@ -1,6 +1,6 @@
 import CallToAction from "./components/CallToAction";
 import KitSelection from "./components/KitSelect";
-import PadsLayout from "./components/PadsLayout";
+import SamplesLayout from "./components/SamplesLayout";
 import AppProviders from "./lib/contexts/AppProviders";
 
 function App() {
@@ -12,7 +12,7 @@ function App() {
       <AppProviders>
         <main className="container mx-auto flex min-h-screen flex-col overflow-hidden">
           <KitSelection />
-          <PadsLayout />
+          <SamplesLayout />
         </main>
       </AppProviders>
     </>
