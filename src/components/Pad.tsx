@@ -10,7 +10,7 @@ export default function Pad({ order, sample }: PadProps) {
   };
 
   return (
-    <div className="flex flex-col gap-1 font-[Orbitron]">
+    <div className="flex flex-col gap-1">
       <PadButton onClick={handleClick}>
         <span className="text-sm text-white/50 transition group-hover:text-white">
           {sample.sampleName}

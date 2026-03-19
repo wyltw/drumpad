@@ -29,7 +29,7 @@ export default function PadsContextProvider({
 export const usePadsContextContext = () => {
   const context = useContext(PadsContext);
   if (!context) {
-    throw new Error("Use PadsContext with Provider! ");
+    throw new Error("Use PadsContext with Provider!");
   }
   return context;
 };

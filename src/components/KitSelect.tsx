@@ -8,7 +8,7 @@ import {
   SelectValue,
 } from "./ui/select";
 
-export default function KitSelection() {
+export default function KitSelect() {
   return (
     <Field>
       <FieldLabel className="text-base" htmlFor="kitName">
