@@ -37,7 +37,7 @@ export function EditableText({ order, sampleName }: EditableTextProps) {
           setIsEditable(true);
         }}
       >
-        <span className="text-sm">
+        <span className="text-sm md:text-base">
           pad<span className="ml-1">{order}</span>
         </span>
         <SquarePen

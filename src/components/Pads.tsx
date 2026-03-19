@@ -2,7 +2,7 @@ import { useSamplesContext } from "@/lib/contexts/SamplesContextProvider";
 import Pad from "./Pad";
 
 export default function Pads() {
-  const { samples } = useSamplesContext();
+  const { samples, isPending } = useSamplesContext();
   return (
     <>
       {samples?.map((sample, index) => (

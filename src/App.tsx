@@ -1,3 +1,4 @@
+import { Toaster } from "sonner";
 import CallToAction from "./components/CallToAction";
 import KitSelection from "./components/KitSelect";
 import PadsLayout from "./components/PadsLayout";
@@ -16,6 +17,7 @@ function App() {
             <PadsLayout />
           </main>
         </div>
+        <Toaster />
       </AppProviders>
     </>
   );
