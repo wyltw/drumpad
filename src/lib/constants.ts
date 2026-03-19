@@ -1,5 +1,3 @@
-import { Kit } from "./types/types";
-
 export const HOUSE_KIT = [
   { sampleName: "kick", source: "./src/assets/sounds/909s/kick.wav" },
   { sampleName: "snare", source: "./src/assets/sounds/909s/snare.wav" },
@@ -17,5 +15,3 @@ export const HOUSE_KIT = [
   { sampleName: "ride", source: "./src/assets/sounds/909s/ride.wav" },
   { sampleName: "crash", source: "./src/assets/sounds/909s/crash.wav" },
 ];
-
-export const KITS: Kit[] = [{ kitName: "default", samples: HOUSE_KIT }];

@@ -1,8 +1,8 @@
 import { ComponentPropsWithoutRef, ReactNode } from "react";
-import { Sample } from "../lib/types/types";
 import { EditableText } from "./EditableText";
+import { SampleDecoded } from "@/lib/types/types";
 
-type PadProps = { order: string; sample: Sample };
+type PadProps = { order: string; sample: SampleDecoded };
 
 export default function Pad({ order, sample }: PadProps) {
   const handleClick = () => {

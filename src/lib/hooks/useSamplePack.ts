@@ -1,33 +1,27 @@
 import { useCallback, useEffect, useState, useTransition } from "react";
-import { Sample } from "../types/types";
-import { getArrayBuffer } from "../utils/utils";
+import { decodeSample, loadSample } from "../utils/utils";
 import { HOUSE_KIT } from "../constants";
+import { SampleDecoded } from "../types/types";
 
-export const useSamplePack = (audioContext: AudioContext) => {
-  const [samplePack, setSamplePack] = useState<SamplePack[] | null>(null);
+export const useSamplePack = (
+  selectedKit: string,
+  audioContext: AudioContext,
+) => {
+  const [samplePack, setSamplePack] = useState<SampleDecoded[] | null>(null);
   const [isPending, startTransiion] = useTransition();
-  const loadSamplePack = useCallback(
-    async (sources: Sample[]) => {
-      const promises = sources.map(async (source) => ({
-        id: crypto.randomUUID(),
-        sampleName: source.sampleName,
-        buffer: await getArrayBuffer(source.source),
-      }));
-      const result = await Promise.all(promises);
-      const decodedData = result.map((item) => ({
-        ...item,
-        buffer: audioContext.decodeAudioData(item.buffer),
-      }));
-      startTransiion(() => {
-        setSamplePack(decodedData);
-      });
-    },
-    [audioContext],
-  );
+
+  const loadDefaultSample = useCallback(async () => {
+    startTransiion(async () => {
+      const sample = await decodeSample(loadSample(HOUSE_KIT), audioContext);
+      setSamplePack(sample);
+    });
+  }, [audioContext]);
 
   useEffect(() => {
-    loadSamplePack(HOUSE_KIT);
-  }, [loadSamplePack]);
+    if (selectedKit === "default") {
+      loadDefaultSample();
+    }
+  }, [selectedKit, loadDefaultSample]);
 
   return { samplePack, isPending };
 };

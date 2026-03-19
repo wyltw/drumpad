@@ -1,24 +1,24 @@
-import { createContext, ReactNode, useContext, useRef } from "react";
+import { createContext, ReactNode, useContext } from "react";
 import { useSamplePack } from "../hooks/useSamplePack";
-import { DecodedSample } from "../types/types";
+import { SampleDecoded } from "../types/types";
+import { useKitContext } from "./KitContextProvider";
 
 type TPadsPackContext = {
-  samplePack: DecodedSample[] | null;
+  samplePack: SampleDecoded[] | null;
   isPending: boolean;
 };
 
 const PadsContext = createContext<TPadsPackContext | null>(null);
 
 export default function PadsContextProvider({
+  selectedKit = "default",
   children,
 }: {
+  selectedKit: string;
   children: ReactNode;
 }) {
-  const audioContextRef = useRef<AudioContext>(null);
-  if (audioContextRef.current === null) {
-    audioContextRef.current = new AudioContext();
-  }
-  const { samplePack, isPending } = useSamplePack(audioContextRef.current);
+  const { audioContext } = useKitContext();
+  const { samplePack, isPending } = useSamplePack(selectedKit, audioContext);
   const context = { samplePack, isPending };
 
   return (
