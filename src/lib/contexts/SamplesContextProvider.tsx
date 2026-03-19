@@ -11,7 +11,7 @@ type TSamplesContext = {
 const SamplesContext = createContext<TSamplesContext | null>(null);
 
 export default function SamplesContextProvider({
-  selectedKit = "default",
+  selectedKit,
   children,
 }: {
   selectedKit: string;

@@ -27,9 +27,12 @@ export const decodeSample = async (
   }));
 };
 
-// export const playback = async (url: string) => {
-//   const playSound = audioContext.createBufferSource();
-//   playSound.buffer = await arrayBuffer(url);
-//   playSound.connect(audioContext.destination);
-//   playSound.start(audioContext.currentTime);
-// };
+export const playback = async (
+  audioBuffer: Promise<AudioBuffer>,
+  audioContext: AudioContext,
+) => {
+  const playSound = audioContext.createBufferSource();
+  playSound.buffer = await audioBuffer;
+  playSound.connect(audioContext.destination);
+  playSound.start(audioContext.currentTime);
+};

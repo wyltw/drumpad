@@ -1,7 +1,7 @@
 import { useSamplesContext } from "@/lib/contexts/SamplesContextProvider";
 import Pad from "./Pad";
 
-export default function Samples() {
+export default function Pads() {
   const { samples } = useSamplesContext();
   return (
     <>

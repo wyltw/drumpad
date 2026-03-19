@@ -1,19 +1,21 @@
 import CallToAction from "./components/CallToAction";
 import KitSelection from "./components/KitSelect";
-import SamplesLayout from "./components/SamplesLayout";
+import PadsLayout from "./components/PadsLayout";
 import AppProviders from "./lib/contexts/AppProviders";
 
 function App() {
   return (
     <>
-      <header className="px-4 py-2">
-        <CallToAction />
-      </header>
       <AppProviders>
-        <main className="container mx-auto flex min-h-screen flex-col overflow-hidden">
-          <KitSelection />
-          <SamplesLayout />
-        </main>
+        <div className="min-h-screen">
+          <header className="px-4 py-2">
+            <CallToAction />
+          </header>
+          <main className="container mx-auto flex flex-col overflow-hidden">
+            <KitSelection />
+            <PadsLayout />
+          </main>
+        </div>
       </AppProviders>
     </>
   );
