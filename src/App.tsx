@@ -17,8 +17,8 @@ function App() {
             <PadsLayout />
           </main>
         </div>
-        <Toaster />
       </AppProviders>
+      <Toaster />
     </>
   );
 }

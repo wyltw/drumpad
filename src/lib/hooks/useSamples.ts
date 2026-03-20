@@ -3,10 +3,7 @@ import { decodeSample, loadSample } from "../utils/utils";
 import { HOUSE_KIT } from "../constants";
 import { SampleDecoded } from "../types/types";
 
-export const useSamples = (
-  selectedKit: string,
-  audioContext: AudioContext,
-) => {
+export const useSamples = (selectedKit: string, audioContext: AudioContext) => {
   const [samples, setSamples] = useState<SampleDecoded[] | null>(null);
   const [isPending, startTransiion] = useTransition();
 
