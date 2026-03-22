@@ -2,7 +2,7 @@ import type { PadItem } from "@/lib/types/types";
 import { create } from "zustand";
 
 export type PadsState = {
-  pads: PadItem[] | null;
+  pads: PadItem[];
 };
 
 export type PadsActions = {
@@ -18,6 +18,7 @@ export const emptyPads = Array.from({ length: 9 }, (_, index) => ({
   order: String(index + 1),
   label: `empty`,
   sampleId: null,
+  audioBuffer: null,
 }));
 
 const usePadsStore = create<PadsStore>((set) => ({

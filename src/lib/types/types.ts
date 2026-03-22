@@ -5,6 +5,7 @@ export type PadItem = {
   order: string;
   label: string;
   sampleId: SampleDecoded["id"] | null;
+  audioBuffer: SampleDecoded["audioBuffer"] | null;
 };
 
 type BaseSample = {

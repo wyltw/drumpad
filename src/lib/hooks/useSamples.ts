@@ -2,23 +2,29 @@ import { useCallback, useEffect, useState, useTransition } from "react";
 import { decodeSample, loadSample } from "../utils/utils";
 import { HOUSE_KIT } from "../constants";
 import { SampleDecoded } from "../types/types";
+import { toast } from "sonner";
 
 export const useSamples = (selectedKit: string, audioContext: AudioContext) => {
   const [samples, setSamples] = useState<SampleDecoded[] | null>(null);
   const [isPending, startTransiion] = useTransition();
 
-  const loadDefaultSample = useCallback(async () => {
+  const loadSamples = useCallback(async () => {
     startTransiion(async () => {
-      const sample = await decodeSample(loadSample(HOUSE_KIT), audioContext);
+      const samplePromise = decodeSample(loadSample(HOUSE_KIT), audioContext);
+      toast.promise(samplePromise, {
+        loading: "音源載入中...",
+        success: "載入完成",
+      });
+      const sample = await samplePromise;
       setSamples(sample);
     });
   }, [audioContext]);
 
   useEffect(() => {
     if (selectedKit === "default") {
-      loadDefaultSample();
+      loadSamples();
     }
-  }, [selectedKit, loadDefaultSample]);
+  }, [selectedKit, loadSamples]);
 
   return { samples, isPending };
 };

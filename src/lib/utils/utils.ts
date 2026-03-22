@@ -1,5 +1,8 @@
 import { SampleBinary, SampleDecoded, SampleSource } from "../types/types";
 
+export const sleep = (ms: number) =>
+  new Promise((resolve) => setTimeout(resolve, ms));
+
 export const getArrayBuffer = async (url: string) => {
   const response = await fetch(url);
   return response.arrayBuffer();
