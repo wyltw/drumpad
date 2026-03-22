@@ -1,27 +1,27 @@
 import { ComponentPropsWithoutRef, ReactNode } from "react";
 import { EditableText } from "./EditableText";
-import { SampleDecoded } from "@/lib/types/types";
+import { PadItem, SampleDecoded } from "@/lib/types/types";
 import { playback } from "@/lib/utils/utils";
 import { useKitContext } from "@/lib/contexts/KitContextProvider";
 import { cn } from "@/lib/utils/cn";
 
-type PadProps = { order: string; sample: SampleDecoded };
+type PadProps = Partial<PadItem>;
 
-export default function Pad({ order, sample }: PadProps) {
+export default function Pad({ order, label }: PadProps) {
   const { audioContext } = useKitContext();
   const handleClick = () => {
-    playback(sample.audioBuffer, audioContext);
+    // playback(sample.audioBuffer, audioContext);
   };
 
   return (
     <div className="flex flex-col gap-1">
       <PadButton onClick={handleClick} className="size-40">
         <span className="text-base text-white/50 transition group-hover:text-white">
-          {sample.sampleName}
+          {label}
         </span>
         <Mask className="size-40 -translate-20" />
       </PadButton>
-      <EditableText order={order} sampleName={sample.sampleName} />
+      {/* <EditableText order={order} sampleName={label} /> */}
     </div>
   );
 }

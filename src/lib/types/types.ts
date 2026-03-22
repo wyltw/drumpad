@@ -1,5 +1,14 @@
+export type CryptoRandomUUID = ReturnType<typeof crypto.randomUUID>;
+
+export type PadItem = {
+  id: string;
+  order: string;
+  label: string;
+  sampleId: SampleDecoded["id"] | null;
+};
+
 type BaseSample = {
-  id: ReturnType<typeof crypto.randomUUID>;
+  id: CryptoRandomUUID;
   sampleName: string;
 };
 

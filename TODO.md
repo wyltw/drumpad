@@ -1,92 +1,70 @@
-# DrumPad MVP Todo
+# DrumPad Todo
 
-## 目前階段
+## 現況
 
-目前專案在 `Stage 1: 先穩定基底`，而且只完成了一部分。
-
-已經有的東西：
-- `default` kit 選擇 state
-- 909 sample 載入流程
-- 9-pad grid UI
+目前已經有：
+- kit 選單 state
+- 909 samples 載入
+- 9-pad UI
 - 點擊 pad 播放聲音
-- 部分可編輯 label UI 骨架
+- 可編輯 label 的 UI 殼
 
-還沒站穩的基底：
-- pad 資料仍然不是完整的 app state，而是直接從 sample array render
-- 沒有明確的 `PadItem` / `LoopData` / transport state
-- audio engine 還只是單一 `playback()` helper，沒有排程抽象
-- `kit` / `custom` / `builtin` / `user sample` 的資料流還沒建立
-- README 還是 Vite 預設內容，專案狀態沒有被文件化
+目前還沒站穩的地方：
+- pad 資料還是直接從 samples render，不是 app-level pad state
+- label 編輯還沒有真的寫回 pad 資料
+- `default` 之外的 kit flow 還是假資料
+- audio 播放只有最薄的一層 helper，還談不上 engine
 
-## 狀態總覽
+## Now
 
-### Stage 1. 穩定基底
+先做這些，因為它們會直接決定現在這個 MVP 是不是真的成立：
 
-- [x] 建立 `KitContextProvider`
-- [x] 可載入預設 909 sample
-- [x] 可點擊 pad 播放 sample
-- [x] 畫出 9-pad 基本版面
-- [ ] 把 pad 資料改成正式 React state，而不是直接 `samples.map`
-- [ ] 定義 MVP 核心型別：`PadItem`、`RecordedHit`、`LoopData`
-- [ ] 建立 pad active / triggered state
-- [ ] 建立 BPM state
-- [ ] 建立 transport state：`idle | recording | playing`
-- [ ] 抽出 audio engine 層，讓 UI 不直接碰 playback 細節
-- [ ] 釐清預設 kit 與 custom kit 的 state/data flow
+- [ ] 把 `samples.map(...)` 改成明確的 `pads` state，讓 pad 成為真正的畫面資料來源
+- [ ] 讓 label 編輯真的更新 pad state，不只是在 input 裡改 local state
+- [ ] 定義目前夠用的 pad 資料 shape，只保留現在畫面真的需要的欄位
+- [ ] 補一個明確的 pad trigger/active 視覺狀態，確認互動有回饋
+- [ ] 整理 `default` kit 的資料流，避免 select 出現 `banana` 這種尚未支援的選項
+- [ ] 補 README 的目前功能與限制，讓「做到哪裡」是清楚的
 
-### Stage 2. Sample Upload 與 Persistence
+## Next
 
-- [ ] 每個 pad 可上傳 `wav/mp3`
-- [ ] 驗證檔案格式與錯誤提示
-- [ ] 使用者 sample decode 後可播放
-- [ ] pad 可指派 builtin 或 user sample
-- [ ] `localStorage` 保存目前 kit / pad mapping
-- [ ] IndexedDB 保存 user sample blob
-- [ ] 頁面載入時 hydrate pad state
-- [ ] `sampleId` 可從 IndexedDB 找回 blob 並播放
-- [ ] 有任一 pad 被改動時，kit 自動視為 `custom`
+這些可以排在基礎站穩之後，但還算合理延伸：
 
-### Stage 3. Keyboard Interaction
-
-- [ ] 建立 9 個 pad 的 key mapping
-- [ ] `keydown` 觸發 pad
+- [ ] 鍵盤對應 9 個 pad
+- [ ] `keydown` 觸發 pad 播放
 - [ ] 避免長按重複觸發
-- [ ] 避免 input focus 時誤觸快捷鍵
-- [ ] pad 播放時有 active/pressed 視覺狀態
-- [ ] UI 顯示目前 keybind
+- [ ] 補上目前 keybind 提示
+- [ ] 支援單個 pad 上傳自訂 sample
+- [ ] 把 custom pad mapping 先存進 `localStorage`
 
-### Stage 4. Loop Recorder
+## Later
 
-- [ ] 開始錄音
-- [ ] 停止錄音
-- [ ] 記錄 `padId + timeMs`
-- [ ] 儲存單一 loop layer
-- [ ] 播放錄下的 hit sequence
-- [ ] 支援 loop 重播
-- [ ] 支援 stop / clear
+這些不是不能做，而是現在做很容易變成 over-design：
 
-### Stage 5. BPM 對齊與 Timing
+- [ ] BPM state
+- [ ] transport state
+- [ ] loop recorder
+- [ ] metronome
+- [ ] quantize
+- [ ] IndexedDB 存 user sample blob
+- [ ] 分層 audio engine API
+- [ ] 提前設計完整的 `LoopData` / `RecordedHit` / transport types
+- [ ] `builtin` / `user sample` / `custom kit` 的完整資料模型
 
-- [ ] 建立 BPM input / slider
-- [ ] loop 長度固定先用 4/4
-- [ ] 錄音時間對齊 beat grid
-- [ ] 回放跟 BPM 對齊
-- [ ] 視需要加入 metronome
-- [ ] 視需要加入簡化 quantize
+## 暫時不要做
 
-## 建議下一輪直接做的事
+下面這些目前先刻意不做，避免為了未來可能需求提前抽象：
 
-1. 把目前 `sample` 驅動 UI 的方式改成 `pads` state 驅動。
-2. 補上正式型別：`PadItem`、`RecordedHit`、`LoopData`、`TransportState`。
-3. 建一個最小版 audio engine API，例如 `loadPadSample()`、`triggerPad()`、`stopLoop()`。
-4. 讓 `Pad` component 只收資料與事件，不直接持有播放邏輯。
-5. 做完上面四項後，再進 sample upload + persistence。
+- [ ] 不先拆完整 audio engine
+- [ ] 不先定一大包還沒用到的 domain types
+- [ ] 不先做多 kit 架構
+- [ ] 不先做 IndexedDB hydration / blob-id mapping
+- [ ] 不先為 loop/BPM 設計 UI 和 state
 
-## 現況判斷
+## 目前建議順序
 
-如果照這份 MVP 規劃來看，現在進度大概是：
-
-- 基底階段：`35%`
-- 整體 MVP：`15%`
-
-原因不是 UI 太少，而是核心資料模型、持久化、鍵盤、錄音、BPM 這些真正決定 MVP 是否成立的部分都還沒開始。
+1. 先把 `pads` state 建起來
+2. 讓 label 編輯真的改到 pad state
+3. 補 pad active / trigger feedback
+4. 清掉假的 kit 選項，整理 `default` flow
+5. 再決定要先做 keyboard 還是 sample upload
