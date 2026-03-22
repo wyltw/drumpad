@@ -1,61 +1,75 @@
 import { SquarePen } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { ComponentPropsWithoutRef, useEffect, useRef, useState } from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 
-type EditableTextProps = { order: string; sampleName: string };
+type EditableTextProps = {
+  buttonText: string;
+  onBlurValue?: (value: string) => void;
+} & ComponentPropsWithoutRef<"input">;
 
-export function EditableText({ order, sampleName }: EditableTextProps) {
+export function EditableText({
+  buttonText,
+  value,
+  onChange,
+  onBlurValue,
+}: EditableTextProps) {
   const [isEditable, setIsEditable] = useState(false);
-  const [value, setValue] = useState(sampleName);
-  const handleBlur = (event: React.FocusEvent<HTMLInputElement, Element>) => {
+  const [localValue, setLocalValue] = useState(value);
+
+  useEffect(() => {
+    setLocalValue(value);
+  }, [value]);
+
+  const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     setIsEditable(false);
-    setValue(event.target.value);
-    // blur時應該需要同步修改sampleName，此狀態需提升
+    setLocalValue(event.target.value);
+    onBlurValue?.(event.target.value);
   };
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value);
+    setLocalValue(event.target.value);
+    onChange?.(event);
   };
+
   if (isEditable) {
     return (
       <SampleNameInput
-        value={value}
+        value={localValue}
         onBlur={handleBlur}
         onChange={handleChange}
-        size={1} // without this attribute w-full won't work. default width would be size=20
+        size={1}
         className="h-6 w-full py-0 font-sans text-sm md:text-base"
       />
     );
   }
+
   return (
-    <>
-      <Button
-        size={"sm"}
-        variant={"ghost"}
-        className="group flex h-6 cursor-pointer justify-between px-1 hover:bg-transparent focus-visible:ring-0"
-        onClick={() => {
-          setIsEditable(true);
-        }}
-      >
-        <span className="text-sm md:text-base">
-          pad<span className="ml-1">{order}</span>
-        </span>
-        <SquarePen
-          className="opacity-0 duration-300 group-hover:opacity-100"
-          size={100}
-        />
-      </Button>
-    </>
+    <Button
+      size={"sm"}
+      variant={"ghost"}
+      className="group flex h-6 cursor-pointer justify-between px-1 hover:bg-transparent focus-visible:ring-0"
+      onClick={() => {
+        setIsEditable(true);
+      }}
+    >
+      <span className="text-sm md:text-base">{buttonText}</span>
+      <SquarePen
+        className="opacity-0 duration-300 group-hover:opacity-100"
+        size={100}
+      />
+    </Button>
   );
 }
 
-type SampleNameInputProps = React.ComponentProps<"input">;
+type SampleNameInputProps = ComponentPropsWithoutRef<"input">;
 
 function SampleNameInput({ className, ...props }: SampleNameInputProps) {
   const inputRef = useRef<HTMLInputElement>(null);
+
   useEffect(() => {
-    const input = inputRef.current;
-    input?.focus();
+    inputRef.current?.focus();
   }, []);
+
   return <Input ref={inputRef} className={className} {...props} />;
 }

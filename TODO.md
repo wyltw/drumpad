@@ -3,6 +3,7 @@
 ## 現況
 
 目前已經有：
+
 - kit 選單 state
 - 909 samples 載入
 - 9-pad UI
@@ -10,6 +11,7 @@
 - 可編輯 label 的 UI 殼
 
 目前還沒站穩的地方：
+
 - pad 資料還是直接從 samples render，不是 app-level pad state
 - label 編輯還沒有真的寫回 pad 資料
 - `default` 之外的 kit flow 還是假資料
@@ -19,7 +21,7 @@
 
 先做這些，因為它們會直接決定現在這個 MVP 是不是真的成立：
 
-- [ ] 把 `samples.map(...)` 改成明確的 `pads` state，讓 pad 成為真正的畫面資料來源
+- [x] 把 `samples.map(...)` 改成明確的 `pads` state，讓 pad 成為真正的畫面資料來源
 - [ ] 讓 label 編輯真的更新 pad state，不只是在 input 裡改 local state
 - [ ] 定義目前夠用的 pad 資料 shape，只保留現在畫面真的需要的欄位
 - [ ] 補一個明確的 pad trigger/active 視覺狀態，確認互動有回饋

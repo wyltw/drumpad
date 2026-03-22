@@ -4,6 +4,7 @@ import { PadItem } from "@/lib/types/types";
 import { useKitContext } from "@/lib/contexts/KitContextProvider";
 import { cn } from "@/lib/utils/cn";
 import { playback } from "@/lib/utils/utils";
+import usePadsStore from "@/lib/stores/PadsStore";
 
 type PadProps = {
   pad: PadItem;
@@ -11,8 +12,8 @@ type PadProps = {
 
 export default function Pad({ pad }: PadProps) {
   const { audioContext } = useKitContext();
+  const updatePad = usePadsStore((state) => state.updatePad);
   const handleClick = () => {
-    console.log(pad);
     playback(pad.audioBuffer, audioContext);
   };
 
@@ -24,7 +25,13 @@ export default function Pad({ pad }: PadProps) {
         </span>
         <Mask className="size-40 -translate-20" />
       </PadButton>
-      <EditableText order={pad.order} sampleName={pad.label} />
+      <EditableText
+        buttonText={`pad ${pad.order}`}
+        value={pad.label}
+        onBlurValue={(value) => {
+          updatePad(pad.id, { label: value });
+        }}
+      />
     </div>
   );
 }
