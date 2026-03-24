@@ -8,30 +8,35 @@ import usePadsStore from "@/lib/stores/PadsStore";
 
 type PadProps = {
   pad: PadItem;
+  onClick: React.Dispatch<React.SetStateAction<string>>;
+  isActived: boolean;
 };
 
-export default function Pad({ pad }: PadProps) {
+export default function Pad({ pad, onClick, isActived }: PadProps) {
   const { audioContext } = useKitContext();
   const updatePad = usePadsStore((state) => state.updatePad);
   const handleClick = () => {
+    onClick(pad.id);
     playback(pad.audioBuffer, audioContext);
   };
 
   return (
     <div className="flex flex-col gap-1">
-      <PadButton onClick={handleClick} className="size-40">
+      <PadButton onClick={handleClick} className="size-36">
         <span className="text-base text-white/50 transition group-hover:text-white">
           {pad.label}
         </span>
-        <Mask className="size-40 -translate-20" />
+        <Mask className="size-36 -translate-18" />
       </PadButton>
-      <EditableText
-        buttonText={`pad ${pad.order}`}
-        value={pad.label}
-        onBlurValue={(value) => {
-          updatePad(pad.id, { label: value });
-        }}
-      />
+      <div className="mt-2">
+        <EditableText
+          buttonText={`pad ${pad.order}`}
+          value={pad.label}
+          onBlurValue={(value) => {
+            updatePad(pad.id, { label: value });
+          }}
+        />
+      </div>
     </div>
   );
 }
@@ -46,7 +51,7 @@ function PadButton({ children, onClick, className }: PadButtonProps) {
     <button
       onClick={onClick}
       className={cn(
-        "group ring-primary/75 relative size-32 cursor-pointer rounded-2xl bg-zinc-800 shadow-md shadow-gray-600 transition hover:shadow-none hover:ring-4 focus:shadow-none",
+        "group ring-primary/75 relative size-32 cursor-pointer rounded-2xl bg-zinc-800 shadow-xl shadow-gray-600 transition hover:shadow-none hover:ring-4 focus:shadow-none",
         className,
       )}
       // hover時出現ring-4，focus時取消box-shadow

@@ -48,7 +48,7 @@ export function EditableText({
     <Button
       size={"sm"}
       variant={"ghost"}
-      className="group flex h-6 cursor-pointer justify-between px-1 hover:bg-transparent focus-visible:ring-0"
+      className="group flex h-6 w-full cursor-pointer justify-between px-3 hover:bg-transparent focus-visible:ring-0"
       onClick={() => {
         setIsEditable(true);
       }}
