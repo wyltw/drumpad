@@ -23,7 +23,7 @@ export default function Pad({ pad, onClick, isActived }: PadProps) {
   return (
     <div className="flex flex-col gap-1">
       <PadButton onClick={handleClick} className="size-36">
-        <span className="text-base text-white/50 transition group-hover:text-white">
+        <span className="flex-1 -translate-y-1 rounded-xl bg-zinc-700 text-base text-white/50 transition group-hover:-translate-y-0 group-hover:text-white">
           {pad.label}
         </span>
         <Mask className="size-36 -translate-18" />
@@ -51,7 +51,7 @@ function PadButton({ children, onClick, className }: PadButtonProps) {
     <button
       onClick={onClick}
       className={cn(
-        "group ring-primary/75 relative size-32 cursor-pointer rounded-2xl bg-zinc-800 shadow-xl shadow-gray-600 transition hover:shadow-none hover:ring-4 focus:shadow-none",
+        "group ring-primary/75 relative flex size-32 cursor-pointer rounded-xl bg-zinc-800 shadow-md shadow-gray-600 transition hover:shadow-none hover:ring-4 focus:shadow-none",
         className,
       )}
       // hover時出現ring-4，focus時取消box-shadow
@@ -66,7 +66,7 @@ function Mask({ className }: MaskProps) {
   return (
     <span
       className={cn(
-        "ring-primary/75 hover:animate-button-pulsing siza-32 outline-primary/75 absolute top-3/6 left-3/6 block size-32 -translate-16 rounded-2xl opacity-100 ring-2 outline-2",
+        "ring-primary/75 hover:animate-button-pulsing outline-primary absolute top-3/6 left-3/6 block size-32 -translate-16 rounded-xl opacity-100",
         className,
       )}
     />

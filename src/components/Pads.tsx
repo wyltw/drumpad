@@ -19,7 +19,7 @@ export default function Pads() {
           key={pad.id || pad.order}
           pad={pad}
           onClick={setActivePadId}
-          isActivated={activePadId === pad.id}
+          // isActivated={activePadId === pad.id}
         />
       ))}
     </>
