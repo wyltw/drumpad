@@ -138,7 +138,7 @@
 
 @theme {
   --color-primary: #9cfffa;
-  --animate-button-pulsing: button-pulsing ease-in-out 1s;
+  --animate-button-pulsing: button-pulsing ease-in-out forwards 1s;
 
   @keyframes button-pulsing {
     100% {

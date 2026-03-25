@@ -5,6 +5,7 @@ import { useKitContext } from "@/lib/contexts/KitContextProvider";
 import { cn } from "@/lib/utils/cn";
 import { playback } from "@/lib/utils/utils";
 import usePadsStore from "@/lib/stores/PadsStore";
+import { ClassNameValue } from "tailwind-merge";
 
 type PadProps = {
   pad: PadItem;
@@ -20,13 +21,15 @@ export default function Pad({ pad, onClick, isActived }: PadProps) {
     playback(pad.audioBuffer, audioContext);
   };
 
+  const buttonSize = "size-36";
+
   return (
     <div className="flex flex-col gap-1">
-      <PadButton onClick={handleClick} className="size-36">
-        <span className="flex-1 -translate-y-1 rounded-xl bg-zinc-700 text-base text-white/50 transition group-hover:-translate-y-0 group-hover:text-white">
+      <PadButton onClick={handleClick} className={buttonSize}>
+        <span className="flex flex-1 -translate-y-1 items-center justify-center rounded-xl bg-gray-800 text-base text-white/50 transition group-hover:-translate-y-0 group-hover:text-white">
           {pad.label}
         </span>
-        <Mask className="size-36 -translate-18" />
+        <Mask className={cn("-translate-18", buttonSize)} />
       </PadButton>
       <div className="mt-2">
         <EditableText
@@ -51,7 +54,7 @@ function PadButton({ children, onClick, className }: PadButtonProps) {
     <button
       onClick={onClick}
       className={cn(
-        "group ring-primary/75 relative flex size-32 cursor-pointer rounded-xl bg-zinc-800 shadow-md shadow-gray-600 transition hover:shadow-none hover:ring-4 focus:shadow-none",
+        "group ring-primary/75 relative flex cursor-pointer rounded-xl bg-zinc-900 shadow-md shadow-gray-600 transition hover:shadow-none hover:ring-4 focus:shadow-none",
         className,
       )}
       // hover時出現ring-4，focus時取消box-shadow
@@ -66,7 +69,7 @@ function Mask({ className }: MaskProps) {
   return (
     <span
       className={cn(
-        "ring-primary/75 hover:animate-button-pulsing outline-primary absolute top-3/6 left-3/6 block size-32 -translate-16 rounded-xl opacity-100",
+        "ring-primary/75 group-hover:animate-button-pulsing outline-primary absolute top-3/6 left-3/6 rounded-xl opacity-100 group-hover:outline-2",
         className,
       )}
     />
