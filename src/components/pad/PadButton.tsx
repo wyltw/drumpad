@@ -11,7 +11,7 @@ export function PadButton({ children, onClick, className }: PadButtonProps) {
     <button
       onClick={onClick}
       className={cn(
-        "group ring-primary/75 relative flex cursor-pointer rounded-xl bg-zinc-900 shadow-md shadow-gray-600 transition hover:shadow-none hover:ring-4 focus:shadow-none",
+        "group ring-primary/75 relative flex cursor-pointer rounded-xl bg-zinc-900 shadow-md transition hover:ring-4 hover:[box-shadow:0_0_35px_4px_rgba(156,255,250,1)] focus:shadow-none",
         className,
       )}
     >
