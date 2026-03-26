@@ -39,7 +39,7 @@ export function EditableText({
         onBlur={handleBlur}
         onChange={handleChange}
         size={1}
-        className="h-6 w-full py-0 font-sans text-sm md:text-base"
+        className="h-6 py-0 font-sans text-sm md:text-base"
       />
     );
   }
@@ -48,7 +48,7 @@ export function EditableText({
     <Button
       size={"sm"}
       variant={"ghost"}
-      className="group flex h-6 w-full cursor-pointer justify-between px-3 hover:bg-transparent focus-visible:ring-0"
+      className="group flex h-6 flex-1 cursor-pointer justify-between px-3 hover:bg-transparent focus-visible:ring-0"
       onClick={() => {
         setIsEditable(true);
       }}
