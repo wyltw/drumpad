@@ -141,9 +141,15 @@
   --animate-button-pulsing: button-pulsing ease-in-out forwards 1s;
 
   @keyframes button-pulsing {
+    0% {
+      outline: 2px solid var(--color-primary);
+      outline-offset: 0px;
+      opacity: 100%;
+    }
     100% {
-      opacity: 0;
+      outline: 8px solid var(--color-primary);
       outline-offset: 240px;
+      opacity: 0%;
     }
   }
 }
