@@ -22,11 +22,9 @@ export default function Pad({ pad, onClick, isActived }: PadProps) {
     playback(pad.audioBuffer, audioContext);
   };
 
-  const buttonSize = "size-36";
-
   return (
     <div className="flex flex-col gap-1">
-      <PadButton onClick={handleClick} className={buttonSize}>
+      <PadButton onClick={handleClick}>
         <PadFace label={pad.label} />
         <PadMask />
       </PadButton>
