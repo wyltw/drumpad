@@ -24,7 +24,7 @@
 - [x] 把 `samples.map(...)` 改成明確的 `pads` state，讓 pad 成為真正的畫面資料來源
 - [x] 讓 label 編輯真的更新 pad state，不只是在 input 裡改 local state
 - [x] 定義目前夠用的 pad 資料 shape，只保留現在畫面真的需要的欄位
-- [ ] 補一個明確的 pad trigger/active 視覺狀態，確認互動有回饋
+- [x] 補一個明確的 pad trigger/active 視覺狀態，確認互動有回饋
 - [ ] 整理 `default` kit 的資料流，避免 select 出現 `banana` 這種尚未支援的選項
 - [ ] 補 README 的目前功能與限制，讓「做到哪裡」是清楚的
 

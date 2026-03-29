@@ -15,7 +15,7 @@ export type PadsStore = PadsState & PadsActions;
 
 export const emptyPads = Array.from({ length: 9 }, (_, index) => ({
   id: "",
-  order: String(index + 1),
+  order: index + 1,
   label: `empty`,
   sampleId: null,
   audioBuffer: null,

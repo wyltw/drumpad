@@ -1,7 +1,6 @@
 import { EditableText } from "./EditableText";
 import { PadItem } from "@/lib/types/types";
 import { useKitContext } from "@/lib/contexts/KitContextProvider";
-import { cn } from "@/lib/utils/cn";
 import { playback } from "@/lib/utils/utils";
 import usePadsStore from "@/lib/stores/PadsStore";
 import { PadButton } from "./pad/PadButton";
