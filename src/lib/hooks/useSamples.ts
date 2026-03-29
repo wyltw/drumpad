@@ -1,12 +1,15 @@
-import { useQuery } from "@tanstack/react-query";
-import { HOUSE_KIT } from "../constants";
+import { useCallback, useEffect, useState, useTransition } from "react";
 import { decodeSample, loadSample } from "../utils/utils";
+import { HOUSE_KIT } from "../constants";
+import { SampleDecoded } from "../types/types";
 import { toast } from "sonner";
 
 export const useSamples = (selectedKit: string, audioContext: AudioContext) => {
-  const { data, isPending } = useQuery({
-    queryKey: ["samples", selectedKit],
-    queryFn: () => {
+  const [samples, setSamples] = useState<SampleDecoded[] | null>(null);
+  const [isPending, startTransiion] = useTransition();
+
+  const loadSamples = useCallback(async () => {
+    startTransiion(async () => {
       const samplePromise = decodeSample(loadSample(HOUSE_KIT), audioContext);
 
       toast.promise(samplePromise, {
@@ -14,9 +17,16 @@ export const useSamples = (selectedKit: string, audioContext: AudioContext) => {
         success: "Samples loaded",
       });
 
-      return samplePromise;
-    },
-  });
+      const sample = await samplePromise;
+      setSamples(sample);
+    });
+  }, [audioContext]);
 
-  return { samples: data ?? null, isPending };
+  useEffect(() => {
+    if (selectedKit === "default") {
+      loadSamples();
+    }
+  }, [selectedKit, loadSamples]);
+
+  return { samples, isPending };
 };
