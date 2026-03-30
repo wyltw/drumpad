@@ -15,3 +15,4 @@ export const kitSchema = z.object({
 
 export type KitPad = z.infer<typeof kitPadSchema>;
 export type Kit = z.infer<typeof kitSchema>;
+export type LastSelectedKit = Omit<Kit, "pads">;

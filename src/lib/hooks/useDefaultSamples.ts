@@ -3,8 +3,9 @@ import { loadSample } from "../audio/audio-utils";
 import { HOUSE_KIT } from "../constants";
 import { toast } from "sonner";
 import { db } from "../db/db";
+import { LastSelectedKit } from "../types/kit";
 
-export const useDefaultSamples = (selectedKit: string) => {
+export const useDefaultSamples = (lastSelectedKit: LastSelectedKit) => {
   const saveDefaultSamplesToDb = useCallback(async () => {
     const sample = await loadSample(HOUSE_KIT);
     const dbPromise = db.kit.add({
@@ -18,8 +19,8 @@ export const useDefaultSamples = (selectedKit: string) => {
   }, []);
 
   useEffect(() => {
-    if (selectedKit) {
+    if (!lastSelectedKit.id) {
       saveDefaultSamplesToDb();
     }
-  }, [selectedKit, saveDefaultSamplesToDb]);
+  }, [lastSelectedKit, saveDefaultSamplesToDb]);
 };
