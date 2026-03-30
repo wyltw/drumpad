@@ -1,7 +1,6 @@
 import { EditableText } from "./EditableText";
 import { PadItem } from "@/lib/types/types";
-import { useKitContext } from "@/lib/contexts/KitContextProvider";
-import { playback } from "@/lib/utils/utils";
+import { playback } from "@/lib/audio/audio-utils";
 import usePadsStore from "@/lib/stores/PadsStore";
 import { PadButton } from "./pad/PadButton";
 import { PadFace } from "./pad/PadFace";
@@ -9,16 +8,14 @@ import { PadMask } from "./pad/PadMask";
 
 type PadProps = {
   pad: PadItem;
-  onClick: React.Dispatch<React.SetStateAction<string>>;
-  isActived: boolean;
+  onClick: (padId: string) => void;
 };
 
-export default function Pad({ pad, onClick, isActived }: PadProps) {
-  const { audioContext } = useKitContext();
+export default function Pad({ pad, onClick }: PadProps) {
   const updatePad = usePadsStore((state) => state.updatePad);
-  const handleClick = () => {
+  const handleClick = async () => {
     onClick(pad.id);
-    playback(pad.audioBuffer, audioContext);
+    if (pad.audioBuffer) playback(pad.audioBuffer);
   };
 
   return (

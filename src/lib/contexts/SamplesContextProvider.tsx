@@ -1,7 +1,6 @@
 import { createContext, ReactNode, useContext } from "react";
 import { useSamples } from "../hooks/useSamples";
 import { SampleDecoded } from "../types/types";
-import { useKitContext } from "./KitContextProvider";
 
 type TSamplesContext = {
   samples: SampleDecoded[] | null;
@@ -17,8 +16,7 @@ export default function SamplesContextProvider({
   selectedKit: string;
   children: ReactNode;
 }) {
-  const { audioContext } = useKitContext();
-  const { samples, isPending } = useSamples(selectedKit, audioContext);
+  const { samples, isPending } = useSamples(selectedKit);
   const context = { samples, isPending };
 
   return (
