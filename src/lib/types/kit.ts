@@ -11,8 +11,6 @@ export const kitSchema = z.object({
   id: z.number(),
   name: z.string(),
   pads: z.array(kitPadSchema),
-  createdAt: z.number(),
-  updatedAt: z.number(),
 });
 
 export type KitPad = z.infer<typeof kitPadSchema>;

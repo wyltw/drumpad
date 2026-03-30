@@ -9,9 +9,10 @@ const getArrayBuffer = async (url: string) => {
 export const loadSample = async (
   samples: SampleSource[],
 ): Promise<SampleBinary[]> => {
-  const promises = samples.map(async (sample) => ({
+  const promises = samples.map(async (sample, index) => ({
     id: crypto.randomUUID(),
     sampleName: sample.sampleName,
+    order: index + 1,
     arrayBuffer: await getArrayBuffer(sample.source),
   }));
 

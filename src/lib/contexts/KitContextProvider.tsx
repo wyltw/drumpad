@@ -1,4 +1,5 @@
-import { createContext, ReactNode, useContext, useState } from "react";
+import { createContext, ReactNode, useContext } from "react";
+import { useLocalStorage } from "usehooks-ts";
 
 type TKitPackContext = {
   selectedKit: string;
@@ -12,7 +13,7 @@ export default function KitContextProvider({
 }: {
   children: ReactNode;
 }) {
-  const [selectedKit, setSelectedKit] = useState("default");
+  const [selectedKit, setSelectedKit] = useLocalStorage("selectedKit", "");
 
   const selectKit = (value: string) => {
     setSelectedKit(value);

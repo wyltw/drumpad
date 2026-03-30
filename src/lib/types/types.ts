@@ -20,6 +20,7 @@ export type SampleSource = {
 
 export type SampleBinary = BaseSample & {
   arrayBuffer: ArrayBuffer;
+  order: number;
 };
 
 export type SampleDecoded = BaseSample & {
