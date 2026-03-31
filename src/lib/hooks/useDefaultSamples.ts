@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import { db } from "../db/db";
 import { LastSelectedKit } from "../types/kit";
 
-export const useDefaultSamples = (lastSelectedKit: LastSelectedKit) => {
+export const useDefaultSamples = (lastSelectedKit: LastSelectedKit | null) => {
   const saveDefaultSamplesToDb = useCallback(async () => {
     const sample = await loadSample(HOUSE_KIT);
     const dbPromise = db.kit.add({
@@ -19,7 +19,7 @@ export const useDefaultSamples = (lastSelectedKit: LastSelectedKit) => {
   }, []);
 
   useEffect(() => {
-    if (!lastSelectedKit.id) {
+    if (lastSelectedKit?.name === "default") {
       saveDefaultSamplesToDb();
     }
   }, [lastSelectedKit, saveDefaultSamplesToDb]);

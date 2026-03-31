@@ -11,19 +11,33 @@ import {
 
 export default function KitSelect() {
   const { selectKit, selectedKit, kitOptions } = useKitContext();
+
+  const options = kitOptions.length === 0 ? [selectedKit] : kitOptions;
+  console.log(kitOptions);
+  // 沒有db，沒有localStorage的情況下
   return (
     <Field>
       <FieldLabel className="text-base" htmlFor="kitName">
         Kit Selection
       </FieldLabel>
       <FieldDescription>Select Kit you want for drumpad.</FieldDescription>
-      <Select value={selectedKit} onValueChange={selectKit}>
+      <Select
+        value={String(selectedKit?.id)}
+        onValueChange={(value) => {
+          selectKit({
+            id: Number(value),
+            name:
+              kitOptions.find((option) => String(option.id) === value)?.name ||
+              "",
+          });
+        }}
+      >
         <SelectTrigger id="kitName">
           <SelectValue />
         </SelectTrigger>
         <SelectContent position="popper">
           <SelectGroup>
-            {kitOptions.map((kit) => (
+            {options.map((kit) => (
               <SelectItem key={kit.id} value={String(kit.id)}>
                 {kit.name}
               </SelectItem>

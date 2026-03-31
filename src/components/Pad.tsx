@@ -8,13 +8,11 @@ import { PadMask } from "./pad/PadMask";
 
 type PadProps = {
   pad: PadItem;
-  onClick: (padId: string) => void;
 };
 
-export default function Pad({ pad, onClick }: PadProps) {
+export default function Pad({ pad }: PadProps) {
   const updatePad = usePadsStore((state) => state.updatePad);
   const handleClick = async () => {
-    onClick(pad.id);
     if (pad.audioBuffer) playback(pad.audioBuffer);
   };
 

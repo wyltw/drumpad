@@ -7,3 +7,8 @@ export const useKits = () => {
 
   return { kitOptions };
 };
+
+export const useKit = (selectedKitId: number) => {
+  const kit = useLiveQuery(async () => db.kit.get(selectedKitId));
+  return { kit };
+};

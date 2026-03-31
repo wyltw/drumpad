@@ -19,13 +19,9 @@ export const loadSample = async (
   return Promise.all(promises);
 };
 
-export const decodeSample = async (
-  samples: Promise<SampleBinary[]>,
-): Promise<SampleDecoded[]> => {
+export const decodeSample = (samples: SampleBinary[]): SampleDecoded[] => {
   const audioContext = getAudioContext();
-  const result = await samples;
-
-  return result.map((item) => ({
+  return samples.map((item) => ({
     ...item,
     audioBuffer: audioContext.decodeAudioData(item.arrayBuffer),
   }));

@@ -1,11 +1,11 @@
 import { createContext, ReactNode, useContext } from "react";
 import { useLocalStorage } from "usehooks-ts";
 import { useKits } from "../hooks/useKits";
-import { Kit } from "../types/kit";
+import { Kit, LastSelectedKit } from "../types/kit";
 
 type TKitPackContext = {
-  selectedKit: string;
-  selectKit: (value: string) => void;
+  selectedKit: LastSelectedKit;
+  selectKit: (value: LastSelectedKit) => void;
   kitOptions: Omit<Kit, "pads">[];
 };
 
@@ -16,10 +16,13 @@ export default function KitContextProvider({
 }: {
   children: ReactNode;
 }) {
-  const [selectedKit, setSelectedKit] = useLocalStorage("selectedKit", "");
+  const [selectedKit, setSelectedKit] = useLocalStorage<LastSelectedKit>(
+    "selectedKit",
+    { id: 1, name: "default" },
+  );
   const { kitOptions } = useKits();
 
-  const selectKit = (value: string) => {
+  const selectKit = (value: LastSelectedKit) => {
     setSelectedKit(value);
   };
   const context = {

@@ -5,6 +5,5 @@ export const samplesToPads = (samples: SampleDecoded[]): PadItem[] =>
     id: sample.id,
     order: index + 1,
     label: sample.sampleName,
-    sampleId: sample.id,
     audioBuffer: sample.audioBuffer,
   }));

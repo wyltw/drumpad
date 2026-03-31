@@ -1,15 +1,12 @@
-export type CryptoRandomUUID = ReturnType<typeof crypto.randomUUID>;
-
 export type PadItem = {
   id: string;
   order: number;
   label: string;
-  sampleId: SampleDecoded["id"] | null;
   audioBuffer: SampleDecoded["audioBuffer"] | null;
 };
 
 type BaseSample = {
-  id: CryptoRandomUUID;
+  id: string;
   sampleName: string;
 };
 
