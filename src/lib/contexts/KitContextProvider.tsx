@@ -1,12 +1,19 @@
-import { createContext, ReactNode, useContext } from "react";
+import {
+  createContext,
+  ReactNode,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+} from "react";
 import { useLocalStorage } from "usehooks-ts";
-import { useKits } from "../hooks/useKits";
-import { Kit, LastSelectedKit } from "../types/kit";
+import { LastSelectedKit } from "../types/kit";
+import { seedWithDefaultSamples } from "../db/db-utils";
+import { db } from "../db/db";
 
 type TKitPackContext = {
-  selectedKit: LastSelectedKit;
+  selectedKit: LastSelectedKit | null;
   selectKit: (value: LastSelectedKit) => void;
-  kitOptions: Omit<Kit, "pads">[];
 };
 
 const KitContext = createContext<TKitPackContext | null>(null);
@@ -16,20 +23,36 @@ export default function KitContextProvider({
 }: {
   children: ReactNode;
 }) {
-  const [selectedKit, setSelectedKit] = useLocalStorage<LastSelectedKit>(
+  const [selectedKit, setSelectedKit] = useLocalStorage<LastSelectedKit | null>(
     "selectedKit",
-    { id: 1, name: "default" },
+    null,
   );
-  const { kitOptions } = useKits();
 
-  const selectKit = (value: LastSelectedKit) => {
-    setSelectedKit(value);
-  };
-  const context = {
-    selectedKit,
-    selectKit,
-    kitOptions,
-  };
+  const selectKit = useCallback(
+    (value: LastSelectedKit | null) => {
+      setSelectedKit(value);
+    },
+    [setSelectedKit],
+  );
+
+  const seed = useCallback(async () => {
+    const kitsCount = await db.kits.count();
+    if (kitsCount === 0) {
+      const defaultKit = await seedWithDefaultSamples();
+      selectKit(defaultKit as LastSelectedKit);
+    }
+  }, [selectKit]);
+
+  useEffect(() => {
+    seed();
+  }, [seed]);
+  const context = useMemo(
+    () => ({
+      selectedKit,
+      selectKit,
+    }),
+    [selectKit, selectedKit],
+  );
 
   return <KitContext.Provider value={context}>{children}</KitContext.Provider>;
 }

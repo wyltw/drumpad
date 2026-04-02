@@ -1,5 +1,4 @@
 import { useKitContext } from "@/lib/contexts/KitContextProvider";
-import { useDefaultSamples } from "@/lib/hooks/useDefaultSamples";
 
 import Pad from "./Pad";
 import usePadsStore, { emptyPads } from "@/lib/stores/PadsStore";
@@ -10,8 +9,8 @@ import { useEffect } from "react";
 
 export default function Pads() {
   const { selectedKit } = useKitContext();
-  useDefaultSamples(selectedKit);
-  const { kit } = useKit(selectedKit.id); // 初次建立default可能和查詢存在時間差
+  // useDefaultSamples(selectedKit);
+  const { kit } = useKit(selectedKit?.id);
   const setPads = usePadsStore((state) => state.setPads);
   const pads = usePadsStore((state) => state.pads);
 

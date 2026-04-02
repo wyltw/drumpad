@@ -8,13 +8,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
+import { useKits } from "@/lib/hooks/useKits";
 
 export default function KitSelect() {
-  const { selectKit, selectedKit, kitOptions } = useKitContext();
-
-  const options = kitOptions.length === 0 ? [selectedKit] : kitOptions;
-  console.log(kitOptions);
-  // 沒有db，沒有localStorage的情況下
+  const { selectedKit, selectKit } = useKitContext();
+  const { kitOptions } = useKits();
   return (
     <Field>
       <FieldLabel className="text-base" htmlFor="kitName">
@@ -37,9 +35,9 @@ export default function KitSelect() {
         </SelectTrigger>
         <SelectContent position="popper">
           <SelectGroup>
-            {options.map((kit) => (
-              <SelectItem key={kit.id} value={String(kit.id)}>
-                {kit.name}
+            {kitOptions.map((kit) => (
+              <SelectItem key={kit?.id} value={String(kit?.id)}>
+                {kit?.name}
               </SelectItem>
             ))}
           </SelectGroup>
