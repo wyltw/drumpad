@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import { useLocalStorage } from "usehooks-ts";
 import { LastSelectedKit } from "../types/kit";
 import { countKits, seedWithDefaultSamples } from "../services/KitsService";
+import { handleError } from "../utils/utils";
 
 type TKitPackContext = {
   selectedKit: LastSelectedKit | null;
@@ -36,15 +37,19 @@ export default function KitContextProvider({
   );
 
   const seed = useCallback(async () => {
-    const kitsCount = await countKits();
-    if (kitsCount === 0) {
-      const seedPromise = seedWithDefaultSamples();
-      toast.promise(seedPromise, {
-        loading: "Initializing default samples",
-        success: "Samples created",
-      });
-      const defaultKit = await seedPromise;
-      selectKit(defaultKit as LastSelectedKit);
+    try {
+      const kitsCount = await countKits();
+      if (kitsCount === 0) {
+        const seedPromise = seedWithDefaultSamples();
+        toast.promise(seedPromise, {
+          loading: "Initializing default samples",
+          success: "Samples created",
+        });
+        const defaultKit = await seedPromise;
+        selectKit(defaultKit);
+      }
+    } catch (error) {
+      toast.error(handleError(error));
     }
   }, [selectKit]);
 

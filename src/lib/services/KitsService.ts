@@ -17,8 +17,8 @@ export const getKit = async (kitId: number) => {
 export const seedWithDefaultSamples = async () => {
   const id = await createDefaultKit();
   const kit = await db.kits.get(id);
-
-  return { id: kit?.id, name: kit?.name };
+  if (!kit) throw new Error("Failed to create default samples");
+  return { id: kit.id, name: kit.name };
 };
 
 const createDefaultKit = async () => {
