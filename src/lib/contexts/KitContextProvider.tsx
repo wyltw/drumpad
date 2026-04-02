@@ -46,6 +46,7 @@ export default function KitContextProvider({
   useEffect(() => {
     seed();
   }, [seed]);
+
   const context = useMemo(
     () => ({
       selectedKit,

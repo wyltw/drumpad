@@ -12,7 +12,7 @@ import { useKits } from "@/lib/hooks/useKits";
 
 export default function KitSelect() {
   const { selectedKit, selectKit } = useKitContext();
-  const { kitOptions } = useKits();
+  const { kitsOptions } = useKits();
   return (
     <Field>
       <FieldLabel className="text-base" htmlFor="kitName">
@@ -25,7 +25,7 @@ export default function KitSelect() {
           selectKit({
             id: Number(value),
             name:
-              kitOptions.find((option) => String(option.id) === value)?.name ||
+              kitsOptions.find((option) => String(option.id) === value)?.name ||
               "",
           });
         }}
@@ -35,7 +35,7 @@ export default function KitSelect() {
         </SelectTrigger>
         <SelectContent position="popper">
           <SelectGroup>
-            {kitOptions.map((kit) => (
+            {kitsOptions.map((kit) => (
               <SelectItem key={kit?.id} value={String(kit?.id)}>
                 {kit?.name}
               </SelectItem>

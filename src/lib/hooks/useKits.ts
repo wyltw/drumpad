@@ -6,9 +6,9 @@ export const useKits = () => {
     const kitsCount = await db.kits.count();
     if (kitsCount > 0) return await db.kits.toArray();
   });
-  const kitOptions = kits?.map(({ id, name }) => ({ id, name })) || [];
+  const kitsOptions = kits?.map(({ id, name }) => ({ id, name })) || [];
 
-  return { kitOptions };
+  return { kitsOptions };
 };
 
 export const useKit = (selectedKitId: number | undefined) => {
