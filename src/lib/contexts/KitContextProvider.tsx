@@ -6,10 +6,10 @@ import {
   useEffect,
   useMemo,
 } from "react";
+import { toast } from "sonner";
 import { useLocalStorage } from "usehooks-ts";
 import { LastSelectedKit } from "../types/kit";
-import { seedWithDefaultSamples } from "../db/db-utils";
-import { db } from "../db/db";
+import { countKits, seedWithDefaultSamples } from "../services/KitsService";
 
 type TKitPackContext = {
   selectedKit: LastSelectedKit | null;
@@ -36,9 +36,14 @@ export default function KitContextProvider({
   );
 
   const seed = useCallback(async () => {
-    const kitsCount = await db.kits.count();
+    const kitsCount = await countKits();
     if (kitsCount === 0) {
-      const defaultKit = await seedWithDefaultSamples();
+      const seedPromise = seedWithDefaultSamples();
+      toast.promise(seedPromise, {
+        loading: "Initializing default samples",
+        success: "Samples created",
+      });
+      const defaultKit = await seedPromise;
       selectKit(defaultKit as LastSelectedKit);
     }
   }, [selectKit]);

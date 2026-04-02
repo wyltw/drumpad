@@ -8,7 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
-import { useKits } from "@/lib/hooks/useKits";
+import { useKits } from "@/lib/adapters/KitsAdapter";
 
 export default function KitSelect() {
   const { selectedKit, selectKit } = useKitContext();
