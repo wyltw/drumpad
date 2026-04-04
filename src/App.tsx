@@ -1,7 +1,7 @@
 import { Toaster } from "sonner";
 import CallToAction from "./components/CallToAction";
 import KitSelection from "./components/KitSelect";
-import PadsLayout from "./components/PadsLayout";
+import Pads from "./components/Pads";
 import AppProviders from "./lib/contexts/AppProviders";
 
 function App() {
@@ -14,7 +14,7 @@ function App() {
           </header>
           <main className="container mx-auto flex flex-col overflow-hidden">
             <KitSelection />
-            <PadsLayout />
+            <Pads />
           </main>
         </div>
       </AppProviders>

@@ -5,6 +5,7 @@ import usePadsStore from "@/lib/stores/PadsStore";
 import { PadButton } from "./pad/PadButton";
 import { PadFace } from "./pad/PadFace";
 import { PadMask } from "./pad/PadMask";
+import { useState } from "react";
 
 type PadProps = {
   pad: PadItem;
@@ -15,10 +16,19 @@ export default function Pad({ pad }: PadProps) {
   const handleClick = async () => {
     if (pad.audioBuffer) playback(pad.audioBuffer);
   };
-
+  const [isPressing, setIsPressing] = useState(false);
+  console.log(isPressing);
   return (
     <div className="flex flex-col gap-1">
-      <PadButton onClick={handleClick}>
+      <PadButton
+        onClick={handleClick}
+        onKeyDown={() => {
+          setIsPressing(true);
+        }}
+        onKeyUp={() => {
+          setIsPressing(false);
+        }}
+      >
         <PadFace label={pad.label} />
         <PadMask />
       </PadButton>

@@ -6,11 +6,11 @@ type PadMaskProps = {
 };
 
 export function PadMask({ className }: PadMaskProps) {
-  const [isPulsing, setIsPuling] = useState(false);
+  const [isPulsing, setIsPulsing] = useState(false);
   return (
     <span
-      onClick={() => setIsPuling(true)}
-      onAnimationEnd={() => setIsPuling(false)}
+      onClick={() => setIsPulsing(true)}
+      onAnimationEnd={() => setIsPulsing(false)}
       className={cn(
         "absolute inset-0 rounded-full",
         { "animate-button-pulsing": isPulsing },
