@@ -2,10 +2,11 @@ import { cn } from "@/lib/utils/cn";
 import { useState } from "react";
 
 type PadMaskProps = {
+  isActive?: boolean;
   className?: string;
 };
 
-export function PadMask({ className }: PadMaskProps) {
+export function PadMask({ isActive = false, className }: PadMaskProps) {
   const [isPulsing, setIsPulsing] = useState(false);
   return (
     <span
@@ -13,7 +14,7 @@ export function PadMask({ className }: PadMaskProps) {
       onAnimationEnd={() => setIsPulsing(false)}
       className={cn(
         "absolute inset-0 rounded-full",
-        { "animate-button-pulsing": isPulsing },
+        { "animate-button-pulsing": isPulsing || isActive },
         className,
       )}
     />

@@ -5,7 +5,6 @@ import { useKit } from "@/lib/adapters/KitsAdapter";
 import { decodeSample } from "@/lib/audio/audio-utils";
 import { samplesToPads } from "@/lib/dto/samplesToPads";
 import { useEffect } from "react";
-import { usePadKeybind } from "@/lib/hooks/usePadKeybind";
 
 export default function Pads() {
   const { selectedKit } = useKitContext();
@@ -21,8 +20,6 @@ export default function Pads() {
     const decodedPads = decodeSample(kit?.pads);
     setPads(samplesToPads(decodedPads));
   }, [kit?.pads, setPads]);
-
-  usePadKeybind(pads);
 
   return (
     <div className="mx-auto mt-20 grid grid-cols-3 grid-rows-3 place-items-center gap-x-10 gap-y-4">

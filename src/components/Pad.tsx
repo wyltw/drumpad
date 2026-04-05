@@ -5,7 +5,7 @@ import usePadsStore from "@/lib/stores/PadsStore";
 import { PadButton } from "./pad/PadButton";
 import { PadFace } from "./pad/PadFace";
 import { PadMask } from "./pad/PadMask";
-import { useState } from "react";
+import { usePadKeybind } from "@/lib/hooks/usePadKeybind";
 
 type PadProps = {
   pad: PadItem;
@@ -13,24 +13,17 @@ type PadProps = {
 
 export default function Pad({ pad }: PadProps) {
   const updatePad = usePadsStore((state) => state.updatePad);
+  const { isActive } = usePadKeybind(pad);
+
   const handleClick = async () => {
     if (pad.audioBuffer) playback(pad.audioBuffer);
   };
-  const [isPressing, setIsPressing] = useState(false);
-  console.log(isPressing);
+
   return (
     <div className="flex flex-col gap-1">
-      <PadButton
-        onClick={handleClick}
-        onKeyDown={() => {
-          setIsPressing(true);
-        }}
-        onKeyUp={() => {
-          setIsPressing(false);
-        }}
-      >
-        <PadFace label={pad.label} />
-        <PadMask />
+      <PadButton onClick={handleClick}>
+        <PadFace label={pad.label} isActive={isActive} />
+        <PadMask isActive={isActive} />
       </PadButton>
       <div className="mt-2 flex">
         <EditableText
