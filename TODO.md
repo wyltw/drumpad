@@ -25,16 +25,16 @@
 - [x] 讓 label 編輯真的更新 pad state，不只是在 input 裡改 local state
 - [x] 定義目前夠用的 pad 資料 shape，只保留現在畫面真的需要的欄位
 - [x] 補一個明確的 pad trigger/active 視覺狀態，確認互動有回饋
-- [ ] 整理 `default` kit 的資料流，避免 select 出現 `banana` 這種尚未支援的選項
+- [x] 整理 `default` kit 的資料流，避免 select 出現 `banana` 這種尚未支援的選項
 - [ ] 補 README 的目前功能與限制，讓「做到哪裡」是清楚的
 
 ## Next
 
 這些可以排在基礎站穩之後，但還算合理延伸：
 
-- [ ] 鍵盤對應 9 個 pad
-- [ ] `keydown` 觸發 pad 播放
-- [ ] 避免長按重複觸發
+- [x] 鍵盤對應 9 個 pad
+- [x] `keydown` 觸發 pad 播放
+- [x] 避免長按重複觸發
 - [ ] 補上目前 keybind 提示
 - [ ] 支援單個 pad 上傳自訂 sample
 - [ ] 把 custom pad mapping 先存進 `localStorage`
