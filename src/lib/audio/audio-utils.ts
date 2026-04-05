@@ -1,5 +1,6 @@
-import { SampleBinary, SampleDecoded, SampleSource } from "../types/types";
-import { ensureAudioContextReady, getAudioContext } from "./audioContext";
+import { KitPad } from "../types/kit";
+import { SampleSource } from "../types/types";
+import { ensureAudioContextReady } from "./audioContext";
 
 const getArrayBuffer = async (url: string) => {
   const response = await fetch(url);
@@ -8,23 +9,16 @@ const getArrayBuffer = async (url: string) => {
 
 export const loadSample = async (
   samples: SampleSource[],
-): Promise<SampleBinary[]> => {
+): Promise<KitPad[]> => {
   const promises = samples.map(async (sample, index) => ({
     id: crypto.randomUUID(),
     sampleName: sample.sampleName,
+    label: sample.sampleName,
     order: index + 1,
     arrayBuffer: await getArrayBuffer(sample.source),
   }));
 
   return Promise.all(promises);
-};
-
-export const decodeSample = (samples: SampleBinary[]): SampleDecoded[] => {
-  const audioContext = getAudioContext();
-  return samples.map((item) => ({
-    ...item,
-    audioBuffer: audioContext.decodeAudioData(item.arrayBuffer),
-  }));
 };
 
 export const playback = async (audioBuffer: Promise<AudioBuffer>) => {

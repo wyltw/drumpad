@@ -2,8 +2,7 @@ import { useKitContext } from "@/lib/contexts/KitContextProvider";
 import Pad from "./Pad";
 import usePadsStore, { emptyPads } from "@/lib/stores/PadsStore";
 import { useKit } from "@/lib/adapters/KitsAdapter";
-import { decodeSample } from "@/lib/audio/audio-utils";
-import { samplesToPads } from "@/lib/dto/samplesToPads";
+import { kitPadsToPads } from "@/lib/dto/kitPadsToPads";
 import { useEffect } from "react";
 
 export default function Pads() {
@@ -17,8 +16,7 @@ export default function Pads() {
       setPads(emptyPads);
       return;
     }
-    const decodedPads = decodeSample(kit?.pads);
-    setPads(samplesToPads(decodedPads));
+    setPads(kitPadsToPads(kit.pads));
   }, [kit?.pads, setPads]);
 
   return (
