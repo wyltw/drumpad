@@ -21,7 +21,7 @@ export default function Pad({ pad }: PadProps) {
 
   return (
     <div className="flex flex-col gap-1">
-      <PadButton onClick={handleClick}>
+      <PadButton onClick={handleClick} isActive={isActive}>
         <PadFace label={pad.label} isActive={isActive} />
         <PadMask isActive={isActive} />
       </PadButton>
