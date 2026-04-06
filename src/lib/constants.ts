@@ -17,13 +17,13 @@ export const HOUSE_KIT = [
 ];
 
 export const KEYBIND: Record<number, string> = {
-  1: "7",
-  2: "8",
-  3: "9",
-  4: "4",
-  5: "5",
-  6: "6",
-  7: "1",
-  8: "2",
-  9: "3",
+  1: "Numpad7",
+  2: "Numpad8",
+  3: "Numpad9",
+  4: "Numpad4",
+  5: "Numpad5",
+  6: "Numpad6",
+  7: "Numpad1",
+  8: "Numpad2",
+  9: "Numpad3",
 };
