@@ -1,15 +1,13 @@
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "./ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "./ui/dialog";
 
-export default function HelpDialog({ trigger }: { trigger: React.ReactNode }) {
+type HelpDialogProps = {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+};
+
+export default function HelpDialog({ open, onOpenChange }: HelpDialogProps) {
   return (
-    <Dialog>
-      <DialogTrigger>{trigger}</DialogTrigger>
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Help</DialogTitle>
