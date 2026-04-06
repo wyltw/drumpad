@@ -37,7 +37,6 @@
 - [x] 避免長按重複觸發
 - [ ] 補上目前 keybind 提示
 - [ ] 支援單個 pad 上傳自訂 sample
-- [ ] 把 custom pad mapping 先存進 `localStorage`
 
 ## Later
 

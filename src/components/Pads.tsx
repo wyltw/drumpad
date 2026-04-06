@@ -4,6 +4,7 @@ import usePadsStore, { emptyPads } from "@/lib/stores/PadsStore";
 import { useKit } from "@/lib/adapters/KitsAdapter";
 import { kitPadsToPads } from "@/lib/dto/kitPadsToPads";
 import { useEffect } from "react";
+import PadsToolbar from "./PadsToolbar";
 
 export default function Pads() {
   const { selectedKit } = useKitContext();
@@ -20,10 +21,13 @@ export default function Pads() {
   }, [kit?.pads, setPads]);
 
   return (
-    <div className="mx-auto mt-20 grid grid-cols-3 grid-rows-3 place-items-center gap-x-10 gap-y-4">
-      {pads.map((pad) => (
-        <Pad key={pad.id || pad.order} pad={pad} />
-      ))}
+    <div className="mt-4 flex gap-2">
+      <div className="grid grid-cols-3 grid-rows-3 place-items-center gap-x-10 gap-y-4">
+        {pads.map((pad) => (
+          <Pad key={pad.id || pad.order} pad={pad} />
+        ))}
+      </div>
+      <PadsToolbar />
     </div>
   );
 }

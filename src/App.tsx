@@ -12,9 +12,11 @@ function App() {
           <header className="px-4 py-2">
             <CallToAction />
           </header>
-          <main className="container mx-auto flex flex-col overflow-hidden">
-            <KitSelection />
-            <Pads />
+          <main className="container mx-auto mt-8 flex flex-col items-center overflow-hidden">
+            <div>
+              <KitSelection />
+              <Pads />
+            </div>
           </main>
         </div>
       </AppProviders>

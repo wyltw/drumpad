@@ -54,10 +54,7 @@ export function EditableText({
       }}
     >
       <span className="text-sm md:text-base">{buttonText}</span>
-      <SquarePen
-        className="opacity-0 duration-300 group-hover:opacity-100"
-        size={100}
-      />
+      <SquarePen className="size-5 opacity-0 duration-300 group-hover:opacity-100" />
     </Button>
   );
 }
