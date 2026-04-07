@@ -4,21 +4,22 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
+  DialogTrigger,
 } from "./ui/dialog";
 import { Kbd } from "./ui/kbd";
 import { KEYBIND } from "@/lib/constants";
 import usePadsStore from "@/lib/stores/PadsStore";
 
 type HelpDialogProps = {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
+  trigger: React.ReactNode;
 };
 
-export default function HelpDialog({ open, onOpenChange }: HelpDialogProps) {
+export default function HelpDialog({ trigger }: HelpDialogProps) {
   const pads = usePadsStore((state) => state.pads);
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog>
+      <DialogTrigger asChild>{trigger}</DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Help</DialogTitle>
@@ -28,10 +29,10 @@ export default function HelpDialog({ open, onOpenChange }: HelpDialogProps) {
           {pads.map((pad) => (
             <div
               key={pad.order}
-              className="flex items-center justify-between px-3 py-2 text-sm"
+              className="flex items-center justify-between text-sm"
             >
-              <span className="text-muted-foreground">{pad.label}</span>
-              <Kbd>{KEYBIND[pad.order].replace("Numpad", "")}</Kbd>
+              <span className="truncate text-black">{pad.label}</span>
+              <Kbd>{KEYBIND[pad.order]}</Kbd>
             </div>
           ))}
         </div>
