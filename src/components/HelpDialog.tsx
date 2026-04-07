@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import {
   Dialog,
   DialogContent,
@@ -23,7 +24,9 @@ export default function HelpDialog({ trigger }: HelpDialogProps) {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Help</DialogTitle>
-          <DialogDescription>Use Numpads</DialogDescription>
+          <DialogDescription>
+            Use Numpad or Q W E / A S D / Z X C
+          </DialogDescription>
         </DialogHeader>
         <div className="grid grid-cols-3 gap-2">
           {pads.map((pad) => (
@@ -31,8 +34,15 @@ export default function HelpDialog({ trigger }: HelpDialogProps) {
               key={pad.order}
               className="flex items-center justify-between text-sm"
             >
-              <span className="truncate text-black">{pad.label}</span>
-              <Kbd>{KEYBIND[pad.order]}</Kbd>
+              <span className="truncate text-black">{pad.label}:</span>
+              <span className="flex items-center gap-1">
+                {KEYBIND[pad.order].map((key, i) => (
+                  <Fragment key={key}>
+                    {i > 0 && <span className="text-muted-foreground">/</span>}
+                    <Kbd>{key.replace(/Numpad|Key/, "")}</Kbd>
+                  </Fragment>
+                ))}
+              </span>
             </div>
           ))}
         </div>

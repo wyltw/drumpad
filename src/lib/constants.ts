@@ -16,14 +16,14 @@ export const HOUSE_KIT = [
   { sampleName: "crash", source: "./src/assets/sounds/909s/crash.wav" },
 ];
 
-export const KEYBIND: Record<number, string> = {
-  1: "Numpad7",
-  2: "Numpad8",
-  3: "Numpad9",
-  4: "Numpad4",
-  5: "Numpad5",
-  6: "Numpad6",
-  7: "Numpad1",
-  8: "Numpad2",
-  9: "Numpad3",
+export const KEYBIND: Record<number, string[]> = {
+  1: ["Numpad7", "KeyQ"],
+  2: ["Numpad8", "KeyW"],
+  3: ["Numpad9", "KeyE"],
+  4: ["Numpad4", "KeyA"],
+  5: ["Numpad5", "KeyS"],
+  6: ["Numpad6", "KeyD"],
+  7: ["Numpad1", "KeyZ"],
+  8: ["Numpad2", "KeyX"],
+  9: ["Numpad3", "KeyC"],
 };

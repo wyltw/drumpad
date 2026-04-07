@@ -8,11 +8,11 @@ export function usePadKeybind(pad: PadItem) {
   const isKeyHeld = useRef(false);
 
   useEffect(() => {
-    const key = KEYBIND[pad.order];
+    const keys = KEYBIND[pad.order];
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (isKeyHeld.current) return;
-      if (event.code !== key || !pad.audioBuffer) return;
+      if (!keys.includes(event.code) || !pad.audioBuffer) return;
       event.preventDefault();
       playback(pad.audioBuffer);
       isKeyHeld.current = true;
@@ -20,7 +20,7 @@ export function usePadKeybind(pad: PadItem) {
     };
 
     const handleKeyUp = (event: KeyboardEvent) => {
-      if (event.code !== key) return;
+      if (!keys.includes(event.code)) return;
       isKeyHeld.current = false;
       setIsActive(false);
     };
