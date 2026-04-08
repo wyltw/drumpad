@@ -8,13 +8,13 @@ import {
 } from "react";
 import { toast } from "sonner";
 import { useLocalStorage } from "usehooks-ts";
-import { LastSelectedKit } from "../types/kit";
+import { KitMeta } from "../types/kit";
 import { countKits, seedWithDefaultSamples } from "../services/KitsService";
 import { handleError } from "../utils/utils";
 
 type TKitPackContext = {
-  selectedKit: LastSelectedKit | null;
-  selectKit: (value: LastSelectedKit) => void;
+  selectedKit: KitMeta | null;
+  selectKit: (value: KitMeta) => void;
 };
 
 const KitContext = createContext<TKitPackContext | null>(null);
@@ -24,13 +24,13 @@ export default function KitContextProvider({
 }: {
   children: ReactNode;
 }) {
-  const [selectedKit, setSelectedKit] = useLocalStorage<LastSelectedKit | null>(
+  const [selectedKit, setSelectedKit] = useLocalStorage<KitMeta | null>(
     "selectedKit",
     null,
   );
 
   const selectKit = useCallback(
-    (value: LastSelectedKit | null) => {
+    (value: KitMeta | null) => {
       setSelectedKit(value);
     },
     [setSelectedKit],
