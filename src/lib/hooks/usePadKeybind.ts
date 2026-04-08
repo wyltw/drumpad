@@ -5,7 +5,16 @@ import { PadItem } from "@/lib/types/types";
 
 export function usePadKeybind(pad: PadItem) {
   const [isActive, setIsActive] = useState(false);
+  const [padMaskIds, setPadMaskIds] = useState<number[]>([]);
   const isKeyHeld = useRef(false);
+
+  const addPadMask = () => {
+    setPadMaskIds((prev) => [...prev, Date.now()]);
+  };
+
+  const removePadMask = (id: number) => {
+    setPadMaskIds((prev) => prev.filter((maskId) => id !== maskId));
+  };
 
   useEffect(() => {
     const keys = KEYBIND[pad.order];
@@ -17,6 +26,7 @@ export function usePadKeybind(pad: PadItem) {
       playback(pad.audioBuffer);
       isKeyHeld.current = true;
       setIsActive(true);
+      addPadMask();
     };
 
     const handleKeyUp = (event: KeyboardEvent) => {
@@ -34,5 +44,5 @@ export function usePadKeybind(pad: PadItem) {
     };
   }, [pad.id, pad.order, pad.audioBuffer]);
 
-  return { isActive };
+  return { isActive, padMaskIds, removePadMask, addPadMask };
 }

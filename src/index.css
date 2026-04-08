@@ -138,7 +138,7 @@
 
 @theme {
   --color-accent: #9cfffa;
-  --animate-button-pulsing: 400ms button-pulsing ease-in-out forwards;
+  --animate-button-pulsing: 600ms button-pulsing ease-in-out forwards;
 
   @keyframes button-pulsing {
     0% {
@@ -148,7 +148,7 @@
     }
     100% {
       outline: 12px solid var(--color-accent);
-      outline-offset: 160px;
+      outline-offset: 180px;
       opacity: 0%;
     }
   }

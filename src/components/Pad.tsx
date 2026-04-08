@@ -13,17 +13,19 @@ type PadProps = {
 
 export default function Pad({ pad }: PadProps) {
   const updatePad = usePadsStore((state) => state.updatePad);
-  const { isActive } = usePadKeybind(pad);
+  const { isActive, padMaskIds, addPadMask, removePadMask } =
+    usePadKeybind(pad);
 
   const handleClick = async () => {
     if (pad.audioBuffer) playback(pad.audioBuffer);
+    addPadMask();
   };
 
   return (
     <div className="flex flex-col gap-1">
       <PadButton onClick={handleClick} isActive={isActive}>
         <PadFace label={pad.label} isActive={isActive} />
-        <PadMask isActive={isActive} />
+        <PadMask padMaskIds={padMaskIds} removePadMask={removePadMask} />
       </PadButton>
       <div className="mt-2 flex">
         <EditableText
