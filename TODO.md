@@ -42,6 +42,25 @@
 - [ ] 支援單個 pad 上傳自訂 sample
 - [ ] pads CRUD
 
+## 設計待決策：Kit & Pad CRUD
+
+在動手之前需要想清楚的問題：
+
+**Kit**
+- 新 kit 從 default clone，還是從空白開始？空 pad 有意義嗎？
+- kit 的名稱有無限制（唯一性、長度）？
+- 刪除 kit 時，目前選中的 kit 要怎麼處理？
+
+**Pad**
+- pad 是否永遠屬於某個 kit，不能獨立存在？
+- pad 數量固定 9 個，還是可以增減？
+- `default` kit 的 pad 唯讀——這個限制要在哪一層保護？
+
+**Default Kit**
+- `default` 完全唯讀，還是 label 可以改但 sample 不行？
+
+---
+
 ## Later
 
 這些不是不能做，而是現在做很容易變成 over-design：
