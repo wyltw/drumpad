@@ -38,8 +38,9 @@
 - [x] 補上目前 keybind 提示
 - [x] QWERTY keybind 支援
 - [x] 多次觸發動畫同時播放
+- [ ] kits CRUD
 - [ ] 支援單個 pad 上傳自訂 sample
-- [ ] pad CRUD
+- [ ] pads CRUD
 
 ## Later
 
