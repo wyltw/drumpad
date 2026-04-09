@@ -47,16 +47,26 @@
 在動手之前需要想清楚的問題：
 
 **Kit**
+
 - 新 kit 從 default clone，還是從空白開始？空 pad 有意義嗎？
+  plus icon然後跳出modal，用戶輸入新的kit name，clone一個default
 - kit 的名稱有無限制（唯一性、長度）？
+  db已經唯一，取合適長度
 - 刪除 kit 時，目前選中的 kit 要怎麼處理？
+  選中kit從db刪除，重新選取default
+- 建立：+ → modal 輸入名稱 → clone from default → 切換到新 kit
+  改名：inline edit，點 kit 名稱變 input，enter 確認，僅非 default 顯示
+  刪除：非 default 顯示刪除按鈕，刪後切回 default
+  default：永遠唯讀，不可刪、不可改名
 
 **Pad**
+
 - pad 是否永遠屬於某個 kit，不能獨立存在？
 - pad 數量固定 9 個，還是可以增減？
 - `default` kit 的 pad 唯讀——這個限制要在哪一層保護？
 
 **Default Kit**
+
 - `default` 完全唯讀，還是 label 可以改但 sample 不行？
 
 ---
