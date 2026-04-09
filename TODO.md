@@ -35,8 +35,11 @@
 - [x] 鍵盤對應 9 個 pad
 - [x] `keydown` 觸發 pad 播放
 - [x] 避免長按重複觸發
-- [ ] 補上目前 keybind 提示
+- [x] 補上目前 keybind 提示
+- [x] QWERTY keybind 支援
+- [x] 多次觸發動畫同時播放
 - [ ] 支援單個 pad 上傳自訂 sample
+- [ ] pad CRUD
 
 ## Later
 
@@ -47,10 +50,8 @@
 - [ ] loop recorder
 - [ ] metronome
 - [ ] quantize
-- [ ] IndexedDB 存 user sample blob
 - [ ] 分層 audio engine API
 - [ ] 提前設計完整的 `LoopData` / `RecordedHit` / transport types
-- [ ] `builtin` / `user sample` / `custom kit` 的完整資料模型
 
 ## 暫時不要做
 
@@ -58,14 +59,4 @@
 
 - [ ] 不先拆完整 audio engine
 - [ ] 不先定一大包還沒用到的 domain types
-- [ ] 不先做多 kit 架構
-- [ ] 不先做 IndexedDB hydration / blob-id mapping
 - [ ] 不先為 loop/BPM 設計 UI 和 state
-
-## 目前建議順序
-
-1. 先把 `pads` state 建起來
-2. 讓 label 編輯真的改到 pad state
-3. 補 pad active / trigger feedback
-4. 清掉假的 kit 選項，整理 `default` flow
-5. 再決定要先做 keyboard 還是 sample upload
