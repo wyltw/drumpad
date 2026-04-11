@@ -1,6 +1,7 @@
-import { HelpCircle, Save } from "lucide-react";
+import { HelpCircle, Plus, Save } from "lucide-react";
 import { Button } from "./ui/button";
 import HelpDialog from "./HelpDialog";
+import CreateKitDialog from "./CreateKitDialog";
 
 function ToolbarButton({
   children,
@@ -29,6 +30,13 @@ export default function PadsToolbar() {
       <ToolbarButton>
         <Save className="size-5" />
       </ToolbarButton>
+      <CreateKitDialog
+        trigger={
+          <ToolbarButton>
+            <Plus className="size-5" />
+          </ToolbarButton>
+        }
+      />
     </ul>
   );
 }
