@@ -1,12 +1,14 @@
 import { SquarePen } from "lucide-react";
-import { ComponentPropsWithoutRef, useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 
 type EditableTextProps = {
   buttonText: string;
+  value?: React.InputHTMLAttributes<HTMLInputElement>["value"];
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
   onBlurValue?: (value: string) => void;
-} & ComponentPropsWithoutRef<"input">;
+};
 
 export function EditableText({
   buttonText,
@@ -34,7 +36,8 @@ export function EditableText({
 
   if (isEditable) {
     return (
-      <SampleNameInput
+      <Input
+        autoFocus
         value={localValue}
         onBlur={handleBlur}
         onChange={handleChange}
@@ -57,16 +60,4 @@ export function EditableText({
       <SquarePen className="size-5 opacity-0 duration-300 group-hover:opacity-100" />
     </Button>
   );
-}
-
-type SampleNameInputProps = ComponentPropsWithoutRef<"input">;
-
-function SampleNameInput({ className, ...props }: SampleNameInputProps) {
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    inputRef.current?.focus();
-  }, []);
-
-  return <Input ref={inputRef} className={className} {...props} />;
 }

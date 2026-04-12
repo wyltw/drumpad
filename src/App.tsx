@@ -1,6 +1,6 @@
 import { Toaster } from "sonner";
 import CallToAction from "./components/CallToAction";
-import KitSelection from "./components/KitSelect";
+import KitSelect from "./components/KitSelect";
 import Pads from "./components/Pads";
 import AppProviders from "./lib/contexts/AppProviders";
 import { ErrorBoundary } from "react-error-boundary";
@@ -17,7 +17,7 @@ function App() {
             </header>
             <main className="container mx-auto mt-8 flex flex-col items-center overflow-hidden">
               <div>
-                <KitSelection />
+                <KitSelect />
                 <Pads />
               </div>
             </main>

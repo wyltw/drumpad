@@ -1,20 +1,14 @@
 import { useKitContext } from "@/lib/contexts/KitContextProvider";
 import { Field, FieldDescription, FieldLabel } from "./ui/field";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "./ui/select";
+import { Select, SelectContent, SelectGroup, SelectItem } from "./ui/select";
 import { useKits } from "@/lib/adapters/KitsAdapter";
+import KitNameEditor from "./KitNameEditor";
 
 export default function KitSelect() {
   const { selectedKit, selectKit } = useKitContext();
   const { kitsOptions } = useKits();
   return (
-    <Field>
+    <Field className="flex">
       <FieldLabel className="text-base" htmlFor="kitName">
         Kit Selection
       </FieldLabel>
@@ -30,9 +24,7 @@ export default function KitSelect() {
           });
         }}
       >
-        <SelectTrigger id="kitName">
-          <SelectValue />
-        </SelectTrigger>
+        <KitNameEditor kitName={selectedKit?.name ?? ""} />
         <SelectContent position="popper">
           <SelectGroup>
             {kitsOptions.map((kit) => (
