@@ -24,7 +24,7 @@ export default function KitSelect() {
           });
         }}
       >
-        <KitNameEditor kitName={selectedKit?.name ?? ""} />
+        <KitNameEditor />
         <SelectContent position="popper">
           <SelectGroup>
             {kitsOptions.map((kit) => (

@@ -24,9 +24,25 @@ export const seedWithDefaultSamples = async () => {
   return { id: kit.id, name: kit.name };
 };
 
+const findKitByName = (name: string) =>
+  db.kits.where("name").equals(name).first();
+
+export const updateKitName = async (
+  id: number,
+  name: string,
+): Promise<string | undefined> => {
+  try {
+    const existing = await findKitByName(name);
+    if (existing) return "A kit with this name already exists.";
+    await db.kits.update(id, { name });
+  } catch (error) {
+    return handleError(error);
+  }
+};
+
 export const createKit = async (name: string): Promise<string | number> => {
   try {
-    const existing = await db.kits.where("name").equals(name).first();
+    const existing = await findKitByName(name);
     if (existing) return "A kit with this name already exists.";
     const sample = await loadSample(HOUSE_KIT);
     return await db.kits.add({ name, pads: sample });
@@ -36,7 +52,7 @@ export const createKit = async (name: string): Promise<string | number> => {
 };
 
 const createDefaultKit = async () => {
-  const existing = await db.kits.where("name").equals("default").first();
+  const existing = await findKitByName("default");
   const sample = await loadSample(HOUSE_KIT);
   if (existing) {
     await db.kits.update(existing.id!, { pads: sample });

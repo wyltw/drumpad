@@ -1,22 +1,21 @@
-import React, { useState } from "react";
+import { ComponentPropsWithoutRef, useState } from "react";
 import { SelectTrigger, SelectValue } from "./ui/select";
 import { Button } from "./ui/button";
 import { SquarePen, Undo2 } from "lucide-react";
 import { Input } from "./ui/input";
+import { useKitContext } from "@/lib/contexts/KitContextProvider";
+import { updateKitName } from "@/lib/services/KitsService";
 
-type KitNameEditorProps = {
-  kitName: string;
-};
-
-export default function KitNameEditor({ kitName }: KitNameEditorProps) {
+export default function KitNameEditor() {
+  const { selectedKit } = useKitContext();
   const [isEditing, setIsEditing] = useState(false);
 
   return (
     <div className="flex gap-2">
       {isEditing ? (
         <KitNameInput
-          initialName={kitName}
-          onBlur={() => setIsEditing(false)}
+          initialName={selectedKit?.name ?? ""}
+          kitId={selectedKit?.id}
         />
       ) : (
         <SelectTrigger id="kitName" className="flex-1">
@@ -39,14 +38,19 @@ export default function KitNameEditor({ kitName }: KitNameEditorProps) {
   );
 }
 
-function KitNameInput({
-  initialName,
-  onBlur,
-}: {
+type KitNameInputProps = {
   initialName: string;
-  onBlur: () => void;
-}) {
+  kitId: number | undefined;
+} & ComponentPropsWithoutRef<"input">;
+
+function KitNameInput({ initialName, kitId, ...props }: KitNameInputProps) {
   const [name, setName] = useState(initialName);
+
+  const handleBlur = async (e: React.FocusEvent<HTMLInputElement>) => {
+    if (kitId && e.target.value !== initialName) {
+      await updateKitName(kitId, e.target.value);
+    }
+  };
 
   return (
     <Input
@@ -56,7 +60,8 @@ function KitNameInput({
       placeholder="Enter new kit name"
       value={name}
       onChange={(e) => setName(e.target.value)}
-      onBlur={onBlur}
+      {...props}
+      onBlur={handleBlur}
     />
   );
 }
