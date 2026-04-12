@@ -10,7 +10,9 @@ export function PadMask({ padMaskIds, removePadMask }: PadMaskProps) {
     <span
       key={maskId}
       onAnimationEnd={() => removePadMask(maskId)}
-      className={cn("animate-button-pulsing absolute inset-0 rounded-full")}
+      className={cn(
+        "animate-button-pulsing absolute inset-0 z-10 rounded-full",
+      )}
     />
   ));
 }
