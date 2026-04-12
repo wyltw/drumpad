@@ -47,7 +47,8 @@ function CreateKitDialogContent({
 
   const validateKitName = (name: string) => {
     if (name.trim() === "") throw new Error("Name is required.");
-    if (name.length > 40) throw new Error("Name must be 40 characters or fewer.");
+    if (name.length > 40)
+      throw new Error("Name must be 40 characters or fewer.");
   };
 
   const handleCreate = async () => {
@@ -82,7 +83,10 @@ function CreateKitDialogContent({
           aria-invalid={hasError}
           placeholder="e.g. My House Kit"
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          onChange={(e) => {
+            setError("");
+            setName(e.target.value);
+          }}
         />
         <FieldError>{error}</FieldError>
       </Field>

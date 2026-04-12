@@ -20,6 +20,7 @@ export function usePadKeybind(pad: PadItem) {
     const keys = KEYBIND[pad.order];
 
     const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.target instanceof HTMLInputElement) return;
       if (isKeyHeld.current) return;
       if (!keys.includes(event.code) || !pad.audioBuffer) return;
       event.preventDefault();
@@ -30,6 +31,7 @@ export function usePadKeybind(pad: PadItem) {
     };
 
     const handleKeyUp = (event: KeyboardEvent) => {
+      if (event.target instanceof HTMLInputElement) return;
       if (!keys.includes(event.code)) return;
       isKeyHeld.current = false;
       setIsActive(false);
