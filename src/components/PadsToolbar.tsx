@@ -1,4 +1,4 @@
-import { HelpCircle, Plus, Save } from "lucide-react";
+import { CircleQuestionMark, Plus, Save } from "lucide-react";
 import { Button } from "./ui/button";
 import HelpDialog from "./HelpDialog";
 import CreateKitDialog from "./CreateKitDialog";
@@ -23,7 +23,7 @@ export default function PadsToolbar() {
       <HelpDialog
         trigger={
           <ToolbarButton>
-            <HelpCircle className="size-5" />
+            <CircleQuestionMark className="size-5" />
           </ToolbarButton>
         }
       />

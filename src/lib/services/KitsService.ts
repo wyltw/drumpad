@@ -1,6 +1,7 @@
 import { loadSample } from "../audio/audio-utils";
 import { HOUSE_KIT } from "../constants";
 import { db } from "../db/db";
+import { KitPad } from "../types/kit";
 import { handleError } from "../utils/utils";
 
 export const countKits = async () => {
@@ -35,6 +36,17 @@ export const updateKitName = async (
     const existing = await findKitByName(name);
     if (existing) return "A kit with this name already exists.";
     await db.kits.update(id, { name });
+  } catch (error) {
+    return handleError(error);
+  }
+};
+
+export const updateKitPads = async (
+  id: number,
+  pads: KitPad[],
+): Promise<string | undefined> => {
+  try {
+    await db.kits.update(id, { pads });
   } catch (error) {
     return handleError(error);
   }

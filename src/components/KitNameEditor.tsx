@@ -1,7 +1,7 @@
 import { ComponentPropsWithoutRef, useState } from "react";
 import { SelectTrigger, SelectValue } from "./ui/select";
 import { Button } from "./ui/button";
-import { SquarePen, Undo2 } from "lucide-react";
+import { CircleCheckBig, SquarePen } from "lucide-react";
 import { Input } from "./ui/input";
 import { useKitContext } from "@/lib/contexts/KitContextProvider";
 import { updateKitName } from "@/lib/services/KitsService";
@@ -29,7 +29,7 @@ export default function KitNameEditor() {
         onClick={() => setIsEditing((prev) => !prev)}
       >
         {isEditing ? (
-          <Undo2 className="size-5" />
+          <CircleCheckBig className="size-5" />
         ) : (
           <SquarePen className="size-5" />
         )}
