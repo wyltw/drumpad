@@ -7,8 +7,12 @@ import { useKitContext } from "@/lib/contexts/KitContextProvider";
 import { updateKitName } from "@/lib/services/KitsService";
 
 export default function KitNameEditor() {
-  const { selectedKit } = useKitContext();
+  const { selectedKit, selectKit } = useKitContext();
   const [isEditing, setIsEditing] = useState(false);
+
+  const handleSuccess = (newName: string) => {
+    if (selectedKit) selectKit({ ...selectedKit, name: newName });
+  };
 
   return (
     <div className="flex gap-2">
@@ -16,6 +20,7 @@ export default function KitNameEditor() {
         <KitNameInput
           initialName={selectedKit?.name ?? ""}
           kitId={selectedKit?.id}
+          onSuccess={handleSuccess}
         />
       ) : (
         <SelectTrigger id="kitName" className="flex-1">
@@ -41,14 +46,22 @@ export default function KitNameEditor() {
 type KitNameInputProps = {
   initialName: string;
   kitId: number | undefined;
+  onSuccess: (newName: string) => void;
 } & ComponentPropsWithoutRef<"input">;
 
-function KitNameInput({ initialName, kitId, ...props }: KitNameInputProps) {
+function KitNameInput({
+  initialName,
+  kitId,
+  onSuccess,
+  ...props
+}: KitNameInputProps) {
   const [name, setName] = useState(initialName);
 
   const handleBlur = async (e: React.FocusEvent<HTMLInputElement>) => {
-    if (kitId && e.target.value !== initialName) {
-      await updateKitName(kitId, e.target.value);
+    const newName = e.target.value;
+    if (kitId && newName !== initialName) {
+      const error = await updateKitName(kitId, newName);
+      if (!error) onSuccess(newName);
     }
   };
 
