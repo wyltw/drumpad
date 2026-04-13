@@ -5,6 +5,7 @@ import { CircleCheckBig, SquarePen } from "lucide-react";
 import { Input } from "./ui/input";
 import { useKitContext } from "@/lib/contexts/KitContextProvider";
 import { updateKitName } from "@/lib/services/KitsService";
+import { toast } from "sonner";
 
 export default function KitNameEditor() {
   const { selectedKit, selectKit } = useKitContext();
@@ -12,6 +13,7 @@ export default function KitNameEditor() {
 
   const handleSuccess = (newName: string) => {
     if (selectedKit) selectKit({ ...selectedKit, name: newName });
+    setIsEditing(false);
   };
 
   return (
@@ -31,7 +33,7 @@ export default function KitNameEditor() {
         className="ms-auto"
         size={"icon"}
         variant={"ghost"}
-        onClick={() => setIsEditing((prev) => !prev)}
+        onClick={() => setIsEditing(true)}
       >
         {isEditing ? (
           <CircleCheckBig className="size-5" />
@@ -57,11 +59,14 @@ function KitNameInput({
 }: KitNameInputProps) {
   const [name, setName] = useState(initialName);
 
-  const handleBlur = async (e: React.FocusEvent<HTMLInputElement>) => {
-    const newName = e.target.value;
-    if (kitId && newName !== initialName) {
-      const error = await updateKitName(kitId, newName);
-      if (!error) onSuccess(newName);
+  const handleBlur = async () => {
+    if (kitId && name !== initialName) {
+      const error = await updateKitName(kitId, name);
+      if (error) {
+        toast.error(error);
+      } else {
+        onSuccess(name);
+      }
     }
   };
 
