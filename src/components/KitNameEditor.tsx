@@ -20,6 +20,7 @@ export default function KitNameEditor() {
     <div className="flex gap-2">
       {isEditing ? (
         <KitNameInput
+          isEditing={isEditing}
           initialName={selectedKit?.name ?? ""}
           kitId={selectedKit?.id}
           onSuccess={handleSuccess}
@@ -29,14 +30,16 @@ export default function KitNameEditor() {
           <SelectValue />
         </SelectTrigger>
       )}
-      <Button
-        className="ms-auto"
-        size={"icon"}
-        variant={"ghost"}
-        onClick={() => setIsEditing((prev) => !prev)}
-      >
-        {isEditing ? <Check /> : <SquarePen />}
-      </Button>
+      {!isEditing && (
+        <Button
+          className="ms-auto"
+          size={"icon"}
+          variant={"ghost"}
+          onClick={() => setIsEditing(true)}
+        >
+          <SquarePen />
+        </Button>
+      )}
       {isEditing && (
         <Button
           className="ms-auto"
@@ -55,17 +58,19 @@ type KitNameInputProps = {
   initialName: string;
   kitId: number | undefined;
   onSuccess: (newName: string) => void;
+  isEditing: boolean;
 } & ComponentPropsWithoutRef<"input">;
 
 function KitNameInput({
   initialName,
   kitId,
   onSuccess,
+  isEditing,
   ...props
 }: KitNameInputProps) {
   const [name, setName] = useState(initialName);
 
-  const handleBlur = async () => {
+  const handleChangeKitName = async () => {
     if (kitId && name !== initialName) {
       const error = await updateKitName(kitId, name);
       if (error) {
@@ -77,15 +82,26 @@ function KitNameInput({
   };
 
   return (
-    <Input
-      autoFocus
-      id="name"
-      type="text"
-      placeholder="Enter new kit name"
-      value={name}
-      onChange={(e) => setName(e.target.value)}
-      {...props}
-      onBlur={handleBlur}
-    />
+    <>
+      <Input
+        autoFocus
+        id="name"
+        type="text"
+        placeholder="Enter new kit name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        {...props}
+      />
+      {isEditing && (
+        <Button
+          className="ms-auto"
+          size={"icon"}
+          variant={"ghost"}
+          onClick={handleChangeKitName}
+        >
+          <Check />
+        </Button>
+      )}
+    </>
   );
 }
