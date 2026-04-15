@@ -41,6 +41,12 @@
 - [ ] kits CRUD
 - [ ] 支援單個 pad 上傳自訂 sample
 - [ ] pads CRUD
+  - [ ] 將 pads 從嵌套在 kit 改為獨立 table（schema migration）
+  - [ ] pads table schema：`{ id, kitId, label, sampleName, arrayBuffer, order }`，以 `kitId` 為 FK
+  - [ ] 更新 DB 初始化與 seed 邏輯，建立時同步寫入 pads table
+  - [ ] 更新 `getKit` 查詢：改為兩次查詢後手動合併（kit + pads where kitId）
+  - [ ] 新增 `updatePadLabel(padId, label)` service，直接 patch 單一欄位
+  - [ ] 更新 `KitsService` 移除舊的 `updateKitPads`（或保留給 sample 更新用）
 
 ## 設計待決策：Kit & Pad CRUD
 
