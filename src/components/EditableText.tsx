@@ -5,32 +5,31 @@ import { Input } from "./ui/input";
 
 type EditableTextProps = {
   buttonText: string;
-  value?: React.InputHTMLAttributes<HTMLInputElement>["value"];
+  initialValue?: React.InputHTMLAttributes<HTMLInputElement>["value"];
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
-  onBlurValue?: (value: string) => void;
+  onSave?: (value: string) => void;
 };
 
 export function EditableText({
   buttonText,
-  value,
+  initialValue,
   onChange,
-  onBlurValue,
+  onSave,
 }: EditableTextProps) {
   const [isEditable, setIsEditable] = useState(false);
-  const [localValue, setLocalValue] = useState(value);
+  const [text, setText] = useState(initialValue);
 
   useEffect(() => {
-    setLocalValue(value);
-  }, [value]);
+    setText(initialValue);
+  }, [initialValue]);
 
   const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     setIsEditable(false);
-    setLocalValue(event.target.value);
-    onBlurValue?.(event.target.value);
+    onSave?.(event.target.value);
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setLocalValue(event.target.value);
+    setText(event.target.value);
     onChange?.(event);
   };
 
@@ -38,7 +37,7 @@ export function EditableText({
     return (
       <Input
         autoFocus
-        value={localValue}
+        value={text}
         onBlur={handleBlur}
         onChange={handleChange}
         size={1}

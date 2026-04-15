@@ -16,6 +16,10 @@ export default function Pad({ pad }: PadProps) {
   const { isActive, padMaskIds, addPadMask, removePadMask } =
     usePadKeybind(pad);
 
+  const handleEditLabel = (value: string) => {
+    updatePad(pad.id, { label: value });
+  };
+
   const handleClick = async () => {
     if (pad.audioBuffer) playback(pad.audioBuffer);
     addPadMask();
@@ -30,10 +34,8 @@ export default function Pad({ pad }: PadProps) {
       <div className="mt-2 flex">
         <EditableText
           buttonText={`pad ${pad.order}`}
-          value={pad.label}
-          onBlurValue={(value) => {
-            updatePad(pad.id, { label: value });
-          }}
+          initialValue={pad.label}
+          onSave={handleEditLabel}
         />
       </div>
     </div>

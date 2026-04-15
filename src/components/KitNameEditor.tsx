@@ -70,7 +70,7 @@ function KitNameInput({
 }: KitNameInputProps) {
   const [name, setName] = useState(initialName);
 
-  const handleChangeKitName = async () => {
+  const handleEditKitName = async () => {
     if (kitId && name !== initialName) {
       const error = await updateKitName(kitId, name);
       if (error) {
@@ -97,7 +97,7 @@ function KitNameInput({
           className="ms-auto"
           size={"icon"}
           variant={"ghost"}
-          onClick={handleChangeKitName}
+          onClick={handleEditKitName}
         >
           <Check />
         </Button>
