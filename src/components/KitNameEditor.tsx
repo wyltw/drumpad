@@ -6,6 +6,7 @@ import { Input } from "./ui/input";
 import { useKitContext } from "@/lib/contexts/KitContextProvider";
 import { updateKitName } from "@/lib/services/KitsService";
 import { toast } from "sonner";
+import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
 export default function KitNameEditor() {
   const { selectedKit, selectKit } = useKitContext();
@@ -69,9 +70,10 @@ function KitNameInput({
   ...props
 }: KitNameInputProps) {
   const [name, setName] = useState(initialName);
+  const isSameName = name === initialName;
 
   const handleEditKitName = async () => {
-    if (kitId && name !== initialName) {
+    if (kitId) {
       const error = await updateKitName(kitId, name);
       if (error) {
         toast.error(error);
@@ -93,14 +95,24 @@ function KitNameInput({
         {...props}
       />
       {isEditing && (
-        <Button
-          className="ms-auto"
-          size={"icon"}
-          variant={"ghost"}
-          onClick={handleEditKitName}
-        >
-          <Check />
-        </Button>
+        <Tooltip>
+          <TooltipTrigger>
+            <Button
+              className="ms-auto"
+              size={"icon"}
+              variant={"ghost"}
+              onClick={handleEditKitName}
+              disabled={isSameName}
+            >
+              <Check />
+            </Button>
+          </TooltipTrigger>
+          {isSameName && (
+            <TooltipContent>
+              <p>Name hasn't changed</p>
+            </TooltipContent>
+          )}
+        </Tooltip>
       )}
     </>
   );
