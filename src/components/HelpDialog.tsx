@@ -9,15 +9,14 @@ import {
 } from "./ui/dialog";
 import { Kbd } from "./ui/kbd";
 import { KEYBIND } from "@/lib/constants";
-import usePadsStore from "@/lib/stores/PadsStore";
+import { KitPad } from "@/lib/types/kit";
 
 type HelpDialogProps = {
   trigger: React.ReactNode;
+  pads: KitPad[];
 };
 
-export default function HelpDialog({ trigger }: HelpDialogProps) {
-  const pads = usePadsStore((state) => state.pads);
-
+export default function HelpDialog({ trigger, pads }: HelpDialogProps) {
   return (
     <Dialog>
       <DialogTrigger asChild>{trigger}</DialogTrigger>

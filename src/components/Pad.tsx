@@ -1,27 +1,36 @@
-import { EditableText } from "./EditableText";
-import { PadItem } from "@/lib/types/types";
+import { useEffect, useState } from "react";
+import { KitPad } from "@/lib/types/kit";
 import { playback } from "@/lib/audio/audio-utils";
-import usePadsStore from "@/lib/stores/PadsStore";
+import { getAudioContext } from "@/lib/audio/audioContext";
+import { updatePadLabel } from "@/lib/services/PadsService";
+import { EditableText } from "./EditableText";
 import { PadButton } from "./pad/PadButton";
 import { PadFace } from "./pad/PadFace";
 import { PadMask } from "./pad/PadMask";
 import { usePadKeybind } from "@/lib/hooks/usePadKeybind";
 
 type PadProps = {
-  pad: PadItem;
+  pad: KitPad;
 };
 
 export default function Pad({ pad }: PadProps) {
-  const updatePad = usePadsStore((state) => state.updatePad);
+  const [audioBuffer, setAudioBuffer] = useState<AudioBuffer | null>(null);
   const { isActive, padMaskIds, addPadMask, removePadMask } =
-    usePadKeybind(pad);
+    usePadKeybind(pad, audioBuffer);
+
+  useEffect(() => {
+    const audioContext = getAudioContext();
+    audioContext.decodeAudioData(pad.arrayBuffer.slice(0)).then(setAudioBuffer);
+    // pad.id is the correct dependency — arrayBuffer has no stable reference equality
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pad.id]);
 
   const handleEditLabel = (value: string) => {
-    updatePad(pad.id, { label: value });
+    updatePadLabel(pad.id, value);
   };
 
   const handleClick = async () => {
-    if (pad.audioBuffer) playback(pad.audioBuffer);
+    if (audioBuffer) playback(audioBuffer);
     addPadMask();
   };
 

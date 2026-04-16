@@ -1,7 +1,8 @@
-import { CircleQuestionMark, Plus, Save } from "lucide-react";
+import { CircleQuestionMark, Plus } from "lucide-react";
 import { Button } from "./ui/button";
 import HelpDialog from "./HelpDialog";
 import CreateKitDialog from "./CreateKitDialog";
+import { KitPad } from "@/lib/types/kit";
 
 function ToolbarButton({
   children,
@@ -17,7 +18,7 @@ function ToolbarButton({
   );
 }
 
-export default function PadsToolbar() {
+export default function PadsToolbar({ pads }: { pads: KitPad[] }) {
   return (
     <ul className="flex flex-col gap-1">
       <HelpDialog
@@ -26,10 +27,8 @@ export default function PadsToolbar() {
             <CircleQuestionMark className="size-5" />
           </ToolbarButton>
         }
+        pads={pads}
       />
-      <ToolbarButton>
-        <Save className="size-5" />
-      </ToolbarButton>
       <CreateKitDialog
         trigger={
           <ToolbarButton>
