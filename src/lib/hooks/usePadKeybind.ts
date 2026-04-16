@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { playback } from "@/lib/audio/audio-utils";
 import { KEYBIND } from "@/lib/constants";
-import { PadItem } from "@/lib/types/types";
+import { KitPad } from "@/lib/types/kit";
 
-export function usePadKeybind(pad: PadItem) {
+export function usePadKeybind(pad: KitPad, audioBuffer: AudioBuffer | null) {
   const [isActive, setIsActive] = useState(false);
   const [padMaskIds, setPadMaskIds] = useState<number[]>([]);
   const isKeyHeld = useRef(false);
@@ -22,9 +22,9 @@ export function usePadKeybind(pad: PadItem) {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.target instanceof HTMLInputElement) return;
       if (isKeyHeld.current) return;
-      if (!keys.includes(event.code) || !pad.audioBuffer) return;
+      if (!keys.includes(event.code) || !audioBuffer) return;
       event.preventDefault();
-      playback(pad.audioBuffer);
+      playback(audioBuffer);
       isKeyHeld.current = true;
       setIsActive(true);
       addPadMask();
@@ -44,7 +44,7 @@ export function usePadKeybind(pad: PadItem) {
       window.removeEventListener("keydown", handleKeyDown);
       window.removeEventListener("keyup", handleKeyUp);
     };
-  }, [pad.id, pad.order, pad.audioBuffer]);
+  }, [pad.id, pad.order, audioBuffer]);
 
   return { isActive, padMaskIds, removePadMask, addPadMask };
 }

@@ -12,9 +12,9 @@ import {
 } from "./ui/dialog";
 import { Field, FieldError, FieldLabel } from "./ui/field";
 import { Input } from "./ui/input";
-import { createKit } from "@/lib/services/KitsService";
 import { useKitContext } from "@/lib/contexts/KitContextProvider";
 import { handleError } from "@/lib/utils/utils";
+import { createNewKit } from "@/lib/services/KitsService";
 
 type CreateKitDialogProps = {
   trigger: React.ReactNode;
@@ -54,7 +54,7 @@ function CreateKitDialogContent({
   const handleCreate = async () => {
     try {
       validateKitName(name);
-      const result = await createKit(name);
+      const result = await createNewKit(name);
       if (typeof result === "number") {
         selectKit({ id: result, name });
         setOpen(false);
