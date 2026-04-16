@@ -2,6 +2,7 @@ import { z } from "zod";
 
 export const kitPadSchema = z.object({
   id: z.uuid(),
+  kitId: z.number(),
   sampleName: z.string(),
   label: z.string(),
   order: z.number(),
@@ -11,9 +12,8 @@ export const kitPadSchema = z.object({
 export const kitSchema = z.object({
   id: z.number(),
   name: z.string(),
-  pads: z.array(kitPadSchema),
 });
 
 export type KitPad = z.infer<typeof kitPadSchema>;
 export type Kit = z.infer<typeof kitSchema>;
-export type KitMeta = Omit<Kit, "pads">;
+export type KitWithPads = Kit & { pads: KitPad[] };

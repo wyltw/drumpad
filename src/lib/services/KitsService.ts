@@ -1,7 +1,7 @@
 import { loadSample } from "../audio/audio-utils";
 import { HOUSE_KIT } from "../constants";
 import { db } from "../db/db";
-import { KitPad } from "../types/kit";
+import { KitWithPads } from "../types/kit";
 import { handleError } from "../utils/utils";
 
 export const countKits = async () => {
@@ -14,8 +14,11 @@ export const listKits = async () => {
   // see https://github.com/dexie/Dexie.js/issues/2058#issuecomment-2411322740
 };
 
-export const getKit = async (kitId: number) => {
-  return db.kits.get(kitId);
+export const getKit = async (kitId: number): Promise<KitWithPads | undefined> => {
+  const kit = await db.kits.get(kitId);
+  if (!kit) return undefined;
+  const pads = await db.pads.where("kitId").equals(kitId).sortBy("order");
+  return { ...kit, pads };
 };
 
 export const seedWithDefaultSamples = async () => {
@@ -41,23 +44,34 @@ export const updateKitName = async (
   }
 };
 
-export const updateKitPads = async (
-  id: number,
-  pads: KitPad[],
-): Promise<string | undefined> => {
-  try {
-    await db.kits.update(id, { pads });
-  } catch (error) {
-    return handleError(error);
-  }
+const seedPadsForKit = async (kitId: number) => {
+  await db.pads.where("kitId").equals(kitId).delete();
+  const sample = await loadSample(HOUSE_KIT);
+  const sampleWithKitId = sample.map((item) => ({
+    ...item,
+    kitId,
+  }));
+  db.pads.bulkAdd(sampleWithKitId);
 };
 
-export const createKit = async (name: string): Promise<string | number> => {
+// export const updateKitPads = async (
+//   id: number,
+//   pads: KitPad[],
+// ): Promise<string | undefined> => {
+//   try {
+//     await db.kits.update(id, { pads });
+//   } catch (error) {
+//     return handleError(error);
+//   }
+// };
+
+export const createNewKit = async (name: string): Promise<string | number> => {
   try {
     const existing = await findKitByName(name);
     if (existing) return "A kit with this name already exists.";
-    const sample = await loadSample(HOUSE_KIT);
-    return await db.kits.add({ name, pads: sample });
+    const newKitId = await db.kits.add({ name });
+    await seedPadsForKit(newKitId);
+    return newKitId;
   } catch (error) {
     return handleError(error);
   }
@@ -65,10 +79,11 @@ export const createKit = async (name: string): Promise<string | number> => {
 
 const createDefaultKit = async () => {
   const existing = await findKitByName("default");
-  const sample = await loadSample(HOUSE_KIT);
   if (existing) {
-    await db.kits.update(existing.id!, { pads: sample });
+    await seedPadsForKit(existing.id);
     return existing.id!;
   }
-  return db.kits.add({ name: "default", pads: sample });
+  const newKitId = await db.kits.add({ name: "default" });
+  await seedPadsForKit(newKitId);
+  return newKitId;
 };
