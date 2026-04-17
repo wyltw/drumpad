@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { KitPad } from "@/lib/types/kit";
 import { playback } from "@/lib/audio/audio-utils";
 import { getAudioContext } from "@/lib/audio/audioContext";
@@ -8,6 +8,7 @@ import { PadButton } from "./pad/PadButton";
 import { PadFace } from "./pad/PadFace";
 import { PadMask } from "./pad/PadMask";
 import { usePadKeybind } from "@/lib/hooks/usePadKeybind";
+import { useDropzone } from "react-dropzone";
 
 type PadProps = {
   pad: KitPad;
@@ -15,8 +16,14 @@ type PadProps = {
 
 export default function Pad({ pad }: PadProps) {
   const [audioBuffer, setAudioBuffer] = useState<AudioBuffer | null>(null);
-  const { isActive, padMaskIds, addPadMask, removePadMask } =
-    usePadKeybind(pad, audioBuffer);
+  const { isActive, padMaskIds, addPadMask, removePadMask } = usePadKeybind(
+    pad,
+    audioBuffer,
+  );
+  const onDrop = useCallback((acceptedFiles) => {
+    console.log(acceptedFiles);
+  }, []);
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   useEffect(() => {
     const audioContext = getAudioContext();
@@ -35,18 +42,29 @@ export default function Pad({ pad }: PadProps) {
   };
 
   return (
-    <div className="flex flex-col gap-1">
-      <PadButton onClick={handleClick} isActive={isActive}>
-        <PadFace label={pad.label} isActive={isActive} />
-        <PadMask padMaskIds={padMaskIds} removePadMask={removePadMask} />
-      </PadButton>
-      <div className="mt-2 flex">
-        <EditableText
-          buttonText={`pad ${pad.slot}`}
-          initialValue={pad.label}
-          onSave={handleEditLabel}
-        />
+    <>
+      <div className="flex flex-col gap-1">
+        <PadButton
+          onClick={handleClick}
+          isActive={isActive}
+          {...getRootProps()}
+        >
+          <PadFace
+            label={pad.label}
+            isActive={isActive}
+            isDragActive={isDragActive}
+          />
+          <PadMask padMaskIds={padMaskIds} removePadMask={removePadMask} />
+        </PadButton>
+        <div className="mt-2 flex">
+          <EditableText
+            buttonText={`pad ${pad.slot}`}
+            initialValue={pad.label}
+            onSave={handleEditLabel}
+          />
+        </div>
       </div>
-    </div>
+      <input className="hidden" type="file" {...getInputProps()} />
+    </>
   );
 }
