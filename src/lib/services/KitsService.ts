@@ -10,11 +10,13 @@ export const countKits = async () => {
 
 export const listKits = async () => {
   return db.transaction("r", db.kits, () => db.kits.toArray());
-  // need this transaction method to prevent reading null
+  // need this transaction method to prevent reading null after constraints error
   // see https://github.com/dexie/Dexie.js/issues/2058#issuecomment-2411322740
 };
 
-export const getKit = async (kitId: number): Promise<KitWithPads | undefined> => {
+export const getKit = async (
+  kitId: number,
+): Promise<KitWithPads | undefined> => {
   const kit = await db.kits.get(kitId);
   if (!kit) return undefined;
   const pads = await db.pads.where("kitId").equals(kitId).sortBy("order");
@@ -53,17 +55,6 @@ const seedPadsForKit = async (kitId: number) => {
   }));
   db.pads.bulkAdd(sampleWithKitId);
 };
-
-// export const updateKitPads = async (
-//   id: number,
-//   pads: KitPad[],
-// ): Promise<string | undefined> => {
-//   try {
-//     await db.kits.update(id, { pads });
-//   } catch (error) {
-//     return handleError(error);
-//   }
-// };
 
 export const createNewKit = async (name: string): Promise<string | number> => {
   try {
