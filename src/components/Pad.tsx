@@ -42,7 +42,7 @@ export default function Pad({ pad }: PadProps) {
       </PadButton>
       <div className="mt-2 flex">
         <EditableText
-          buttonText={`pad ${pad.order}`}
+          buttonText={`pad ${pad.slot}`}
           initialValue={pad.label}
           onSave={handleEditLabel}
         />

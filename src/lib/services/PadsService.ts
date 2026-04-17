@@ -2,7 +2,7 @@ import { db } from "../db/db";
 import { handleError } from "../utils/utils";
 
 export const updatePadLabel = async (
-  id: string,
+  id: number,
   label: string,
 ): Promise<string | undefined> => {
   try {

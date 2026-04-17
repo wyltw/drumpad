@@ -1,5 +1,6 @@
 import { loadSample } from "../audio/audio-utils";
 import { HOUSE_KIT } from "../constants";
+import Dexie from "dexie";
 import { db } from "../db/db";
 import { KitWithPads } from "../types/kit";
 import { handleError } from "../utils/utils";
@@ -19,7 +20,10 @@ export const getKit = async (
 ): Promise<KitWithPads | undefined> => {
   const kit = await db.kits.get(kitId);
   if (!kit) return undefined;
-  const pads = await db.pads.where("kitId").equals(kitId).sortBy("order");
+  const pads = await db.pads
+    .where("[kitId+slot]")
+    .between([kitId, Dexie.minKey], [kitId, Dexie.maxKey])
+    .toArray();
   return { ...kit, pads };
 };
 

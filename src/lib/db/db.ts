@@ -10,5 +10,5 @@ export const db = new Dexie("drumpad") as DrumpadDatabase;
 
 db.version(1).stores({
   kits: "++id,&name",
-  pads: "id,kitId",
+  pads: "++id,kitId,&[kitId+slot]",
 });
