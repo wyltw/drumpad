@@ -1,4 +1,4 @@
-import { SquarePen } from "lucide-react";
+import { SquarePen, Upload } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
@@ -8,6 +8,7 @@ type EditableTextProps = {
   initialValue?: React.InputHTMLAttributes<HTMLInputElement>["value"];
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
   onSave?: (value: string) => void;
+  openFileDialog: () => void;
 };
 
 export function EditableText({
@@ -15,6 +16,7 @@ export function EditableText({
   initialValue,
   onChange,
   onSave,
+  openFileDialog,
 }: EditableTextProps) {
   const [isEditable, setIsEditable] = useState(false);
   const [text, setText] = useState(initialValue);
@@ -47,16 +49,22 @@ export function EditableText({
   }
 
   return (
-    <Button
-      size={"sm"}
-      variant={"ghost"}
-      className="group flex h-6 flex-1 cursor-pointer justify-between px-3 hover:bg-transparent focus-visible:ring-0"
-      onClick={() => {
-        setIsEditable(true);
-      }}
-    >
+    <div className="flex h-6 flex-1 items-center justify-between px-1">
       <span className="text-sm md:text-base">{buttonText}</span>
-      <SquarePen className="size-5 opacity-0 duration-300 group-hover:opacity-100" />
-    </Button>
+      <div className="space-x-1">
+        <Button
+          size={"icon-sm"}
+          variant={"ghost"}
+          onClick={() => {
+            setIsEditable(true);
+          }}
+        >
+          <SquarePen />
+        </Button>
+        <Button size={"icon-sm"} variant={"ghost"} onClick={openFileDialog}>
+          <Upload />
+        </Button>
+      </div>
+    </div>
   );
 }
