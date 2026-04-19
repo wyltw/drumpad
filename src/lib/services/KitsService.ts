@@ -2,7 +2,7 @@ import { loadSample } from "../audio/audio-utils";
 import { HOUSE_KIT } from "../constants";
 import Dexie from "dexie";
 import { db } from "../db/db";
-import { KitWithPads } from "../types/kit";
+import { Kit, KitWithPads } from "../types/kit";
 import { handleError } from "../utils/utils";
 
 export const countKits = async () => {
@@ -36,6 +36,23 @@ export const seedWithDefaultSamples = async () => {
 
 const findKitByName = (name: string) =>
   db.kits.where("name").equals(name).first();
+
+export const getDefaultKit = async (): Promise<Kit | undefined> => {
+  const kit = await findKitByName("default");
+  if (!kit) return undefined;
+  return { id: kit.id!, name: kit.name };
+};
+
+export const deleteKit = async (kitId: number): Promise<string | undefined> => {
+  try {
+    await db.transaction("rw", db.kits, db.pads, async () => {
+      await db.pads.where("kitId").equals(kitId).delete();
+      await db.kits.delete(kitId);
+    });
+  } catch (error) {
+    return handleError(error);
+  }
+};
 
 export const updateKitName = async (
   id: number,

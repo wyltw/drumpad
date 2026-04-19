@@ -1,10 +1,14 @@
 import { ComponentPropsWithoutRef, useState } from "react";
 import { SelectTrigger, SelectValue } from "./ui/select";
 import { Button } from "./ui/button";
-import { Check, SquarePen, Undo2 } from "lucide-react";
+import { Check, SquarePen, Trash, Undo2 } from "lucide-react";
 import { Input } from "./ui/input";
 import { useKitContext } from "@/lib/contexts/KitContextProvider";
-import { updateKitName } from "@/lib/services/KitsService";
+import {
+  deleteKit,
+  getDefaultKit,
+  updateKitName,
+} from "@/lib/services/KitsService";
 import { toast } from "sonner";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
@@ -12,9 +16,23 @@ export default function KitNameEditor() {
   const { selectedKit, selectKit } = useKitContext();
   const [isEditing, setIsEditing] = useState(false);
 
+  const isDefault = selectedKit?.name === "default";
+
   const handleSuccess = (newName: string) => {
     if (selectedKit) selectKit({ ...selectedKit, name: newName });
     setIsEditing(false);
+  };
+
+  const handleDelete = async () => {
+    if (!selectedKit?.id) return;
+    const error = await deleteKit(selectedKit.id);
+    if (error) {
+      toast.error(error);
+      return;
+    }
+    toast.success("Kit deleted.");
+    const defaultKit = await getDefaultKit();
+    if (defaultKit) selectKit(defaultKit);
   };
 
   return (
@@ -32,14 +50,25 @@ export default function KitNameEditor() {
         </SelectTrigger>
       )}
       {!isEditing && (
-        <Button
-          className="ms-auto"
-          size={"icon"}
-          variant={"ghost"}
-          onClick={() => setIsEditing(true)}
-        >
-          <SquarePen />
-        </Button>
+        <>
+          <Button
+            className="ms-auto"
+            size={"icon"}
+            variant={"ghost"}
+            onClick={() => setIsEditing(true)}
+          >
+            <SquarePen />
+          </Button>
+          <Button
+            className="ms-auto"
+            size={"icon"}
+            variant={"ghost"}
+            onClick={handleDelete}
+            disabled={isDefault}
+          >
+            <Trash />
+          </Button>
+        </>
       )}
       {isEditing && (
         <Button
