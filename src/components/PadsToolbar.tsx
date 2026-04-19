@@ -2,7 +2,7 @@ import { CircleQuestionMark, Plus, SlidersVertical } from "lucide-react";
 import { Button } from "./ui/button";
 import HelpDialog from "./HelpDialog";
 import CreateKitDialog from "./CreateKitDialog";
-import MixerDrawer from "./MixerDrawer";
+import MixerSheet from "./MixerSheet";
 import { KitPad } from "@/lib/types/kit";
 
 function ToolbarButton({
@@ -37,7 +37,7 @@ export default function PadsToolbar({ pads }: { pads: KitPad[] }) {
           </ToolbarButton>
         }
       />
-      <MixerDrawer
+      <MixerSheet
         trigger={
           <ToolbarButton>
             <SlidersVertical className="size-5" />
