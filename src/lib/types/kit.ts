@@ -1,11 +1,11 @@
 import { z } from "zod";
 
 export const kitPadSchema = z.object({
-  id: z.uuid(),
+  id: z.number(),
   kitId: z.number(),
   sampleName: z.string(),
   label: z.string(),
-  order: z.number(),
+  slot: z.number(),
   arrayBuffer: z.instanceof(ArrayBuffer),
 });
 

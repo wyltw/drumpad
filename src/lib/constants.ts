@@ -27,3 +27,5 @@ export const KEYBIND: Record<number, string[]> = {
   8: ["Numpad2", "KeyX"],
   9: ["Numpad3", "KeyC"],
 };
+
+export const SAMPLE_FILE_TYPES = ["audio/mpeg", "audio/wav"];

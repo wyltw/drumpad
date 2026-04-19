@@ -17,7 +17,7 @@ export function usePadKeybind(pad: KitPad, audioBuffer: AudioBuffer | null) {
   };
 
   useEffect(() => {
-    const keys = KEYBIND[pad.order];
+    const keys = KEYBIND[pad.slot];
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.target instanceof HTMLInputElement) return;
@@ -44,7 +44,7 @@ export function usePadKeybind(pad: KitPad, audioBuffer: AudioBuffer | null) {
       window.removeEventListener("keydown", handleKeyDown);
       window.removeEventListener("keyup", handleKeyUp);
     };
-  }, [pad.id, pad.order, audioBuffer]);
+  }, [pad.id, pad.slot, audioBuffer]);
 
   return { isActive, padMaskIds, removePadMask, addPadMask };
 }

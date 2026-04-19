@@ -9,12 +9,11 @@ const getArrayBuffer = async (url: string) => {
 
 export const loadSample = async (
   samples: SampleSource[],
-): Promise<Omit<KitPad, "kitId">[]> => {
+): Promise<Omit<KitPad, "kitId" | "id">[]> => {
   const promises = samples.map(async (sample, index) => ({
-    id: crypto.randomUUID(),
     sampleName: sample.sampleName,
     label: sample.sampleName,
-    order: index + 1,
+    slot: index + 1,
     arrayBuffer: await getArrayBuffer(sample.source),
   }));
 
