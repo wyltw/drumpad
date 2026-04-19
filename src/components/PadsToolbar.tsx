@@ -1,7 +1,8 @@
-import { CircleQuestionMark, Plus } from "lucide-react";
+import { CircleQuestionMark, Plus, SlidersVertical } from "lucide-react";
 import { Button } from "./ui/button";
 import HelpDialog from "./HelpDialog";
 import CreateKitDialog from "./CreateKitDialog";
+import MixerDrawer from "./MixerDrawer";
 import { KitPad } from "@/lib/types/kit";
 
 function ToolbarButton({
@@ -35,6 +36,14 @@ export default function PadsToolbar({ pads }: { pads: KitPad[] }) {
             <Plus className="size-5" />
           </ToolbarButton>
         }
+      />
+      <MixerDrawer
+        trigger={
+          <ToolbarButton>
+            <SlidersVertical className="size-5" />
+          </ToolbarButton>
+        }
+        pads={pads}
       />
     </ul>
   );

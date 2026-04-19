@@ -125,7 +125,7 @@ function KitNameInput({
       />
       {isEditing && (
         <Tooltip>
-          <TooltipTrigger>
+          <TooltipTrigger asChild>
             <Button
               className="ms-auto"
               size={"icon"}
