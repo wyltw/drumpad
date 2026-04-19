@@ -6,7 +6,7 @@ export function ErrorFallback({ error }: ErrorFallbackProps) {
   return (
     <div role="alert">
       <p>Something went wrong:</p>
-      <pre className="text-red-500">{errorText}</pre>
+      <pre className="text-destructive">{errorText}</pre>
     </div>
   );
 }

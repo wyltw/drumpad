@@ -33,7 +33,7 @@ export default function HelpDialog({ trigger, pads }: HelpDialogProps) {
               key={pad.slot}
               className="flex items-center justify-between text-sm"
             >
-              <span className="truncate text-black">{pad.label}:</span>
+              <span className="truncate text-foreground">{pad.label}:</span>
               <span className="flex items-center gap-1">
                 {KEYBIND[pad.slot].map((key, i) => (
                   <Fragment key={key}>

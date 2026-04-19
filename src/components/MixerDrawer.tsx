@@ -6,6 +6,7 @@ import {
   DrawerTrigger,
 } from "./ui/drawer";
 import { KitPad } from "@/lib/types/kit";
+import { Slider } from "./ui/slider";
 
 type MixerDrawerProps = {
   trigger: React.ReactNode;
@@ -20,16 +21,14 @@ export default function MixerDrawer({ trigger, pads }: MixerDrawerProps) {
         <DrawerHeader>
           <DrawerTitle>Mixer</DrawerTitle>
         </DrawerHeader>
-        <div className="p-4">
-          <p className="text-sm text-muted-foreground">Master volume</p>
-          <div className="mt-4 grid grid-cols-3 gap-4">
-            {pads.map((pad) => (
-              <div key={pad.slot} className="flex flex-col gap-1">
-                <span className="truncate text-sm">{pad.label}</span>
-                <p className="text-xs text-muted-foreground">Volume</p>
-                <p className="text-xs text-muted-foreground">Pan</p>
-              </div>
-            ))}
+        <div className="flex">
+          <div className="w-40">
+            <Slider
+              defaultValue={[75]}
+              max={100}
+              step={5}
+              orientation="vertical"
+            />
           </div>
         </div>
       </DrawerContent>
