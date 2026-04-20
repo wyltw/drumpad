@@ -1,6 +1,7 @@
 import {
   Sheet,
   SheetContent,
+  SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -19,19 +20,20 @@ export default function MixerSheet({ trigger, pads }: MixerSheetProps) {
       <SheetTrigger asChild>{trigger}</SheetTrigger>
       <SheetContent side="bottom">
         <SheetHeader>
-          <SheetTitle>Mixer</SheetTitle>
+          <SheetTitle className="text-xl">Mixer</SheetTitle>
+          <SheetDescription>Volume Setting </SheetDescription>
         </SheetHeader>
-        <div className="flex">
-          <div className="flex w-40 flex-col justify-center">
+        <ul className="flex px-4">
+          <li className="flex flex-col gap-y-2 text-center">
             <Slider
               defaultValue={[75]}
               max={100}
               step={5}
               orientation="vertical"
             />
-            <p>Master Volume</p>
-          </div>
-        </div>
+            <p>Master</p>
+          </li>
+        </ul>
       </SheetContent>
     </Sheet>
   );
