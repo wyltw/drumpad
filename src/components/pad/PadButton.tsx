@@ -18,7 +18,7 @@ export function PadButton({
       <button
         className={cn(
           "group relative flex size-36 cursor-pointer rounded-lg bg-zinc-900 shadow-md transition duration-500 hover:[box-shadow:0_0_35px_4px_var(--color-accent)] active:[box-shadow:0_0_35px_4px_var(--color-accent)]",
-          { "[box-shadow:0_0_35px_4px_var(--color-accent)]": isActive },
+          { "[box-shadow:0_0_36px_4px_var(--color-accent)]": isActive },
           className,
         )}
         {...props}

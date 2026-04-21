@@ -6,8 +6,9 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "./ui/sheet";
-import { Slider } from "./ui/slider";
 import { KitPad } from "@/lib/types/kit";
+import MixerChannel from "./MixerChannel";
+import { ScrollArea, ScrollBar } from "./ui/scroll-area";
 
 type MixerSheetProps = {
   trigger: React.ReactNode;
@@ -23,17 +24,15 @@ export default function MixerSheet({ trigger, pads }: MixerSheetProps) {
           <SheetTitle className="text-xl">Mixer</SheetTitle>
           <SheetDescription>Volume Setting </SheetDescription>
         </SheetHeader>
-        <ul className="flex px-4">
-          <li className="flex flex-col gap-y-2 text-center">
-            <Slider
-              defaultValue={[75]}
-              max={100}
-              step={5}
-              orientation="vertical"
-            />
-            <p>Master</p>
-          </li>
-        </ul>
+        <ScrollArea className="whitespace-nowrap">
+          <ul className="flex px-4 pb-4">
+            <MixerChannel label="Master" />
+            {pads.map((pad) => (
+              <MixerChannel key={pad.id} label={`Pad ${pad.slot}`} />
+            ))}
+          </ul>
+          <ScrollBar orientation="horizontal" />
+        </ScrollArea>
       </SheetContent>
     </Sheet>
   );
