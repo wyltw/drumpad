@@ -22,9 +22,9 @@ export const loadSample = async (
 
 export const playback = async (audioBuffer: AudioBuffer) => {
   const audioContext = await ensureAudioContextReady();
-  const playSound = audioContext.createBufferSource();
+  const source = audioContext.createBufferSource();
 
-  playSound.buffer = audioBuffer;
-  playSound.connect(audioContext.destination);
-  playSound.start(audioContext.currentTime);
+  source.buffer = audioBuffer;
+  source.connect(audioContext.destination);
+  source.start(audioContext.currentTime);
 };
