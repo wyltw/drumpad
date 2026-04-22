@@ -44,3 +44,4 @@
 - [ ] master volume 控制
 - [ ] 個別 pad volume 控制
 - [ ] 個別 pad pan 控制
+- [ ] selectedKit fallback：kit 被刪除後重新整理，應退回 default kit
