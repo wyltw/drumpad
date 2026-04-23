@@ -20,11 +20,14 @@ export const loadSample = async (
   return Promise.all(promises);
 };
 
-export const playback = async (audioBuffer: AudioBuffer) => {
+export const playback = async (
+  audioBuffer: AudioBuffer,
+  gainNode: GainNode,
+) => {
   const audioContext = await ensureAudioContextReady();
   const source = audioContext.createBufferSource();
 
   source.buffer = audioBuffer;
-  source.connect(audioContext.destination);
+  source.connect(gainNode).connect(audioContext.destination);
   source.start(audioContext.currentTime);
 };

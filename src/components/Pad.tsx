@@ -9,6 +9,7 @@ import { PadFace } from "./pad/PadFace";
 import { PadMask } from "./pad/PadMask";
 import { usePadKeybind } from "@/lib/hooks/usePadKeybind";
 import { usePadDropzone } from "@/lib/hooks/usePadDropzone";
+import { getGainNodes } from "@/lib/audio/gainNodes";
 
 type PadProps = {
   pad: KitPad;
@@ -26,6 +27,9 @@ export default function Pad({ pad }: PadProps) {
     setAudioBuffer,
   );
 
+  const gainNode = getGainNodes();
+  const padNode = gainNode[pad.slot];
+
   useEffect(() => {
     const audioContext = getAudioContext();
     audioContext.decodeAudioData(pad.arrayBuffer.slice(0)).then(setAudioBuffer);
@@ -38,7 +42,7 @@ export default function Pad({ pad }: PadProps) {
   };
 
   const handleClick = async () => {
-    if (audioBuffer) playback(audioBuffer);
+    if (audioBuffer) playback(audioBuffer, padNode);
     addPadMask();
   };
 

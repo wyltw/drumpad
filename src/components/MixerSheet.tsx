@@ -26,9 +26,13 @@ export default function MixerSheet({ trigger, pads }: MixerSheetProps) {
         </SheetHeader>
         <ScrollArea className="whitespace-nowrap">
           <ul className="flex px-4 pb-4">
-            <MixerChannel label="Master" />
+            <MixerChannel label="Master" slot={10} />
             {pads.map((pad) => (
-              <MixerChannel key={pad.id} label={`Pad ${pad.slot}`} />
+              <MixerChannel
+                key={pad.id}
+                slot={pad.slot}
+                label={`Pad ${pad.slot}`}
+              />
             ))}
           </ul>
           <ScrollBar orientation="horizontal" />

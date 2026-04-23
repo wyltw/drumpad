@@ -8,7 +8,7 @@ import {
 } from "react";
 
 const PAD_COUNT = 9;
-const DEFAULT_VOLUME = 1;
+const DEFAULT_VOLUME = 0.75;
 
 const defaultVolumes = () => Array<number>(PAD_COUNT).fill(DEFAULT_VOLUME);
 
@@ -52,7 +52,9 @@ export default function VolumeContextProvider({
 export const useVolumeContext = () => {
   const context = useContext(VolumeContext);
   if (!context) {
-    throw new Error("useVolumeContext must be used within VolumeContextProvider");
+    throw new Error(
+      "useVolumeContext must be used within VolumeContextProvider",
+    );
   }
   return context;
 };
