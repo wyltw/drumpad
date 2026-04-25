@@ -31,3 +31,7 @@ export const playback = async (
   source.connect(gainNode).connect(audioContext.destination);
   source.start(audioContext.currentTime);
 };
+
+export const updateGainNode = (gainNode: GainNode, volume: number) => {
+  gainNode.gain.value = volume;
+};

@@ -17,18 +17,18 @@ type PadProps = {
 
 export default function Pad({ pad }: PadProps) {
   const [audioBuffer, setAudioBuffer] = useState<AudioBuffer | null>(null);
+  const padNode = getGainNodes()[pad.slot];
+
   const { isActive, padMaskIds, addPadMask, removePadMask } = usePadKeybind(
     pad,
     audioBuffer,
+    padNode,
   );
 
   const { getRootProps, getInputProps, isDragActive, open } = usePadDropzone(
     pad.id,
     setAudioBuffer,
   );
-
-  const gainNode = getGainNodes();
-  const padNode = gainNode[pad.slot];
 
   useEffect(() => {
     const audioContext = getAudioContext();

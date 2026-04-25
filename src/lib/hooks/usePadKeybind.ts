@@ -3,7 +3,7 @@ import { playback } from "@/lib/audio/audio-utils";
 import { KEYBIND } from "@/lib/constants";
 import { KitPad } from "@/lib/types/kit";
 
-export function usePadKeybind(pad: KitPad, audioBuffer: AudioBuffer | null) {
+export function usePadKeybind(pad: KitPad, audioBuffer: AudioBuffer | null, gainNode: GainNode) {
   const [isActive, setIsActive] = useState(false);
   const [padMaskIds, setPadMaskIds] = useState<number[]>([]);
   const isKeyHeld = useRef(false);
@@ -24,7 +24,7 @@ export function usePadKeybind(pad: KitPad, audioBuffer: AudioBuffer | null) {
       if (isKeyHeld.current) return;
       if (!keys.includes(event.code) || !audioBuffer) return;
       event.preventDefault();
-      playback(audioBuffer);
+      playback(audioBuffer, gainNode);
       isKeyHeld.current = true;
       setIsActive(true);
       addPadMask();
@@ -44,7 +44,7 @@ export function usePadKeybind(pad: KitPad, audioBuffer: AudioBuffer | null) {
       window.removeEventListener("keydown", handleKeyDown);
       window.removeEventListener("keyup", handleKeyUp);
     };
-  }, [pad.id, pad.slot, audioBuffer]);
+  }, [pad.id, pad.slot, audioBuffer, gainNode]);
 
   return { isActive, padMaskIds, removePadMask, addPadMask };
 }
