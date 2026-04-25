@@ -13,7 +13,7 @@ export const loadSample = async (
   const promises = samples.map(async (sample, index) => ({
     sampleName: sample.sampleName,
     label: sample.sampleName,
-    slot: index + 1,
+    slot: index,
     arrayBuffer: await getArrayBuffer(sample.source),
   }));
 

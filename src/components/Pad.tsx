@@ -63,7 +63,7 @@ export default function Pad({ pad }: PadProps) {
         </PadButton>
         <div className="mt-2 flex">
           <EditableText
-            buttonText={`pad ${pad.slot}`}
+            buttonText={`pad ${pad.slot + 1}`}
             initialValue={pad.label}
             onSave={handleEditLabel}
             openFileDialog={open}
