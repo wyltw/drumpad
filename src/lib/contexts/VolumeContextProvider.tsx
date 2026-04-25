@@ -9,7 +9,7 @@ import {
 
 const PAD_COUNT = 9;
 const CHANNEL_COUNT = PAD_COUNT + 1; // pads (0–8) + master (9)
-const DEFAULT_VOLUME = 0.75;
+const DEFAULT_VOLUME = 1;
 
 const defaultVolumes = () => Array<number>(CHANNEL_COUNT).fill(DEFAULT_VOLUME);
 

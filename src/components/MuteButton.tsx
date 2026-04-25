@@ -1,39 +1,27 @@
-import { Volume, Volume1, Volume2, VolumeOff } from "lucide-react";
+import { Volume1, Volume2, VolumeOff } from "lucide-react";
 import { Button } from "./ui/button";
-import { useState } from "react";
 
-type MuteButtonProps = { volume: number };
-export default function MuteButton({ volume }: MuteButtonProps) {
-  const [isMuted, setIsMuted] = useState(false);
-
-  if (isMuted) {
-    return (
-      <Button
-        onClick={() => {
-          setIsMuted(false);
-        }}
-        variant="default"
-        size={"icon"}
-      >
-        <VolumeOff className="size-5" />
-      </Button>
-    );
-  }
+type MuteButtonProps = {
+  volume: number;
+  onMute: () => void;
+  onUnmute: () => void;
+};
+export default function MuteButton({
+  volume,
+  onMute,
+  onUnmute,
+}: MuteButtonProps) {
+  const isMuted = volume === 0;
 
   return (
     <Button
-      onClick={() => {
-        setIsMuted(true);
-      }}
-      variant="ghost"
+      onClick={isMuted ? onUnmute : onMute}
+      variant={"ghost"}
       size={"icon"}
     >
-      {volume === 0 && <Volume className="size-5" />}
-      {volume > 50 && volume !== 0 ? (
-        <Volume2 className="size-5" />
-      ) : (
-        <Volume1 className="size-5" />
-      )}
+      {isMuted && <VolumeOff className="size-5" />}
+      {!isMuted && volume <= 1 && <Volume1 className="size-5" />}
+      {!isMuted && volume > 1 && <Volume2 className="size-5" />}
     </Button>
   );
 }
