@@ -17,6 +17,7 @@ export const HOUSE_KIT = [
 ];
 
 export const MASTER_SLOT = 9;
+export const CHANNEL_COUNT = MASTER_SLOT + 1;
 
 export const KEYBIND: Record<number, string[]> = {
   0: ["Numpad7", "KeyQ"],

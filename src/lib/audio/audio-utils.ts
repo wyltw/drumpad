@@ -28,7 +28,7 @@ export const playback = async (
   const source = audioContext.createBufferSource();
 
   source.buffer = audioBuffer;
-  source.connect(gainNode).connect(audioContext.destination);
+  source.connect(gainNode);
   source.start(audioContext.currentTime);
 };
 

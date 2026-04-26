@@ -7,8 +7,8 @@ import {
   useState,
 } from "react";
 
-const PAD_COUNT = 9;
-const CHANNEL_COUNT = PAD_COUNT + 1; // pads (0–8) + master (9)
+import { CHANNEL_COUNT } from "../constants";
+
 const DEFAULT_VOLUME = 1;
 
 const defaultVolumes = () => Array<number>(CHANNEL_COUNT).fill(DEFAULT_VOLUME);
@@ -26,7 +26,8 @@ export default function VolumeContextProvider({
 }: {
   children: ReactNode;
 }) {
-  const [volumes, setVolumes] = useState<number[]>(defaultVolumes);
+  const [volumes, setVolumes] = useState<number[]>(defaultVolumes());
+  console.log(volumes);
 
   const setVolume = useCallback((index: number, value: number) => {
     setVolumes((prev) => {

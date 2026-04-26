@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import {
   Sheet,
   SheetContent,
@@ -10,6 +11,7 @@ import { KitPad } from "@/lib/types/kit";
 import MixerChannel from "./MixerChannel";
 import { ScrollArea, ScrollBar } from "./ui/scroll-area";
 import { MASTER_SLOT } from "@/lib/constants";
+import { useVolumeContext } from "@/lib/contexts/VolumeContextProvider";
 
 type MixerSheetProps = {
   trigger: React.ReactNode;
@@ -17,6 +19,13 @@ type MixerSheetProps = {
 };
 
 export default function MixerSheet({ trigger, pads }: MixerSheetProps) {
+  const { resetVolumes } = useVolumeContext();
+  const kitId = pads[0]?.kitId;
+
+  useEffect(() => {
+    resetVolumes();
+  }, [kitId, resetVolumes]);
+
   return (
     <Sheet>
       <SheetTrigger asChild>{trigger}</SheetTrigger>
