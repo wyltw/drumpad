@@ -7,9 +7,7 @@ import {
   useState,
 } from "react";
 
-import { CHANNEL_COUNT } from "../constants";
-
-const DEFAULT_VOLUME = 1;
+import { CHANNEL_COUNT, DEFAULT_VOLUME } from "../constants";
 
 const defaultVolumes = () => Array<number>(CHANNEL_COUNT).fill(DEFAULT_VOLUME);
 

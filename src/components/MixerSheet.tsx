@@ -10,8 +10,10 @@ import {
 import { KitPad } from "@/lib/types/kit";
 import MixerChannel from "./MixerChannel";
 import { ScrollArea, ScrollBar } from "./ui/scroll-area";
-import { MASTER_SLOT } from "@/lib/constants";
+import { DEFAULT_VOLUME, MASTER_SLOT } from "@/lib/constants";
 import { useVolumeContext } from "@/lib/contexts/VolumeContextProvider";
+import { getGainNodes } from "@/lib/audio/gainNodes";
+import { updateGainNode } from "@/lib/audio/audio-utils";
 
 type MixerSheetProps = {
   trigger: React.ReactNode;
@@ -24,6 +26,7 @@ export default function MixerSheet({ trigger, pads }: MixerSheetProps) {
 
   useEffect(() => {
     resetVolumes();
+    getGainNodes().forEach((node) => updateGainNode(node, DEFAULT_VOLUME));
   }, [kitId, resetVolumes]);
 
   return (

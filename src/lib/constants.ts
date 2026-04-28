@@ -16,6 +16,8 @@ export const HOUSE_KIT = [
   { sampleName: "crash", source: "./src/assets/sounds/909s/crash.wav" },
 ];
 
+export const DEFAULT_VOLUME = 1;
+
 export const MASTER_SLOT = 9;
 export const CHANNEL_COUNT = MASTER_SLOT + 1;
 
