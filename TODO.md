@@ -41,7 +41,7 @@
 - [x] kits CRUD
 - [x] 支援單個 pad 上傳自訂 sample
 - [x] pads CRUD
-- [ ] master volume 控制
-- [ ] 個別 pad volume 控制
-- [ ] 個別 pad pan 控制
-- [ ] selectedKit fallback：kit 被刪除後重新整理，應退回 default kit
+- [x] master volume 控制
+- [x] 個別 pad volume 控制
+- ~~個別 pad pan 控制~~
+- [x] selectedKit fallback：kit 被刪除後重新整理，應退回 default kit
