@@ -45,3 +45,8 @@
 - [x] 個別 pad volume 控制
 - ~~個別 pad pan 控制~~
 - [x] selectedKit fallback：kit 被刪除後重新整理，應退回 default kit
+
+## Testing
+
+- [ ] kit 管理流程整合測試
+- [ ] pad keybind 行為整合測試
