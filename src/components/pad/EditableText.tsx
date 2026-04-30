@@ -1,7 +1,7 @@
 import { SquarePen, Upload } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Button } from "./ui/button";
-import { Input } from "./ui/input";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
 
 type EditableTextProps = {
   buttonText: string;

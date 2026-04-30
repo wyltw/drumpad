@@ -1,6 +1,6 @@
 import { useKitContext } from "@/lib/contexts/KitContextProvider";
-import { Field, FieldDescription, FieldLabel } from "./ui/field";
-import { Select, SelectContent, SelectGroup, SelectItem } from "./ui/select";
+import { Field, FieldDescription, FieldLabel } from "../ui/field";
+import { Select, SelectContent, SelectGroup, SelectItem } from "../ui/select";
 import { useKits } from "@/lib/adapters/KitsAdapter";
 import KitNameEditor from "./KitNameEditor";
 

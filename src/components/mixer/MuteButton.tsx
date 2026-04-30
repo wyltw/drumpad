@@ -1,5 +1,5 @@
 import { Volume1, Volume2, VolumeOff } from "lucide-react";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 
 type MuteButtonProps = {
   volume: number;

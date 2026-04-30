@@ -1,10 +1,10 @@
 import { Toaster } from "sonner";
-import CallToAction from "./components/CallToAction";
-import KitSelect from "./components/KitSelect";
-import Pads from "./components/Pads";
+import CallToAction from "./components/sections/CallToAction";
+import KitSelect from "./components/kit/KitSelect";
+import Pads from "./components/pads/Pads";
 import AppProviders from "./lib/contexts/AppProviders";
 import { ErrorBoundary } from "react-error-boundary";
-import { ErrorFallback } from "./components/ErrorFallback";
+import { ErrorFallback } from "./components/sections/ErrorFallback";
 
 function App() {
   return (

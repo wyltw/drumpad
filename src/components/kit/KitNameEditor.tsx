@@ -1,8 +1,8 @@
 import { ComponentPropsWithoutRef, useState } from "react";
-import { SelectTrigger, SelectValue } from "./ui/select";
-import { Button } from "./ui/button";
+import { SelectTrigger, SelectValue } from "../ui/select";
+import { Button } from "../ui/button";
 import { Check, SquarePen, Trash, Undo2 } from "lucide-react";
-import { Input } from "./ui/input";
+import { Input } from "../ui/input";
 import { useKitContext } from "@/lib/contexts/KitContextProvider";
 import {
   deleteKit,
@@ -10,7 +10,7 @@ import {
   updateKitName,
 } from "@/lib/services/KitsService";
 import { toast } from "sonner";
-import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
 export default function KitNameEditor() {
   const { selectedKit, selectKit } = useKitContext();

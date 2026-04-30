@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { useVolumeContext } from "@/lib/contexts/VolumeContextProvider";
 import MuteButton from "./MuteButton";
-import { Slider } from "./ui/slider";
+import { Slider } from "../ui/slider";
 import { getGainNodes } from "@/lib/audio/gainNodes";
 import { updateGainNode } from "@/lib/audio/audio-utils";
 

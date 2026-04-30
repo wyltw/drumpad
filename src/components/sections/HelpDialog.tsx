@@ -6,8 +6,8 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "./ui/dialog";
-import { Kbd } from "./ui/kbd";
+} from "../ui/dialog";
+import { Kbd } from "../ui/kbd";
 import { KEYBIND } from "@/lib/constants";
 import { KitPad } from "@/lib/types/kit";
 

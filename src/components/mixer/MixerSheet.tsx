@@ -6,10 +6,10 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "./ui/sheet";
+} from "../ui/sheet";
 import { KitPad } from "@/lib/types/kit";
 import MixerChannel from "./MixerChannel";
-import { ScrollArea, ScrollBar } from "./ui/scroll-area";
+import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 import { DEFAULT_VOLUME, MASTER_SLOT } from "@/lib/constants";
 import { useVolumeContext } from "@/lib/contexts/VolumeContextProvider";
 import { getGainNodes } from "@/lib/audio/gainNodes";

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import {
   Dialog,
   DialogClose,
@@ -9,9 +9,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "./ui/dialog";
-import { Field, FieldError, FieldLabel } from "./ui/field";
-import { Input } from "./ui/input";
+} from "../ui/dialog";
+import { Field, FieldError, FieldLabel } from "../ui/field";
+import { Input } from "../ui/input";
 import { useKitContext } from "@/lib/contexts/KitContextProvider";
 import { handleError } from "@/lib/utils/utils";
 import { createNewKit } from "@/lib/services/KitsService";

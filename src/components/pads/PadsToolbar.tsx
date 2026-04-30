@@ -1,8 +1,8 @@
 import { CircleQuestionMark, Plus, SlidersVertical } from "lucide-react";
-import { Button } from "./ui/button";
-import HelpDialog from "./HelpDialog";
-import CreateKitDialog from "./CreateKitDialog";
-import MixerSheet from "./MixerSheet";
+import { Button } from "../ui/button";
+import HelpDialog from "../sections/HelpDialog";
+import CreateKitDialog from "../kit/CreateKitDialog";
+import MixerSheet from "../mixer/MixerSheet";
 import { KitPad } from "@/lib/types/kit";
 
 function ToolbarButton({
