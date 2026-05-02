@@ -1,6 +1,5 @@
 import { KitPad } from "../types/kit";
 import { SampleSource } from "../types/types";
-import { ensureAudioContextReady } from "./audioContext";
 
 const getArrayBuffer = async (url: string) => {
   const response = await fetch(url);
@@ -21,10 +20,11 @@ export const loadSample = async (
 };
 
 export const playback = async (
+  audioContext: AudioContext,
   audioBuffer: AudioBuffer,
   gainNode: GainNode,
 ) => {
-  const audioContext = await ensureAudioContextReady();
+  if (audioContext.state === "suspended") await audioContext.resume();
   const source = audioContext.createBufferSource();
 
   source.buffer = audioBuffer;

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { KitPad } from "@/lib/types/kit";
 import { playback } from "@/lib/audio/audio-utils";
-import { getAudioContext } from "@/lib/audio/audioContext";
 import { updatePadLabel } from "@/lib/services/PadsService";
 import { EditableText } from "../pad/EditableText";
 import { PadButton } from "../pad/PadButton";
@@ -9,15 +8,16 @@ import { PadFace } from "../pad/PadFace";
 import { PadMask } from "../pad/PadMask";
 import { usePadKeybind } from "@/lib/hooks/usePadKeybind";
 import { usePadDropzone } from "@/lib/hooks/usePadDropzone";
-import { getGainNodes } from "@/lib/audio/gainNodes";
+import { useAudioContext } from "@/lib/contexts/AudioContextProvider";
 
 type PadProps = {
   pad: KitPad;
 };
 
 export default function Pad({ pad }: PadProps) {
+  const { audioContext, gainNodes } = useAudioContext();
   const [audioBuffer, setAudioBuffer] = useState<AudioBuffer | null>(null);
-  const padNode = getGainNodes()[pad.slot];
+  const padNode = gainNodes[pad.slot];
 
   const { isActive, padMaskIds, addPadMask, removePadMask } = usePadKeybind(
     pad,
@@ -31,7 +31,6 @@ export default function Pad({ pad }: PadProps) {
   );
 
   useEffect(() => {
-    const audioContext = getAudioContext();
     audioContext.decodeAudioData(pad.arrayBuffer.slice(0)).then(setAudioBuffer);
     // pad.id is the correct dependency — arrayBuffer has no stable reference equality
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -42,7 +41,7 @@ export default function Pad({ pad }: PadProps) {
   };
 
   const handleClick = async () => {
-    if (audioBuffer) playback(audioBuffer, padNode);
+    if (audioBuffer) playback(audioContext, audioBuffer, padNode);
     addPadMask();
   };
 

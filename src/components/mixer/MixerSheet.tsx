@@ -12,7 +12,7 @@ import MixerChannel from "./MixerChannel";
 import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 import { DEFAULT_VOLUME, MASTER_SLOT } from "@/lib/constants";
 import { useVolumeContext } from "@/lib/contexts/VolumeContextProvider";
-import { getGainNodes } from "@/lib/audio/gainNodes";
+import { useAudioContext } from "@/lib/contexts/AudioContextProvider";
 import { updateGainNode } from "@/lib/audio/audio-utils";
 
 type MixerSheetProps = {
@@ -22,12 +22,13 @@ type MixerSheetProps = {
 
 export default function MixerSheet({ trigger, pads }: MixerSheetProps) {
   const { resetVolumes } = useVolumeContext();
+  const { gainNodes } = useAudioContext();
   const kitId = pads[0]?.kitId;
 
   useEffect(() => {
     resetVolumes();
-    getGainNodes().forEach((node) => updateGainNode(node, DEFAULT_VOLUME));
-  }, [kitId, resetVolumes]);
+    gainNodes.forEach((node) => updateGainNode(node, DEFAULT_VOLUME));
+  }, [kitId, resetVolumes, gainNodes]);
 
   return (
     <Sheet>

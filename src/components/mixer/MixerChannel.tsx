@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { useVolumeContext } from "@/lib/contexts/VolumeContextProvider";
 import MuteButton from "./MuteButton";
 import { Slider } from "../ui/slider";
-import { getGainNodes } from "@/lib/audio/gainNodes";
+import { useAudioContext } from "@/lib/contexts/AudioContextProvider";
 import { updateGainNode } from "@/lib/audio/audio-utils";
 
 type MixerChannelProps = {
@@ -12,8 +12,9 @@ type MixerChannelProps = {
 
 export default function MixerChannel({ label, slot }: MixerChannelProps) {
   const { volumes, setVolume } = useVolumeContext();
+  const { gainNodes } = useAudioContext();
   const padVolume = volumes[slot];
-  const padNode = getGainNodes()[slot];
+  const padNode = gainNodes[slot];
   const premuteVolume = useRef(padVolume);
 
   const applyVolume = (value: number) => {
