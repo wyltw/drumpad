@@ -10,7 +10,7 @@ describe("KitSelect", () => {
       JSON.stringify({ id: 1, name: "test" }),
     );
     render(<App />);
-    const select = screen.getByText("test");
+    const select = await screen.findByText("test");
     await waitFor(() => {
       expect(select).toBeInTheDocument();
     });

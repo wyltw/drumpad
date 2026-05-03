@@ -5,19 +5,24 @@ import { afterEach, beforeEach, vi } from "vitest";
 import "fake-indexeddb/auto";
 import { db } from "@/lib/db/db";
 
-const mockBufferSource = { connect: vi.fn(), start: vi.fn(), buffer: null };
-const mockGainNode = { connect: vi.fn(), gain: { value: 1 } };
-const mockAudioContext = {
-  createGain: vi.fn(() => mockGainNode),
-  createBufferSource: vi.fn(() => mockBufferSource),
-  decodeAudioData: vi.fn().mockResolvedValue({}),
-  destination: {},
-  state: "running" as AudioContextState,
-  resume: vi.fn().mockResolvedValue(undefined),
-  currentTime: 0,
-};
-
-vi.stubGlobal("AudioContext", vi.fn(() => mockAudioContext));
+vi.stubGlobal(
+  "AudioContext",
+  vi.fn(
+    class {
+      createGain = vi.fn(() => ({ connect: vi.fn(), gain: { value: 1 } }));
+      createBufferSource = vi.fn(() => ({
+        connect: vi.fn(),
+        start: vi.fn(),
+        buffer: null,
+      }));
+      decodeAudioData = vi.fn().mockResolvedValue({});
+      destination = {};
+      state: AudioContextState = "running";
+      resume = vi.fn().mockResolvedValue(undefined);
+      currentTime = 0;
+    },
+  ),
+);
 
 beforeEach(async () => {
   await db.delete();

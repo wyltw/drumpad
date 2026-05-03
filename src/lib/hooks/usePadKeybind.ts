@@ -50,7 +50,7 @@ export function usePadKeybind(
       window.removeEventListener("keydown", handleKeyDown);
       window.removeEventListener("keyup", handleKeyUp);
     };
-  }, [pad.id, pad.slot, audioBuffer, gainNode]);
+  }, [pad.id, pad.slot, audioBuffer, gainNode, audioContext]);
 
   return { isActive, padMaskIds, removePadMask, addPadMask };
 }
