@@ -3,10 +3,23 @@ import { Field, FieldDescription, FieldLabel } from "../ui/field";
 import { Select, SelectContent, SelectGroup, SelectItem } from "../ui/select";
 import { useKits } from "@/lib/adapters/KitsAdapter";
 import KitNameEditor from "./KitNameEditor";
+import { useEffect } from "react";
+import { toast } from "sonner";
 
 export default function KitSelect() {
   const { selectedKit, selectKit } = useKitContext();
   const { kitsOptions } = useKits();
+
+  const isKitExsit = kitsOptions.find((kit) => kit.id === selectedKit?.id);
+  const defaultKit = kitsOptions.find((kit) => kit.name === "default")!;
+
+  useEffect(() => {
+    if (kitsOptions.length === 0) return;
+    if (!isKitExsit) {
+      selectKit(defaultKit);
+      toast.info("Kit not found, switched to default.");
+    }
+  }, [defaultKit, isKitExsit, kitsOptions.length, selectKit]);
   return (
     <Field className="flex">
       <FieldLabel className="text-base" htmlFor="kitName">

@@ -25,7 +25,6 @@ export default function VolumeContextProvider({
   children: ReactNode;
 }) {
   const [volumes, setVolumes] = useState<number[]>(defaultVolumes());
-  console.log(volumes);
 
   const setVolume = useCallback((index: number, value: number) => {
     setVolumes((prev) => {

@@ -2,8 +2,14 @@ import { useEffect, useRef, useState } from "react";
 import { playback } from "@/lib/audio/audio-utils";
 import { KEYBIND } from "@/lib/constants";
 import { KitPad } from "@/lib/types/kit";
+import { useAudioContext } from "../contexts/AudioContextProvider";
 
-export function usePadKeybind(pad: KitPad, audioBuffer: AudioBuffer | null, gainNode: GainNode) {
+export function usePadKeybind(
+  pad: KitPad,
+  audioBuffer: AudioBuffer | null,
+  gainNode: GainNode,
+) {
+  const { audioContext } = useAudioContext();
   const [isActive, setIsActive] = useState(false);
   const [padMaskIds, setPadMaskIds] = useState<number[]>([]);
   const isKeyHeld = useRef(false);
@@ -24,7 +30,7 @@ export function usePadKeybind(pad: KitPad, audioBuffer: AudioBuffer | null, gain
       if (isKeyHeld.current) return;
       if (!keys.includes(event.code) || !audioBuffer) return;
       event.preventDefault();
-      playback(audioBuffer, gainNode);
+      playback(audioContext, audioBuffer, gainNode);
       isKeyHeld.current = true;
       setIsActive(true);
       addPadMask();
@@ -44,7 +50,7 @@ export function usePadKeybind(pad: KitPad, audioBuffer: AudioBuffer | null, gain
       window.removeEventListener("keydown", handleKeyDown);
       window.removeEventListener("keyup", handleKeyUp);
     };
-  }, [pad.id, pad.slot, audioBuffer, gainNode]);
+  }, [pad.id, pad.slot, audioBuffer, gainNode, audioContext]);
 
   return { isActive, padMaskIds, removePadMask, addPadMask };
 }
