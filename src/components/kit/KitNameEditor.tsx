@@ -56,8 +56,10 @@ export default function KitNameEditor() {
             size={"icon"}
             variant={"ghost"}
             onClick={() => setIsEditing(true)}
+            disabled={isDefault}
           >
             <SquarePen />
+            <span className="sr-only">Edit kit name</span>
           </Button>
           <Button
             className="ms-auto"
@@ -67,6 +69,7 @@ export default function KitNameEditor() {
             disabled={isDefault}
           >
             <Trash />
+            <span className="sr-only">Delete kit</span>
           </Button>
         </>
       )}
@@ -78,6 +81,7 @@ export default function KitNameEditor() {
           onClick={() => setIsEditing(false)}
         >
           <Undo2 className="size-5" />
+          <span className="sr-only">Cancel editing</span>
         </Button>
       )}
     </div>
@@ -114,6 +118,10 @@ function KitNameInput({
 
   return (
     <>
+      <label htmlFor="name" className="sr-only">
+        kitName
+      </label>
+
       <Input
         autoFocus
         id="name"
@@ -123,6 +131,7 @@ function KitNameInput({
         onChange={(e) => setName(e.target.value)}
         {...props}
       />
+
       {isEditing && (
         <Tooltip>
           <TooltipTrigger asChild>
@@ -134,6 +143,7 @@ function KitNameInput({
               disabled={isSameName}
             >
               <Check />
+              <span className="sr-only">Confirm kit name</span>
             </Button>
           </TooltipTrigger>
           {isSameName && (
