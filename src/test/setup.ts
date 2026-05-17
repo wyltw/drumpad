@@ -2,7 +2,6 @@ import "fake-indexeddb/auto";
 import "@testing-library/jest-dom/vitest";
 import { cleanup } from "@testing-library/react";
 import { afterEach, beforeEach, vi } from "vitest";
-import "fake-indexeddb/auto";
 import { db } from "@/lib/db/db";
 
 vi.stubGlobal(

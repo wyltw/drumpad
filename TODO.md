@@ -28,6 +28,16 @@
 - [x] 整理 `default` kit 的資料流，避免 select 出現 `banana` 這種尚未支援的選項
 - [ ] 補 README 的目前功能與限制，讓「做到哪裡」是清楚的
 
+## readme
+
+1. 以Dexie為SSOT, 分出service和adapter，seeding（優先查詢db檢查是否有對應資料
+
+2. 細分pad button的ui layer，mask透過span list動態渲染動畫塑造良好反饋，同時處理滑鼠和鍵盤的使用體驗
+
+3. 為了上傳功能重新設計schema，兼顧partial update，讓功能可以輕鬆拓展，比如後續的音量控制
+
+4. 為重要功能撰寫整合測試，mock
+
 ## Next
 
 這些可以排在基礎站穩之後，但還算合理延伸：
