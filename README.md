@@ -1,6 +1,6 @@
-# 🚀 [Project Name]
+# 🥁 DrumPad
 
-> [Provide a punchy, one-sentence tagline describing exactly what your project does.]
+> A browser-based drum machine with per-kit sample management, built with React, TypeScript, and the Web Audio API.
 
 [![Live Demo](https://shields.io)][Demo-Link]
 [![Tech Stack](https://shields.io)][Tech-Stack-Anchor]
@@ -11,19 +11,19 @@
 
 ### The Problem
 
-- [What pain point or real-world problem did you notice?]
-- [Why do current solutions fall short, or why did you want to build this?]
+- Browser-based drum machines tend to be either throwaway demos (hard-coded samples, no persistence) or full DAWs with steep learning curves.
+- Most demos do not treat the pad as a real UI component — interactions feel disconnected from the sound.
 
 ### The Solution
 
-- [How does your application systematically solve this exact problem?]
-- [What unique angle or value does your project introduce?]
+- A focused drum pad with real IndexedDB persistence: kits and samples survive page reloads, and custom samples can be uploaded per pad.
+- The pad button is built as a layered UI component so visual feedback genuinely reflects what the audio engine is doing, for both mouse and keyboard.
 
 ---
 
 ## 🎬 Live Demo
 
-👉 **Check out the live application:** [View Deployment]([Insert URL to Vercel, Netlify, AWS, etc.])
+👉 **Check out the live application:** [View Deployment]([Insert URL])
 
 ![Project Demo Screenshot or GIF]([Insert path/URL to a high-quality GIF or screenshot showing core user workflows])
 
@@ -31,9 +31,11 @@
 
 ## ✨ Core Features
 
-- **[Feature Name 1]**: Short snippet explaining what it does and why it benefits the user.
-- **[Feature Name 2]**: Short snippet explaining what it does and why it benefits the user.
-- **[Feature Name 3]**: Short snippet explaining what it does and why it benefits the user.
+- **Kit management**: Create, rename, and delete kits. Selecting a kit loads its pads from IndexedDB and resets the mixer.
+- **Custom samples**: Drag-and-drop a file onto any pad to replace its sample. The upload is persisted per pad, per kit.
+- **Mixer panel**: Per-channel volume slider and mute toggle. Master gain is routed through the Web Audio graph.
+- **Keyboard support**: Numpad and QWERTY layouts both supported. Long-press does not repeat.
+- **Animated feedback**: Each pad hit — mouse or keyboard — spawns an independent animation so rapid inputs overlap cleanly.
 
 ---
 
@@ -41,85 +43,73 @@
 
 <a id="Tech-Stack-Anchor"></a>
 
-### Frontend / Backend
+### Frontend
 
-- **Languages:** `[e.g., TypeScript, Python]`
-- **Frameworks:** `[e.g., Next.js, FastAPI]`
-- **State/Database:** `[e.g., Zustand, PostgreSQL, Prisma]`
+- **Languages:** `TypeScript`
+- **Framework:** `React 19`, `Vite`
+- **Persistence:** `Dexie` (IndexedDB wrapper)
+- **Audio:** `Web Audio API`
+- **UI:** `Tailwind CSS`, `shadcn/ui`
+- **Testing:** `Vitest`, `Testing Library`, `fake-indexeddb`
 
 ### Key Engineering Decisions
 
-- **[Decision 1, e.g., Choosing PostgreSQL over MongoDB]:** Explain your reasoning here. Showing _why_ you chose a specific tool demonstrates architectural maturity to senior engineers.
-- **[Decision 2, e.g., Implementing Custom Caching]:** Explain the technical performance improvements or cost-saving benefits achieved.
+- **IndexedDB as Single Source of Truth via Dexie:** All kit and pad data lives in IndexedDB. `useLiveQuery` keeps the UI reactive without manually syncing DB results into React state. A service/adapter layer sits between Dexie and the UI: the service owns business logic, the adapter owns query shape, and components stay ignorant of either. On first load, the DB is seeded only if the store is empty — no blind overwrites on refresh.
+
+- **Schema designed for partial updates:** The pad schema uses a compound index on `(kitId, slot)` so individual fields — such as `arrayBuffer` for a custom sample — can be updated without touching the full record. This is what made adding per-channel volume control a new column rather than a schema redesign.
+
+- **Pad button as a layered UI component:** The pad button is split into a base layer, a face layer, and a dynamically rendered list of mask `<span>` elements that carry the pulse animation. Each interaction appends a new ID to the list and removes it on `animationend`, so overlapping inputs each get their own animation without shared state. Mouse clicks and keydown events feed the same path.
+
+- **Integration tests as design feedback:** Key flows (kit selection fallback, kit name editing, DB seeding) are covered with Vitest + Testing Library + `fake-indexeddb`. The AudioContext was originally a module-level singleton; this caused test state to bleed between cases. Refactoring it into a React context provider resolved the leakage — the architectural change came from a test constraint, not from planning ahead.
+
+- **State co-location and derived state:** State lives at the narrowest scope that covers its consumers: `audioBuffer` inside the Pad component, `volumes[]` in a dedicated context for the mixer, `selectedKit` globally. Mute state is derived from volume rather than stored as a separate boolean flag. GainNodes are the Web Audio source of truth and are not duplicated into React state.
 
 ---
 
 ## 🚀 Getting Started (Local Setup)
 
-Follow these steps to spin up a local development environment.
-
 ### Prerequisites
 
-- [e.g., Node.js v18+ / Python 3.10+]
-- [e.g., Docker Desktop]
+- Node.js v18+
 
 ### Installation & Execution
 
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/[YourUsername]/[YourRepositoryName].git
-   cd [YourRepositoryName]
+   git clone https://github.com/wyltw/drumpad.git
+   cd drumpad
    ```
 
 2. **Install dependencies**
 
    ```bash
-   npm install  # or pip install -r requirements.txt
+   npm install
    ```
 
-3. **Configure Environment Variables**
-   Create a `.env` file in the root directory using `.env.example` as a baseline:
-
+3. **Run the local development server**
    ```bash
-   cp .env.example .env
+   npm run dev
    ```
-
-4. **Run the local development server**
-   ```bash
-   npm run dev  # or uvicorn main:app --reload
-   ```
-
----
-
-## 🔒 Environment Variables
-
-To run this project properly, add the following variables to your `.env` file:
-
-```env
-DATABASE_URL=your_database_connection_string
-API_SECRET_KEY=your_secret_key
-NEXT_PUBLIC_ANALYTICS_ID=optional_tracking_id
-```
 
 ---
 
 ## 🚀 Future Roadmap
 
-- [ ] [Planned feature 1, e.g., Write 80% unit test coverage using Jest]
-- [ ] [Planned feature 2, e.g., Migrate local file storage to AWS S3]
-- [ ] [Planned feature 3, e.g., Add OAuth2 authentication via Google]
+- [ ] BPM sequencer: schedule pad hits on a grid instead of manual triggering
+- [ ] Export kit as a ZIP of labelled samples
+- [ ] Pan control per channel
 
 ---
 
 ## 🤝 Contact
 
-[Your Name] - [@YourTwitter/X/LinkedIn]([Your Link]) - [your.email@example.com]
+wyltw - [wyltw812@gmail.com](mailto:wyltw812@gmail.com)
 
-Project Link: [https://github.com/[YourUsername]/[YourRepositoryName]](https://github.com/[YourUsername]/[YourRepositoryName])
+Project Link: [https://github.com/wyltw/drumpad](https://github.com/wyltw/drumpad)
 
 ---
 
 <!-- Markdown Links and Images Anchors -->
 
-[Demo-Link]: [Insert URL to Vercel/Netlify/AWS deployment]
+[Demo-Link]: [Insert URL to deployment]
