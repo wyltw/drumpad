@@ -54,7 +54,7 @@
 
 ### Key Engineering Decisions
 
-- **IndexedDB as Single Source of Truth via Dexie:** All kit and pad data lives in IndexedDB. `useLiveQuery` keeps the UI reactive without manually syncing DB results into React state. A service/adapter layer sits between Dexie and the UI: the service owns business logic, the adapter owns query shape, and components stay ignorant of either. On first load, the DB is seeded only if the store is empty — no blind overwrites on refresh.
+- **IndexedDB as Single Source of Truth via Dexie:** All kit and pad data lives in IndexedDB. `useLiveQuery` keeps the UI reactive without manually syncing DB results into React state. A service/adapter layer sits between Dexie and the UI: the service owns business logic, the adapter owns query shape, and components stay ignorant of either. On first load, the DB is seeded only if the store is empty — no blind overwrites on refresh. An earlier version used Zustand to hold a draft layer on top of IndexedDB, treating the DB as server state and the store as a client cache. That model was removed when it became clear that `EditableText` already follows an optimistic UI pattern — it updates the UI immediately and persists in the background — making the draft layer a redundant source of truth rather than a useful abstraction.
 
 - **Schema designed for partial updates:** The pad schema uses a compound index on `(kitId, slot)` so individual fields — such as `arrayBuffer` for a custom sample — can be updated without touching the full record.
 
