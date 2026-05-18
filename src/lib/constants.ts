@@ -1,41 +1,44 @@
+const soundModules = import.meta.glob<string>("../assets/sounds/**/*.WAV", {
+  eager: true,
+  query: "?url",
+});
+
 export const HOUSE_KIT = [
   {
     sampleName: "kick",
-    source: new URL("../assets/sounds/909s/kick.WAV", import.meta.url).href,
+    source: soundModules["../assets/sounds/909s/kick.WAV"],
   },
   {
     sampleName: "snare",
-    source: new URL("../assets/sounds/909s/snare.WAV", import.meta.url).href,
+    source: soundModules["../assets/sounds/909s/snare.WAV"],
   },
   {
     sampleName: "clap",
-    source: new URL("../assets/sounds/909s/clap.WAV", import.meta.url).href,
+    source: soundModules["../assets/sounds/909s/clap.WAV"],
   },
   {
     sampleName: "tom",
-    source: new URL("../assets/sounds/909s/tom.WAV", import.meta.url).href,
+    source: soundModules["../assets/sounds/909s/tom.WAV"],
   },
   {
     sampleName: "closed_hat",
-    source: new URL("../assets/sounds/909s/closed_hat.WAV", import.meta.url)
-      .href,
+    source: soundModules["../assets/sounds/909s/closed_hat.WAV"],
   },
   {
     sampleName: "opened_hat",
-    source: new URL("../assets/sounds/909s/opened_hat.WAV", import.meta.url)
-      .href,
+    source: soundModules["../assets/sounds/909s/opened_hat.WAV"],
   },
   {
     sampleName: "rimshot",
-    source: new URL("../assets/sounds/909s/rimshot.WAV", import.meta.url).href,
+    source: soundModules["../assets/sounds/909s/rimshot.WAV"],
   },
   {
     sampleName: "ride",
-    source: new URL("../assets/sounds/909s/ride.WAV", import.meta.url).href,
+    source: soundModules["../assets/sounds/909s/ride.WAV"],
   },
   {
     sampleName: "crash",
-    source: new URL("../assets/sounds/909s/crash.WAV", import.meta.url).href,
+    source: soundModules["../assets/sounds/909s/crash.WAV"],
   },
 ];
 
