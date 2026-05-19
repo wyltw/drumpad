@@ -7,20 +7,6 @@
 
 ---
 
-## 💡 The Problem & The Solution
-
-### The Problem
-
-- Browser-based drum machines tend to be either throwaway demos (hard-coded samples, no persistence) or full DAWs with steep learning curves.
-- Most demos do not treat the pad as a real UI component — interactions feel disconnected from the sound.
-
-### The Solution
-
-- A focused drum pad with real IndexedDB persistence: kits and samples survive page reloads, and custom samples can be uploaded per pad.
-- The pad button is built as a layered UI component so visual feedback genuinely reflects what the audio engine is doing, for both mouse and keyboard.
-
----
-
 ## 🎬 Live Demo
 
 👉 **Check out the live application:** [View Deployment]([Insert URL])
@@ -95,10 +81,6 @@
 ---
 
 ## 🚀 Future Roadmap
-
-- [ ] BPM sequencer: schedule pad hits on a grid instead of manual triggering
-- [ ] Export kit as a ZIP of labelled samples
-- [ ] Pan control per channel
 
 ---
 
