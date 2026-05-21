@@ -1,6 +1,7 @@
-const soundModules = import.meta.glob<string>("../assets/sounds/**/*.WAV", {
+const soundModules = import.meta.glob("../assets/sounds/**/*.WAV", {
   eager: true,
   query: "?url",
+  import: "default",
 });
 
 export const HOUSE_KIT = [
