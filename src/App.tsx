@@ -15,7 +15,7 @@ function App() {
             <header className="px-4 py-2">
               <CallToAction />
             </header>
-            <main className="container mx-auto mt-8 flex flex-col items-center overflow-hidden">
+            <main className="container mx-auto mt-8 flex flex-col items-center">
               <div>
                 <KitSelect />
                 <Pads />
