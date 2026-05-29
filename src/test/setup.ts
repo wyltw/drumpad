@@ -4,6 +4,12 @@ import { cleanup } from "@testing-library/react";
 import { afterEach, beforeEach, vi } from "vitest";
 import { db } from "@/lib/db/db";
 
+vi.mock("@/lib/audio/audio-utils", () => ({
+  loadSample: vi.fn().mockResolvedValue([]),
+  playback: vi.fn(),
+  updateGainNode: vi.fn(),
+}));
+
 vi.stubGlobal(
   "AudioContext",
   vi.fn(

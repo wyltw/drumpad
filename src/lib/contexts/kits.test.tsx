@@ -8,8 +8,10 @@ describe("Kits", () => {
     render(<App />);
     await waitFor(async () => {
       const kits = await listKits();
-      const result = kits.find((kit) => kit.name === "default");
-      expect(result).toBeTruthy();
+      const defaultKit = kits.find((kit) => kit.name === "default");
+      const jazzKit = kits.find((kit) => kit.name === "jazz");
+      expect(defaultKit).toBeTruthy();
+      expect(jazzKit).toBeTruthy();
     });
   });
 });

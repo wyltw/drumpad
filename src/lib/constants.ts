@@ -1,8 +1,8 @@
-const soundModules = import.meta.glob("../assets/sounds/**/*.WAV", {
+const soundModules = import.meta.glob("../assets/sounds/**/*.{WAV,wav}", {
   eager: true,
   query: "?url",
   import: "default",
-});
+}) as Record<string, string>;
 
 export const HOUSE_KIT = [
   {
@@ -40,6 +40,45 @@ export const HOUSE_KIT = [
   {
     sampleName: "crash",
     source: soundModules["../assets/sounds/909s/crash.WAV"],
+  },
+];
+
+export const JAZZ_KIT = [
+  {
+    sampleName: "kick",
+    source: soundModules["../assets/sounds/jazz-funk-kit/kick.wav"],
+  },
+  {
+    sampleName: "bop-kick",
+    source: soundModules["../assets/sounds/jazz-funk-kit/bop-kick.wav"],
+  },
+  {
+    sampleName: "snare",
+    source: soundModules["../assets/sounds/jazz-funk-kit/snare.wav"],
+  },
+  {
+    sampleName: "hihat-closed",
+    source: soundModules["../assets/sounds/jazz-funk-kit/hihat-closed.wav"],
+  },
+  {
+    sampleName: "hihat-opened",
+    source: soundModules["../assets/sounds/jazz-funk-kit/hihat-opened.wav"],
+  },
+  {
+    sampleName: "rimshot",
+    source: soundModules["../assets/sounds/jazz-funk-kit/rimshot.wav"],
+  },
+  {
+    sampleName: "stickshot",
+    source: soundModules["../assets/sounds/jazz-funk-kit/stickshot.wav"],
+  },
+  {
+    sampleName: "ride",
+    source: soundModules["../assets/sounds/jazz-funk-kit/ride.wav"],
+  },
+  {
+    sampleName: "floor-tom",
+    source: soundModules["../assets/sounds/jazz-funk-kit/floor-tom.wav"],
   },
 ];
 

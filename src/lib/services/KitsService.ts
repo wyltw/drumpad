@@ -1,9 +1,41 @@
 import { loadSample } from "../audio/audio-utils";
-import { HOUSE_KIT } from "../constants";
+import { HOUSE_KIT, JAZZ_KIT } from "../constants";
 import Dexie from "dexie";
 import { db } from "../db/db";
 import { Kit, KitWithPads } from "../types/kit";
 import { handleError } from "../utils/utils";
+import { SampleSource } from "../types/types";
+
+// --- internal helpers ---
+
+const findKitByName = (name: string) =>
+  db.kits.where("name").equals(name).first();
+
+const seedPadsForKit = async (kitId: number, sampleSource: SampleSource[]) => {
+  await db.pads.where("kitId").equals(kitId).delete();
+  const sample = await loadSample(sampleSource);
+  const sampleWithKitId = sample.map((item) => ({
+    ...item,
+    kitId,
+  }));
+  await db.pads.bulkAdd(sampleWithKitId);
+};
+
+const initKit = async (name: string, sampleSource: SampleSource[]) => {
+  const existing = await findKitByName(name);
+  if (existing) {
+    await seedPadsForKit(existing.id!, sampleSource);
+    return existing.id!;
+  }
+  const newKitId = await db.kits.add({ name });
+  await seedPadsForKit(newKitId, sampleSource);
+  return newKitId;
+};
+
+const createDefaultKit = () => initKit("default", HOUSE_KIT);
+const createJazzKit = () => initKit("jazz", JAZZ_KIT);
+
+// --- queries ---
 
 export const countKits = async () => {
   return db.kits.count();
@@ -27,28 +59,21 @@ export const getKit = async (
   return { ...kit, pads };
 };
 
-export const seedWithDefaultSamples = async () => {
-  const id = await createDefaultKit();
-  const kit = await db.kits.get(id);
-  if (!kit) throw new Error("Failed to create default samples");
-  return { id: kit.id, name: kit.name };
-};
-
-const findKitByName = (name: string) =>
-  db.kits.where("name").equals(name).first();
-
 export const getDefaultKit = async (): Promise<Kit | undefined> => {
   const kit = await findKitByName("default");
   if (!kit) return undefined;
   return { id: kit.id!, name: kit.name };
 };
 
-export const deleteKit = async (kitId: number): Promise<string | undefined> => {
+// --- mutations ---
+
+export const createNewKit = async (name: string): Promise<string | number> => {
   try {
-    await db.transaction("rw", db.kits, db.pads, async () => {
-      await db.pads.where("kitId").equals(kitId).delete();
-      await db.kits.delete(kitId);
-    });
+    const existing = await findKitByName(name);
+    if (existing) return "A kit with this name already exists.";
+    const newKitId = await db.kits.add({ name });
+    await seedPadsForKit(newKitId, HOUSE_KIT);
+    return newKitId;
   } catch (error) {
     return handleError(error);
   }
@@ -67,35 +92,23 @@ export const updateKitName = async (
   }
 };
 
-const seedPadsForKit = async (kitId: number) => {
-  await db.pads.where("kitId").equals(kitId).delete();
-  const sample = await loadSample(HOUSE_KIT);
-  const sampleWithKitId = sample.map((item) => ({
-    ...item,
-    kitId,
-  }));
-  db.pads.bulkAdd(sampleWithKitId);
-};
-
-export const createNewKit = async (name: string): Promise<string | number> => {
+export const deleteKit = async (kitId: number): Promise<string | undefined> => {
   try {
-    const existing = await findKitByName(name);
-    if (existing) return "A kit with this name already exists.";
-    const newKitId = await db.kits.add({ name });
-    await seedPadsForKit(newKitId);
-    return newKitId;
+    await db.transaction("rw", db.kits, db.pads, async () => {
+      await db.pads.where("kitId").equals(kitId).delete();
+      await db.kits.delete(kitId);
+    });
   } catch (error) {
     return handleError(error);
   }
 };
 
-const createDefaultKit = async () => {
-  const existing = await findKitByName("default");
-  if (existing) {
-    await seedPadsForKit(existing.id);
-    return existing.id!;
-  }
-  const newKitId = await db.kits.add({ name: "default" });
-  await seedPadsForKit(newKitId);
-  return newKitId;
+// --- initialization ---
+
+export const seedWithDefaultSamples = async () => {
+  const id = await createDefaultKit();
+  await createJazzKit();
+  const kit = await db.kits.get(id);
+  if (!kit) throw new Error("Failed to start with default samples");
+  return { id: kit.id, name: kit.name };
 };
