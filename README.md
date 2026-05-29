@@ -7,20 +7,6 @@
 
 ---
 
-## 💡 The Problem & The Solution
-
-### The Problem
-
-- Browser-based drum machines tend to be either throwaway demos (hard-coded samples, no persistence) or full DAWs with steep learning curves.
-- Most demos do not treat the pad as a real UI component — interactions feel disconnected from the sound.
-
-### The Solution
-
-- A focused drum pad with real IndexedDB persistence: kits and samples survive page reloads, and custom samples can be uploaded per pad.
-- The pad button is built as a layered UI component so visual feedback genuinely reflects what the audio engine is doing, for both mouse and keyboard.
-
----
-
 ## 🎬 Live Demo
 
 👉 **Check out the live application:** [View Deployment]([Insert URL])
@@ -54,9 +40,9 @@
 
 ### Key Engineering Decisions
 
-- **IndexedDB as Single Source of Truth via Dexie:** All kit and pad data lives in IndexedDB. `useLiveQuery` keeps the UI reactive without manually syncing DB results into React state. A service/adapter layer sits between Dexie and the UI: the service owns business logic, the adapter owns query shape, and components stay ignorant of either. On first load, the DB is seeded only if the store is empty — no blind overwrites on refresh.
+- **IndexedDB as Single Source of Truth via Dexie:** All kit and pad data lives in IndexedDB. `useLiveQuery` keeps the UI reactive without manual syncing. A service/adapter layer sits between Dexie and the UI: the service owns business logic, the adapter owns query shape, and components stay ignorant of either. The DB is seeded on first load only if the store is empty. An earlier Zustand draft layer was removed — `EditableText` already follows an optimistic UI pattern, making the cache a redundant source of truth.
 
-- **Schema designed for partial updates:** The pad schema uses a compound index on `(kitId, slot)` so individual fields — such as `arrayBuffer` for a custom sample — can be updated without touching the full record. This is what made adding per-channel volume control a new column rather than a schema redesign.
+- **Schema designed for partial updates:** The pad schema uses a compound index on `(kitId, slot)` so individual fields — such as `arrayBuffer` for a custom sample — can be updated without touching the full record.
 
 - **Pad button as a layered UI component:** The pad button is split into a base layer, a face layer, and a dynamically rendered list of mask `<span>` elements that carry the pulse animation. Each interaction appends a new ID to the list and removes it on `animationend`, so overlapping inputs each get their own animation without shared state. Mouse clicks and keydown events feed the same path.
 
@@ -96,9 +82,8 @@
 
 ## 🚀 Future Roadmap
 
-- [ ] BPM sequencer: schedule pad hits on a grid instead of manual triggering
-- [ ] Export kit as a ZIP of labelled samples
-- [ ] Pan control per channel
+- [ ] Per-channel filter and pan controls
+- [ ] Metronome
 
 ---
 

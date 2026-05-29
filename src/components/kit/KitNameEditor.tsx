@@ -1,7 +1,7 @@
 import { ComponentPropsWithoutRef, useState } from "react";
 import { SelectTrigger, SelectValue } from "../ui/select";
 import { Button } from "../ui/button";
-import { Check, SquarePen, Trash, Undo2 } from "lucide-react";
+import { Check, SquarePen, Undo2 } from "lucide-react";
 import { Input } from "../ui/input";
 import { useKitContext } from "@/lib/contexts/KitContextProvider";
 import {
@@ -11,6 +11,7 @@ import {
 } from "@/lib/services/KitsService";
 import { toast } from "sonner";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
+import { KitDeleteDialog } from "./KitDeleteDialog";
 
 export default function KitNameEditor() {
   const { selectedKit, selectKit } = useKitContext();
@@ -61,16 +62,11 @@ export default function KitNameEditor() {
             <SquarePen />
             <span className="sr-only">Edit kit name</span>
           </Button>
-          <Button
-            className="ms-auto"
-            size={"icon"}
-            variant={"ghost"}
-            onClick={handleDelete}
+          <KitDeleteDialog
+            kitName={selectedKit?.name ?? ""}
+            onConfirm={handleDelete}
             disabled={isDefault}
-          >
-            <Trash />
-            <span className="sr-only">Delete kit</span>
-          </Button>
+          />
         </>
       )}
       {isEditing && (

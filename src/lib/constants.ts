@@ -1,19 +1,46 @@
+const soundModules = import.meta.glob("../assets/sounds/**/*.WAV", {
+  eager: true,
+  query: "?url",
+  import: "default",
+});
+
 export const HOUSE_KIT = [
-  { sampleName: "kick", source: "./src/assets/sounds/909s/kick.wav" },
-  { sampleName: "snare", source: "./src/assets/sounds/909s/snare.wav" },
-  { sampleName: "clap", source: "./src/assets/sounds/909s/clap.wav" },
-  { sampleName: "tom", source: "./src/assets/sounds/909s/tom.wav" },
+  {
+    sampleName: "kick",
+    source: soundModules["../assets/sounds/909s/kick.WAV"],
+  },
+  {
+    sampleName: "snare",
+    source: soundModules["../assets/sounds/909s/snare.WAV"],
+  },
+  {
+    sampleName: "clap",
+    source: soundModules["../assets/sounds/909s/clap.WAV"],
+  },
+  {
+    sampleName: "tom",
+    source: soundModules["../assets/sounds/909s/tom.WAV"],
+  },
   {
     sampleName: "closed_hat",
-    source: "./src/assets/sounds/909s/closed_hat.wav",
+    source: soundModules["../assets/sounds/909s/closed_hat.WAV"],
   },
   {
     sampleName: "opened_hat",
-    source: "./src/assets/sounds/909s/opened_hat.wav",
+    source: soundModules["../assets/sounds/909s/opened_hat.WAV"],
   },
-  { sampleName: "rimshot", source: "./src/assets/sounds/909s/rimshot.wav" },
-  { sampleName: "ride", source: "./src/assets/sounds/909s/ride.wav" },
-  { sampleName: "crash", source: "./src/assets/sounds/909s/crash.wav" },
+  {
+    sampleName: "rimshot",
+    source: soundModules["../assets/sounds/909s/rimshot.WAV"],
+  },
+  {
+    sampleName: "ride",
+    source: soundModules["../assets/sounds/909s/ride.WAV"],
+  },
+  {
+    sampleName: "crash",
+    source: soundModules["../assets/sounds/909s/crash.WAV"],
+  },
 ];
 
 export const DEFAULT_VOLUME = 1;
