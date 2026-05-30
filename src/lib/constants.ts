@@ -69,12 +69,12 @@ export const JAZZ_KIT = [
     source: soundModules["../assets/sounds/jazz-funk-kit/rimshot.wav"],
   },
   {
-    sampleName: "stickshot",
-    source: soundModules["../assets/sounds/jazz-funk-kit/stickshot.wav"],
-  },
-  {
     sampleName: "ride",
     source: soundModules["../assets/sounds/jazz-funk-kit/ride.wav"],
+  },
+  {
+    sampleName: "rack-tom",
+    source: soundModules["../assets/sounds/jazz-funk-kit/rack-tom.wav"],
   },
   {
     sampleName: "floor-tom",
