@@ -1,19 +1,15 @@
-import { z } from "zod";
+export type KitPad = {
+  id: number;
+  kitId: number;
+  sampleName: string;
+  label: string;
+  slot: number;
+  arrayBuffer: ArrayBuffer;
+};
 
-export const kitPadSchema = z.object({
-  id: z.number(),
-  kitId: z.number(),
-  sampleName: z.string(),
-  label: z.string(),
-  slot: z.number(),
-  arrayBuffer: z.instanceof(ArrayBuffer),
-});
+export type Kit = {
+  id: number;
+  name: string;
+};
 
-export const kitSchema = z.object({
-  id: z.number(),
-  name: z.string(),
-});
-
-export type KitPad = z.infer<typeof kitPadSchema>;
-export type Kit = z.infer<typeof kitSchema>;
 export type KitWithPads = Kit & { pads: KitPad[] };

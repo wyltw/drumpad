@@ -36,7 +36,7 @@
 - **Persistence:** `Dexie` (IndexedDB wrapper)
 - **Audio:** `Web Audio API`
 - **UI:** `Tailwind CSS`, `shadcn/ui`
-- **Testing:** `Vitest`, `Testing Library`, `fake-indexeddb`
+- **Testing:** `Vitest`, `React Testing Library`, `fake-indexeddb`
 
 ### Key Engineering Decisions
 
@@ -46,7 +46,7 @@
 
 - **Pad button as a layered UI component:** The pad button is split into a base layer, a face layer, and a dynamically rendered list of mask `<span>` elements that carry the pulse animation. Each interaction appends a new ID to the list and removes it on `animationend`, so overlapping inputs each get their own animation without shared state. Mouse clicks and keydown events feed the same path.
 
-- **Integration tests as design feedback:** Key flows (kit selection fallback, kit name editing, DB seeding) are covered with Vitest + Testing Library + `fake-indexeddb`. The AudioContext was originally a module-level singleton; this caused test state to bleed between cases. Refactoring it into a React context provider resolved the leakage — the architectural change came from a test constraint, not from planning ahead.
+- **Integration tests as design feedback:** Key flows (kit selection fallback, kit name editing, DB seeding) are covered with Vitest + React Testing Library + `fake-indexeddb`. The AudioContext was originally a module-level singleton; this caused test state to bleed between cases. Refactoring it into a React context provider resolved the leakage — the architectural change came from a test constraint, not from planning ahead.
 
 - **State co-location and derived state:** State lives at the narrowest scope that covers its consumers: `audioBuffer` inside the Pad component, `volumes[]` in a dedicated context for the mixer, `selectedKit` globally. Mute state is derived from volume rather than stored as a separate boolean flag. GainNodes are the Web Audio source of truth and are not duplicated into React state.
 
@@ -84,16 +84,7 @@
 
 - [ ] Per-channel filter and pan controls
 - [ ] Metronome
-
----
-
-## 🤝 Contact
-
-wyltw - [wyltw812@gmail.com](mailto:wyltw812@gmail.com)
-
-Project Link: [https://github.com/wyltw/drumpad](https://github.com/wyltw/drumpad)
-
----
+- [ ] Dark theme
 
 <!-- Markdown Links and Images Anchors -->
 
