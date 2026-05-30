@@ -100,3 +100,7 @@ export const KEYBIND: Record<number, string[]> = {
 };
 
 export const SAMPLE_FILE_TYPES = ["audio/mpeg", "audio/wav"];
+
+export const EMPTY_PADS = Array.from({ length: 9 }, (_, i) => ({
+  slot: i,
+}));

@@ -3,8 +3,9 @@ import Pad from "./Pad";
 import { useKit } from "@/lib/adapters/KitsAdapter";
 import PadsToolbar from "./PadsToolbar";
 import VolumeContextProvider from "@/lib/contexts/VolumeContextProvider";
-import { Spinner } from "../ui/spinner";
 import { ReactNode } from "react";
+import EmptyPad from "./EmptyPad";
+import { EMPTY_PADS } from "@/lib/constants";
 
 export default function Pads() {
   const { selectedKit } = useKitContext();
@@ -24,7 +25,11 @@ export default function Pads() {
             <PadsToolbar pads={pads} />
           </>
         ) : (
-          <Spinner className="size-32" />
+          <PadsLayout>
+            {EMPTY_PADS.map((pad) => (
+              <EmptyPad key={pad.slot} />
+            ))}
+          </PadsLayout>
         )}
       </div>
     </VolumeContextProvider>

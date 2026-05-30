@@ -58,7 +58,7 @@ export default function Pad({ pad }: PadProps) {
             isActive={isActive}
             isDragActive={isDragActive}
           />
-          <PadMask padMaskIds={padMaskIds} removePadMask={removePadMask} />
+          <PadMask padMaskIds={padMaskIds} onAnimationEnd={removePadMask} />
         </PadButton>
         <div className="mt-2 flex">
           <EditableText
