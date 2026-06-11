@@ -1,7 +1,7 @@
 import * as React from "react"
 import { Dialog as SheetPrimitive } from "radix-ui"
 
-import { cn } from "@/lib/utils/cn"
+import { cn } from "@/lib/utils/cn.ts"
 import { Button } from "@/components/ui/button"
 import { XIcon } from "lucide-react"
 
@@ -112,7 +112,7 @@ function SheetTitle({
     <SheetPrimitive.Title
       data-slot="sheet-title"
       className={cn(
-        "text-base font-medium text-foreground",
+        "font-heading text-base font-medium text-foreground",
         className
       )}
       {...props}
