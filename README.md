@@ -2,14 +2,11 @@
 
 > A browser-based drum machine with per-kit sample management, built with React, TypeScript, and the Web Audio API.
 
-[![Live Demo](https://shields.io)][Demo-Link]
-[![Tech Stack](https://shields.io)][Tech-Stack-Anchor]
+[Live Demo](https://drumpad-pi.vercel.app/)
 
 ---
 
 ## 🎬 Live Demo
-
-👉 **Check out the live application:** [View Deployment]([Insert URL])
 
 ![Project Demo Screenshot or GIF]([Insert path/URL to a high-quality GIF or screenshot showing core user workflows])
 
@@ -26,8 +23,6 @@
 ---
 
 ## 🛠️ Tech Stack & Architecture
-
-<a id="Tech-Stack-Anchor"></a>
 
 ### Frontend
 
@@ -80,7 +75,3 @@ documents for the complete product behavior and as-built design:
 - [ ] Per-channel filter and pan controls
 - [ ] Metronome
 - [ ] Dark theme
-
-<!-- Markdown Links and Images Anchors -->
-
-[Demo-Link]: [Insert URL to deployment]
