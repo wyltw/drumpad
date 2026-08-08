@@ -38,17 +38,12 @@
 - **UI:** `Tailwind CSS`, `shadcn/ui`
 - **Testing:** `Vitest`, `React Testing Library`, `fake-indexeddb`
 
-### Key Engineering Decisions
+Kit and pad records are persisted in IndexedDB, Dexie live queries keep the UI
+reactive, and the Web Audio API owns playback and mixing. See the reference
+documents for the complete product behavior and as-built design:
 
-- **IndexedDB as Single Source of Truth via Dexie:** All kit and pad data lives in IndexedDB. `useLiveQuery` keeps the UI reactive without manual syncing. A service/adapter layer sits between Dexie and the UI: the service owns business logic, the adapter owns query shape, and components stay ignorant of either. The DB is seeded on first load only if the store is empty. An earlier Zustand draft layer was removed — `EditableText` already follows an optimistic UI pattern, making the cache a redundant source of truth.
-
-- **Schema designed for partial updates:** The pad schema uses a compound index on `(kitId, slot)` so individual fields — such as `arrayBuffer` for a custom sample — can be updated without touching the full record.
-
-- **Pad button as a layered UI component:** The pad button is split into a base layer, a face layer, and a dynamically rendered list of mask `<span>` elements that carry the pulse animation. Each interaction appends a new ID to the list and removes it on `animationend`, so overlapping inputs each get their own animation without shared state. Mouse clicks and keydown events feed the same path.
-
-- **Integration tests as design feedback:** Key flows (kit selection fallback, kit name editing, DB seeding) are covered with Vitest + React Testing Library + `fake-indexeddb`. The AudioContext was originally a module-level singleton; this caused test state to bleed between cases. Refactoring it into a React context provider resolved the leakage — the architectural change came from a test constraint, not from planning ahead.
-
-- **State co-location and derived state:** State lives at the narrowest scope that covers its consumers: `audioBuffer` inside the Pad component, `volumes[]` in a dedicated context for the mixer, `selectedKit` globally. Mute state is derived from volume rather than stored as a separate boolean flag. GainNodes are the Web Audio source of truth and are not duplicated into React state.
+- [Product Specification](docs/product-spec.md)
+- [Architecture](docs/architecture.md)
 
 ---
 
