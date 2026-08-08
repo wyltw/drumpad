@@ -1,6 +1,6 @@
 import { useKitContext } from "@/lib/contexts/KitContextProvider";
 import Pad from "./Pad";
-import { useKit } from "@/lib/adapters/KitsAdapter";
+import { useKit } from "@/lib/hooks/useKits";
 import PadsToolbar from "./PadsToolbar";
 import VolumeContextProvider from "@/lib/contexts/VolumeContextProvider";
 import { ReactNode } from "react";
