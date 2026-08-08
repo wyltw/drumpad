@@ -28,6 +28,7 @@ export function usePadKeybind(
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.target instanceof HTMLInputElement) return;
       if (isKeyHeld.current) return;
+      // Every pad receives the global keydown; e.g. KeyQ continues only for its assigned pad.
       if (!keys.includes(event.code) || !audioBuffer) return;
       event.preventDefault();
       playback(audioContext, audioBuffer, gainNode);
