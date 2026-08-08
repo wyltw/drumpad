@@ -1,7 +1,7 @@
 import { useKitContext } from "@/lib/contexts/KitContextProvider";
 import { Field, FieldDescription, FieldLabel } from "../ui/field";
 import { Select, SelectContent, SelectGroup, SelectItem } from "../ui/select";
-import { useKits } from "@/lib/adapters/KitsAdapter";
+import { useKits } from "@/lib/hooks/useKits";
 import KitNameEditor from "./KitNameEditor";
 import { useEffect } from "react";
 import { toast } from "sonner";
