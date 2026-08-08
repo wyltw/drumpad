@@ -4,13 +4,7 @@
 
 [Live Demo](https://drumpad-pi.vercel.app/)
 
----
-
-## 🎬 Live Demo
-
-![Project Demo Screenshot or GIF]([Insert path/URL to a high-quality GIF or screenshot showing core user workflows])
-
----
+<img width="789" height="802" alt="image" src="https://github.com/user-attachments/assets/482bcebb-b7f9-4e59-b78f-7a1013f0b5b6" />
 
 ## ✨ Core Features
 
