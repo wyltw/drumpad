@@ -39,7 +39,7 @@ function CreateKitDialogContent({
   selectKit,
 }: {
   setOpen: (open: boolean) => void;
-  selectKit: (kit: { id: number; name: string }) => void;
+  selectKit: (id: number) => void;
 }) {
   const [name, setName] = useState("");
   const [error, setError] = useState("");
@@ -56,7 +56,7 @@ function CreateKitDialogContent({
       validateKitName(name);
       const result = await createNewKit(name);
       if (typeof result === "number") {
-        selectKit({ id: result, name });
+        selectKit(result);
         setOpen(false);
       } else {
         setError(result);

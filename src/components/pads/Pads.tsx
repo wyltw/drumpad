@@ -8,8 +8,8 @@ import EmptyPad from "./EmptyPad";
 import { EMPTY_PADS } from "@/lib/constants";
 
 export default function Pads() {
-  const { selectedKit } = useKitContext();
-  const { kit } = useKit(selectedKit?.id);
+  const { selectedKitId } = useKitContext();
+  const { kit } = useKit(selectedKitId ?? undefined);
   const pads = kit?.pads ?? [];
 
   return (

@@ -7,10 +7,7 @@ import { test, expect, describe } from "vitest";
 describe("KitSelect", () => {
   test("shows previously selected kit on load", async () => {
     const kitId = await db.kits.add({ name: "my kit" });
-    localStorage.setItem(
-      "selectedKit",
-      JSON.stringify({ id: kitId, name: "my kit" }),
-    );
+    localStorage.setItem("selectedKit", JSON.stringify(kitId));
 
     render(<App />);
 
@@ -21,10 +18,7 @@ describe("KitSelect", () => {
 
   test("falls back to default when selectedKit not found in DB", async () => {
     await db.kits.add({ name: "default" });
-    localStorage.setItem(
-      "selectedKit",
-      JSON.stringify({ id: 999, name: "ghost kit" }),
-    );
+    localStorage.setItem("selectedKit", JSON.stringify(999));
 
     render(<App />);
 
