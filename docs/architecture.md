@@ -76,7 +76,13 @@ and the kit inside one Dexie transaction.
 
 `KitContextProvider` counts kits when it mounts. If none exist,
 `seedWithDefaultSamples()` loads the bundled 909 and jazz audio files into
-ArrayBuffers, creates the two starter kits, and selects `default`.
+ArrayBuffers before opening a database transaction. The transaction creates
+both starter kits and all 18 pads as one atomic operation. Only after that
+transaction succeeds does the provider select `default`.
+
+Creating a user kit follows the same boundary at a smaller scope: its bundled
+909 samples are loaded first, then the kit and its nine pads are written in one
+transaction. A failed write therefore cannot leave an empty kit record.
 
 ### Reactive database reads
 
@@ -178,7 +184,9 @@ paths.
 
 The main covered architectural behaviors are:
 
-- Seeding `default` and `jazz` into an empty database.
+- Seeding `default` and `jazz` into an empty database and rolling back all
+  starter data if the write fails.
+- Creating a user kit and its pads atomically.
 - Restoring `selectedKit` from localStorage.
 - Falling back when a stored selection is missing from IndexedDB.
 - Persisting a kit rename.
@@ -191,8 +199,6 @@ The main covered architectural behaviors are:
 - Audio bytes stored in IndexedDB can consume substantially more space than kit
   metadata.
 - Mixer values and decoded AudioBuffers are runtime-only.
-- The seeding check only tests whether the kits table is empty. A non-empty but
-  incomplete database could result if initialization stops after writing only
-  part of the starter data, or if someone manually changes IndexedDB through
-  browser developer tools. The application does not attempt to repair such a
-  state automatically.
+- Starter samples are loaded before database writes begin. Both starter kits and
+  all 18 pads are then written in one transaction, so a failed initialization
+  cannot leave partial starter data that would prevent a later retry.

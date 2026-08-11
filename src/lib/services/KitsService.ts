@@ -2,38 +2,29 @@ import { loadSample } from "../audio/audio-utils";
 import { HOUSE_KIT, JAZZ_KIT } from "../constants";
 import Dexie from "dexie";
 import { db } from "../db/db";
-import { Kit, KitWithPads } from "../types/kit";
+import { Kit, KitPad, KitWithPads } from "../types/kit";
 import { handleError } from "../utils/utils";
-import { SampleSource } from "../types/types";
+
+type LoadedPad = Omit<KitPad, "id" | "kitId">;
 
 // --- internal helpers ---
 
 const findKitByName = (name: string) =>
   db.kits.where("name").equals(name).first();
 
-const seedPadsForKit = async (kitId: number, sampleSource: SampleSource[]) => {
-  await db.pads.where("kitId").equals(kitId).delete();
-  const sample = await loadSample(sampleSource);
-  const sampleWithKitId = sample.map((item) => ({
-    ...item,
+const addPadsToKit = async (kitId: number, pads: LoadedPad[]) => {
+  const padsWithKitId = pads.map((pad) => ({
+    ...pad,
     kitId,
   }));
-  await db.pads.bulkAdd(sampleWithKitId);
+  await db.pads.bulkAdd(padsWithKitId);
 };
 
-const initKit = async (name: string, sampleSource: SampleSource[]) => {
-  const existing = await findKitByName(name);
-  if (existing) {
-    await seedPadsForKit(existing.id!, sampleSource);
-    return existing.id!;
-  }
-  const newKitId = await db.kits.add({ name });
-  await seedPadsForKit(newKitId, sampleSource);
-  return newKitId;
+const createKitWithPads = async (name: string, pads: LoadedPad[]) => {
+  const kitId = await db.kits.add({ name });
+  await addPadsToKit(kitId, pads);
+  return kitId;
 };
-
-const createDefaultKit = () => initKit("default", HOUSE_KIT);
-const createJazzKit = () => initKit("jazz", JAZZ_KIT);
 
 // --- queries ---
 
@@ -71,9 +62,13 @@ export const createNewKit = async (name: string): Promise<string | number> => {
   try {
     const existing = await findKitByName(name);
     if (existing) return "A kit with this name already exists.";
-    const newKitId = await db.kits.add({ name });
-    await seedPadsForKit(newKitId, HOUSE_KIT);
-    return newKitId;
+    const pads = await loadSample(HOUSE_KIT);
+
+    return await db.transaction("rw", db.kits, db.pads, async () => {
+      const existing = await findKitByName(name);
+      if (existing) return "A kit with this name already exists.";
+      return createKitWithPads(name, pads);
+    });
   } catch (error) {
     return handleError(error);
   }
@@ -106,9 +101,21 @@ export const deleteKit = async (kitId: number): Promise<string | undefined> => {
 // --- initialization ---
 
 export const seedWithDefaultSamples = async () => {
-  const id = await createDefaultKit();
-  await createJazzKit();
-  const kit = await db.kits.get(id);
-  if (!kit) throw new Error("Failed to start with default samples");
-  return { id: kit.id, name: kit.name };
+  const [defaultPads, jazzPads] = await Promise.all([
+    loadSample(HOUSE_KIT),
+    loadSample(JAZZ_KIT),
+  ]);
+
+  return db.transaction("rw", db.kits, db.pads, async () => {
+    const kitsCount = await db.kits.count();
+    if (kitsCount > 0) {
+      const defaultKit = await findKitByName("default");
+      if (!defaultKit) throw new Error("Failed to start with default samples");
+      return { id: defaultKit.id, name: defaultKit.name };
+    }
+
+    const defaultKitId = await createKitWithPads("default", defaultPads);
+    await createKitWithPads("jazz", jazzPads);
+    return { id: defaultKitId, name: "default" };
+  });
 };
