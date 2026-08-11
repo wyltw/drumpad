@@ -4,36 +4,39 @@ import { Button } from "../ui/button";
 import { Check, SquarePen, Undo2 } from "lucide-react";
 import { Input } from "../ui/input";
 import { useKitContext } from "@/lib/contexts/KitContextProvider";
-import {
-  deleteKit,
-  getDefaultKit,
-  updateKitName,
-} from "@/lib/services/KitsService";
+import { deleteKit, updateKitName } from "@/lib/services/KitsService";
 import { toast } from "sonner";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 import { KitDeleteDialog } from "./KitDeleteDialog";
+import { Kit } from "@/lib/types/kit";
 
-export default function KitNameEditor() {
-  const { selectedKit, selectKit } = useKitContext();
+type KitNameEditorProps = {
+  kit: Kit | undefined;
+  defaultKitId: number | undefined;
+};
+
+export default function KitNameEditor({
+  kit,
+  defaultKitId,
+}: KitNameEditorProps) {
+  const { selectKit } = useKitContext();
   const [isEditing, setIsEditing] = useState(false);
 
-  const isDefault = selectedKit?.name === "default";
+  const isDefault = kit?.name === "default";
 
-  const handleSuccess = (newName: string) => {
-    if (selectedKit) selectKit({ ...selectedKit, name: newName });
+  const handleSuccess = () => {
     setIsEditing(false);
   };
 
   const handleDelete = async () => {
-    if (!selectedKit?.id) return;
-    const error = await deleteKit(selectedKit.id);
+    if (!kit?.id) return;
+    const error = await deleteKit(kit.id);
     if (error) {
       toast.error(error);
       return;
     }
     toast.success("Kit deleted.");
-    const defaultKit = await getDefaultKit();
-    if (defaultKit) selectKit(defaultKit);
+    if (defaultKitId) selectKit(defaultKitId);
   };
 
   return (
@@ -41,8 +44,8 @@ export default function KitNameEditor() {
       {isEditing ? (
         <KitNameInput
           isEditing={isEditing}
-          initialName={selectedKit?.name ?? ""}
-          kitId={selectedKit?.id}
+          initialName={kit?.name ?? ""}
+          kitId={kit?.id}
           onSuccess={handleSuccess}
         />
       ) : (
@@ -57,15 +60,15 @@ export default function KitNameEditor() {
             size={"icon"}
             variant={"ghost"}
             onClick={() => setIsEditing(true)}
-            disabled={isDefault}
+            disabled={!kit || isDefault}
           >
             <SquarePen />
             <span className="sr-only">Edit kit name</span>
           </Button>
           <KitDeleteDialog
-            kitName={selectedKit?.name ?? ""}
+            kitName={kit?.name ?? ""}
             onConfirm={handleDelete}
-            disabled={isDefault}
+            disabled={!kit || isDefault}
           />
         </>
       )}
@@ -87,7 +90,7 @@ export default function KitNameEditor() {
 type KitNameInputProps = {
   initialName: string;
   kitId: number | undefined;
-  onSuccess: (newName: string) => void;
+  onSuccess: () => void;
   isEditing: boolean;
 } & ComponentPropsWithoutRef<"input">;
 
@@ -107,7 +110,7 @@ function KitNameInput({
       if (error) {
         toast.error(error);
       } else {
-        onSuccess(name);
+        onSuccess();
       }
     }
   };

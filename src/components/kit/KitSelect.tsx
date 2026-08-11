@@ -7,19 +7,19 @@ import { useEffect } from "react";
 import { toast } from "sonner";
 
 export default function KitSelect() {
-  const { selectedKit, selectKit } = useKitContext();
+  const { selectedKitId, selectKit } = useKitContext();
   const { kitsOptions } = useKits();
 
-  const isKitExsit = kitsOptions.find((kit) => kit.id === selectedKit?.id);
-  const defaultKit = kitsOptions.find((kit) => kit.name === "default")!;
+  const selectedKit = kitsOptions.find((kit) => kit.id === selectedKitId);
+  const defaultKit = kitsOptions.find((kit) => kit.name === "default");
 
   useEffect(() => {
     if (kitsOptions.length === 0) return;
-    if (!isKitExsit) {
-      selectKit(defaultKit);
+    if (!selectedKit && defaultKit) {
+      selectKit(defaultKit.id);
       toast.info("Kit not found, switched to default.");
     }
-  }, [defaultKit, isKitExsit, kitsOptions.length, selectKit]);
+  }, [defaultKit, kitsOptions.length, selectKit, selectedKit]);
   return (
     <Field className="flex">
       <FieldLabel className="text-base" htmlFor="kitName">
@@ -27,17 +27,12 @@ export default function KitSelect() {
       </FieldLabel>
       <FieldDescription>Select Kit you want for drumpad.</FieldDescription>
       <Select
-        value={String(selectedKit?.id)}
+        value={selectedKitId === null ? "" : String(selectedKitId)}
         onValueChange={(value) => {
-          selectKit({
-            id: Number(value),
-            name:
-              kitsOptions.find((option) => String(option.id) === value)?.name ||
-              "",
-          });
+          selectKit(Number(value));
         }}
       >
-        <KitNameEditor />
+        <KitNameEditor kit={selectedKit} defaultKitId={defaultKit?.id} />
         <SelectContent position="popper">
           <SelectGroup>
             {kitsOptions.map((kit) => (
