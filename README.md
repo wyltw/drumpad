@@ -2,6 +2,8 @@
 
 > A browser-based drum machine with per-kit sample management, built with React, TypeScript, and the Web Audio API.
 
+## Live Demo
+
 [Live Demo](https://drumpad-pi.vercel.app/)
 
 <img width="789" height="802" alt="image" src="https://github.com/user-attachments/assets/482bcebb-b7f9-4e59-b78f-7a1013f0b5b6" />
