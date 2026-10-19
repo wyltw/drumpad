@@ -6,9 +6,17 @@ import { describe, expect, test } from "vitest";
 
 describe("KitNameEditor", () => {
   test("should switch to edit mode", async () => {
+    const kitId = await db.kits.add({ name: "my kit" });
+    localStorage.setItem("selectedKit", JSON.stringify(kitId));
+
     const user = userEvent.setup();
     render(<App />);
     const editButton = screen.getByRole("button", { name: "Edit kit name" });
+
+    await waitFor(() => {
+      expect(editButton).toBeEnabled();
+    });
+
     await user.click(editButton);
     const kitNameInput = screen.getByLabelText("kitName");
     expect(kitNameInput).toBeInTheDocument();
@@ -21,7 +29,7 @@ describe("KitNameEditor", () => {
   });
   test("updates kit name in DB after confirming edit", async () => {
     const kitId = await db.kits.add({ name: "my kit" });
-    localStorage.setItem("selectedKit", JSON.stringify({ id: kitId, name: "my kit" }));
+    localStorage.setItem("selectedKit", JSON.stringify(kitId));
 
     const user = userEvent.setup();
     render(<App />);
@@ -40,7 +48,7 @@ describe("KitNameEditor", () => {
 
   test("buttons should be disabled when kit is default", async () => {
     const kitId = await db.kits.add({ name: "default" });
-    localStorage.setItem("selectedKit", JSON.stringify({ id: kitId, name: "default" }));
+    localStorage.setItem("selectedKit", JSON.stringify(kitId));
 
     render(<App />);
 

@@ -49,9 +49,10 @@ animations.
 ### Manage kits
 
 - On first use, the application creates the `default` and `jazz` kits and
-  selects `default`.
+  selects `default`. Both kits and all 18 pads are created as one database
+  operation.
 - The user can create a named kit. A new kit starts with the bundled 909 sample
-  set.
+  set. The kit and its nine pads are created as one database operation.
 - Kit names must be unique. Creation additionally requires a non-empty name of
   at most 40 characters.
 - The user can rename or delete a non-default kit.
@@ -98,6 +99,10 @@ animations.
   channel.
 - **FR-011:** Deleting a kit removes its associated pads in the same database
   transaction.
+- **FR-012:** Creating a kit writes the kit and its nine pads in the same
+  database transaction.
+- **FR-013:** First-use initialization writes both starter kits and all 18 pads
+  in the same database transaction.
 
 ## Data Concepts
 
@@ -115,6 +120,9 @@ animations.
   removes custom kits and samples.
 - The application seeds bundled kits only when the kits table is empty. It
   otherwise assumes that a `default` kit exists for fallback behavior.
+- A failed starter-kit or user-kit write is rolled back rather than leaving a
+  kit without its complete pads. Failed first-use initialization leaves the
+  kits table empty so a later application start can try again.
 - IndexedDB does not enforce foreign-key relationships; the application is
   responsible for keeping kit and pad records consistent.
 - Audio playback depends on browser support for the Web Audio API and successful
@@ -124,8 +132,9 @@ animations.
 
 ## Verification Coverage
 
-Automated tests currently cover initial kit seeding, restoring a prior kit
-selection, fallback when a selected kit is missing, kit renaming, protection of
-the default kit controls, and basic header content. Audio playback, sample
-replacement, mixer behavior, deletion, keyboard input, and animation behavior
-are not covered by the current automated test suite.
+Automated tests currently cover initial kit seeding, rollback of failed starter
+and user-kit creation, restoring a prior kit selection, fallback when a selected
+kit is missing, kit renaming, protection of the default kit controls, and basic
+header content. Audio playback, sample replacement, mixer behavior, deletion,
+keyboard input, and animation behavior are not covered by the current automated
+test suite.

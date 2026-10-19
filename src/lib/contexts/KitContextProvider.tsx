@@ -8,13 +8,12 @@ import {
 } from "react";
 import { toast } from "sonner";
 import { useLocalStorage } from "usehooks-ts";
-import { Kit } from "../types/kit";
 import { countKits, seedWithDefaultSamples } from "../services/KitsService";
 import { handleError } from "../utils/utils";
 
 type TKitPackContext = {
-  selectedKit: Kit | null;
-  selectKit: (value: Kit) => void;
+  selectedKitId: number | null;
+  selectKit: (id: number) => void;
 };
 
 const KitContext = createContext<TKitPackContext | null>(null);
@@ -24,16 +23,16 @@ export default function KitContextProvider({
 }: {
   children: ReactNode;
 }) {
-  const [selectedKit, setSelectedKit] = useLocalStorage<Kit | null>(
+  const [selectedKitId, setSelectedKitId] = useLocalStorage<number | null>(
     "selectedKit",
     null,
   );
 
   const selectKit = useCallback(
-    (value: Kit | null) => {
-      setSelectedKit(value);
+    (id: number) => {
+      setSelectedKitId(id);
     },
-    [setSelectedKit],
+    [setSelectedKitId],
   );
 
   const seed = useCallback(async () => {
@@ -46,7 +45,7 @@ export default function KitContextProvider({
           success: "Samples created",
         });
         const defaultKit = await seedPromise;
-        selectKit(defaultKit);
+        selectKit(defaultKit.id);
       }
     } catch (error) {
       toast.error(handleError(error));
@@ -59,10 +58,10 @@ export default function KitContextProvider({
 
   const context = useMemo(
     () => ({
-      selectedKit,
+      selectedKitId,
       selectKit,
     }),
-    [selectKit, selectedKit],
+    [selectKit, selectedKitId],
   );
 
   return <KitContext.Provider value={context}>{children}</KitContext.Provider>;
